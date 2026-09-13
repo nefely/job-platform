@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useAsync } from "@/hooks/useAsync";
 import {
@@ -76,6 +76,15 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
     [filteredJobs, safePage],
   );
 
+  const listTopRef = useRef<HTMLDivElement>(null);
+  const handlePageChange = useCallback((next: number) => {
+    setPage(next);
+    // Без цього після переходу на нову сторінку користувач лишався б
+    // прокрученим униз, до кнопок пагінації, і бачив хвіст попередньої
+    // сторінки замість першої вакансії нової.
+    listTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   return (
     <div className="py-8">
       <div className="relative flex flex-wrap items-start gap-x-3 gap-y-1">
@@ -91,7 +100,7 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
         </p>
       )}
 
-      <div className="mt-4">
+      <div ref={listTopRef} className="mt-4 scroll-mt-4">
         {state.status === "loading" && <JobListSkeleton />}
         {state.status === "error" && (
           <RetryBlock
@@ -103,7 +112,7 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
         {state.status === "success" && (
           <>
             <JobList jobs={pagedJobs} />
-            <Pagination page={safePage} totalPages={totalPages} onPageChange={setPage} />
+            <Pagination page={safePage} totalPages={totalPages} onPageChange={handlePageChange} />
           </>
         )}
       </div>

@@ -72,7 +72,7 @@ export function MobileNav({ children, toggleLabel }: MobileNavProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="absolute inset-x-0 top-full z-20 flex flex-col items-center gap-3 border-b border-gray-200 bg-white p-5 text-center shadow-lg dark:border-gray-800 dark:bg-gray-950"
+            className="absolute inset-x-0 top-full z-20 flex flex-col items-center gap-3 border-b border-gray-200 bg-white p-5 text-center shadow-lg dark:border-gray-700 dark:bg-gray-900"
           >
             {children}
           </motion.div>

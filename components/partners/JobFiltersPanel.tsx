@@ -82,7 +82,7 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
         aria-expanded={isExpanded}
         aria-label={t("filtersToggle")}
         title={t("filtersToggle")}
-        className="relative flex h-10.5 w-10.5 shrink-0 items-center justify-center rounded-lg border border-gray-300 text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-900"
+        className="relative flex h-10.5 w-10.5 shrink-0 items-center justify-center rounded-lg border border-red-600 text-red-600 transition-colors hover:bg-red-50 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-950/40"
       >
         <svg
           viewBox="0 0 24 24"

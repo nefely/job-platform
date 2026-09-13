@@ -53,7 +53,10 @@ export function PartnersIndexBoard({ initialCategory }: PartnersIndexBoardProps)
           <p className="text-gray-500 dark:text-gray-400">{tIndex("emptyState")}</p>
         )}
         {state.status === "success" && filteredPartners.length > 0 && (
-          <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerContainer
+            viewportTriggered={false}
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {filteredPartners.map((partner) => (
               <StaggerItem key={partner.id}>
                 <PartnerCard partner={partner} />

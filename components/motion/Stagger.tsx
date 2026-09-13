@@ -16,21 +16,34 @@ const itemVariants: Variants = {
 interface StaggerContainerProps {
   children: ReactNode;
   className?: string;
+  /**
+   * true (за замовчуванням) — анімація прив'язана до скролу (whileInView +
+   * once: true): підходить для статичних секцій головної сторінки, що
+   * з'являються один раз і більше не змінюються.
+   * false — анімація завжди програється при кожній зміні дітей (звичайний
+   * `animate`, без прив'язки до в'юпорта). Обов'язково для списків, вміст
+   * яких може змінюватись у часі (фільтри): з `once: true` нові елементи,
+   * додані ПІСЛЯ першого спрацювання, назавжди застрягали б у "hidden"
+   * (opacity: 0) — реально в DOM і в CSS-гріді, просто невидимі.
+   */
+  viewportTriggered?: boolean;
 }
 
 // Батько сітки (категорії, картки партнерів/вакансій): анімує дітей
-// (StaggerItem) послідовно, з невеликою затримкою одна за одною, коли
-// сітка потрапляє у в'юпорт. Самі картки (JobCard/PartnerCard) не
-// торкаємось — обгортка живе на рівень вище й не заважає їхньому React.memo.
-export function StaggerContainer({ children, className }: StaggerContainerProps) {
+// (StaggerItem) послідовно, з невеликою затримкою одна за одною. Самі
+// картки (JobCard/PartnerCard) не торкаємось — обгортка живе на рівень
+// вище й не заважає їхньому React.memo.
+export function StaggerContainer({
+  children,
+  className,
+  viewportTriggered = true,
+}: StaggerContainerProps) {
+  const triggerProps = viewportTriggered
+    ? { whileInView: "show" as const, viewport: { once: true, margin: "-60px" } }
+    : { animate: "show" as const };
+
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
-      variants={containerVariants}
-      className={className}
-    >
+    <motion.div initial="hidden" variants={containerVariants} className={className} {...triggerProps}>
       {children}
     </motion.div>
   );

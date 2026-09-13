@@ -22,7 +22,7 @@ export function LocaleSwitcher() {
     <div
       role="group"
       aria-label={t("languageLabel")}
-      className="flex items-center gap-1 rounded-full border border-gray-200 p-1 text-xs font-medium dark:border-gray-700"
+      className="flex h-10.5 shrink-0 items-center gap-1 rounded-full border border-gray-200 px-1 text-xs font-medium dark:border-gray-700"
     >
       {routing.locales.map((locale) => {
         const isActive = locale === activeLocale;

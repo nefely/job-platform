@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { CATEGORY_COLORS } from "@/data/categoryColors";
 import { CATEGORY_IDS } from "@/data/categories";
 import { Link } from "@/i18n/navigation";
 
@@ -16,7 +17,7 @@ export async function CategoryGrid() {
           <Link
             key={categoryId}
             href={`/jobs?category=${categoryId}`}
-            className="rounded-xl border border-gray-200 px-4 py-4 text-sm font-medium transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-900"
+            className={`rounded-xl border border-transparent px-4 py-4 text-sm font-medium transition-opacity hover:opacity-80 ${CATEGORY_COLORS[categoryId]}`}
           >
             {tCategories(categoryId)}
           </Link>

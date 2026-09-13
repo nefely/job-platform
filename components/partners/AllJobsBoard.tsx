@@ -50,7 +50,7 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
 
   return (
     <div className="py-8">
-      <div className="relative flex items-start gap-3">
+      <div className="relative flex flex-wrap items-start gap-x-3 gap-y-1">
         <div className="flex-1">
           <JobSearchInput onDebouncedChange={handleDebouncedQueryChange} />
         </div>

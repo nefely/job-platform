@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { CATEGORY_COLORS } from "@/data/categoryColors";
 import { CATEGORY_IDS } from "@/data/categories";
@@ -21,9 +21,13 @@ const inputClassName =
 
 // Кнопка-іконка (42×42, як інпут пошуку) стоїть в одному рядку з пошуком —
 // рендериться батьком (AllJobsBoard/PartnerJobsBoard) поруч із
-// JobSearchInput у спільному relative-рядку. Розкривна панель із чіпами
-// позиціонується absolute на всю ширину ТОГО рядка (inset-x-0 відносно
-// найближчого relative-предка), а не лише колонки кнопки.
+// JobSearchInput у спільному relative flex-wrap-рядку. Розкривна панель із
+// чіпами позиціонується absolute на всю ширину ТОГО рядка (inset-x-0
+// відносно найближчого relative-предка), а не лише колонки кнопки.
+// "Скинути все" — звичайний (не absolute) елемент рядка з basis-full: у
+// flex-wrap-рядку він завжди переносить сам себе на новий рядок (незалежно
+// від вільного місця) і притискається до правого краю через text-right —
+// тож не впливає на ширину інпута пошуку.
 export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelProps) {
   const t = useTranslations("jobs");
   const tCategories = useTranslations("categories");
@@ -32,6 +36,33 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
   const tExperienceLevel = useTranslations("experienceLevel");
   const tLanguages = useTranslations("languages");
   const [isExpanded, setIsExpanded] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Клік/тап поза панеллю або Escape — закриває її (той самий підхід, що й
+  // у MobileNav).
+  useEffect(() => {
+    if (!isExpanded) return;
+
+    function handlePointerDown(event: MouseEvent | TouchEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsExpanded(false);
+      }
+    }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsExpanded(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isExpanded]);
 
   const activeCount = countActiveJobFilters(filters);
   const {
@@ -44,45 +75,43 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
   } = filters;
 
   return (
-    <>
-      <div className="relative h-10.5 w-10.5 shrink-0">
+    <div ref={containerRef} className="contents">
+      <button
+        type="button"
+        onClick={() => setIsExpanded((prev) => !prev)}
+        aria-expanded={isExpanded}
+        aria-label={t("filtersToggle")}
+        title={t("filtersToggle")}
+        className="relative flex h-10.5 w-10.5 shrink-0 items-center justify-center rounded-lg border border-gray-300 text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-900"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-5 w-5"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16M7 12h10M10 18h4" />
+        </svg>
+        {activeCount > 0 && (
+          <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-xs font-semibold text-white dark:bg-white dark:text-gray-900">
+            {activeCount}
+          </span>
+        )}
+      </button>
+
+      {activeCount > 0 && (
         <button
           type="button"
-          onClick={() => setIsExpanded((prev) => !prev)}
-          aria-expanded={isExpanded}
-          aria-label={t("filtersToggle")}
-          title={t("filtersToggle")}
-          className="relative flex h-10.5 w-10.5 shrink-0 items-center justify-center rounded-lg border border-gray-300 text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-900"
+          onClick={() => onFiltersChange(EMPTY_JOB_FILTERS)}
+          className="basis-full text-right text-xs font-medium text-gray-500 underline-offset-2 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-5 w-5"
-            aria-hidden="true"
-          >
-            <path d="M4 6h16M7 12h10M10 18h4" />
-          </svg>
-          {activeCount > 0 && (
-            <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-xs font-semibold text-white dark:bg-white dark:text-gray-900">
-              {activeCount}
-            </span>
-          )}
+          {t("resetFilters")}
         </button>
-
-        {activeCount > 0 && (
-          <button
-            type="button"
-            onClick={() => onFiltersChange(EMPTY_JOB_FILTERS)}
-            className="absolute right-0 top-full mt-1 whitespace-nowrap text-xs font-medium text-gray-500 underline-offset-2 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
-          >
-            {t("resetFilters")}
-          </button>
-        )}
-      </div>
+      )}
 
       {isExpanded && (
         <div className="absolute inset-x-0 top-full z-20 mt-2 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-800 dark:bg-gray-950">
@@ -146,6 +175,6 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
           </label>
         </div>
       )}
-    </>
+    </div>
   );
 }

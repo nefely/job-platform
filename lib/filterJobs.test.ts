@@ -83,7 +83,7 @@ describe("filterJobs", () => {
       employmentType: "project",
       workFormat: "remote",
       experienceLevel: "3-5",
-      requiredLanguages: ["en", "de"],
+      requiredLanguages: ["en", "uk"],
       salaryFrom: 2500,
     });
     const noSalarySpecified = makeJob({
@@ -126,11 +126,11 @@ describe("filterJobs", () => {
     });
 
     it("filters by selected languages (job matches if it requires any of them)", () => {
-      expect(filterJobs(advancedJobs, "", "uk", { languages: ["de"] })).toEqual([projectRemote]);
+      expect(filterJobs(advancedJobs, "", "uk", { languages: ["uk"] })).toEqual([projectRemote]);
       expect(filterJobs(advancedJobs, "", "uk", { languages: ["pl"] })).toEqual([
         noSalarySpecified,
       ]);
-      expect(filterJobs(advancedJobs, "", "uk", { languages: ["de", "pl"] })).toEqual([
+      expect(filterJobs(advancedJobs, "", "uk", { languages: ["uk", "pl"] })).toEqual([
         projectRemote,
         noSalarySpecified,
       ]);
@@ -173,7 +173,7 @@ describe("countActiveJobFilters", () => {
       countActiveJobFilters({
         categories: ["it", "drivers"],
         employmentTypes: ["full-time"],
-        languages: ["en", "de", "pl"],
+        languages: ["en", "uk", "pl"],
       }),
     ).toBe(6);
   });

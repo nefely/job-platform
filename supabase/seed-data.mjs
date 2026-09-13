@@ -151,13 +151,13 @@ export const jobs = [
   },
   {
     partnerSlug: "euro-logistics", category: "hospitality", locationCode: "munich",
-    employmentType: "part-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: ["de"],
+    employmentType: "part-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: ["en"],
     salaryFrom: 1100, salaryTo: 1400, currency: "EUR",
     title: { uk: "Офіціант/-ка в готель", en: "Hotel waiter/waitress", pl: "Kelner/-ka w hotelu" },
     description: {
-      uk: "Обслуговування гостей ресторану при готелі: сервірування, прийом замовлень, розрахунок. Гнучкий графік — підходить для суміщення з навчанням. Базова німецька (A2+) потрібна для спілкування з гостями та колегами.",
-      en: "Serving guests at the hotel restaurant: table setting, taking orders, billing. Flexible schedule — works well alongside studies. Basic German (A2+) needed to talk with guests and colleagues.",
-      pl: "Obsługa gości restauracji hotelowej: nakrywanie do stołu, przyjmowanie zamówień, rozliczenia. Elastyczny grafik — dobrze łączy się z nauką. Wymagany podstawowy niemiecki (A2+) do kontaktu z gośćmi i zespołem.",
+      uk: "Обслуговування гостей ресторану при готелі: сервірування, прийом замовлень, розрахунок. Гнучкий графік — підходить для суміщення з навчанням. Базова англійська (A2+) потрібна для спілкування з гостями та колегами.",
+      en: "Serving guests at the hotel restaurant: table setting, taking orders, billing. Flexible schedule — works well alongside studies. Basic English (A2+) needed to talk with guests and colleagues.",
+      pl: "Obsługa gości restauracji hotelowej: nakrywanie do stołu, przyjmowanie zamówień, rozliczenia. Elastyczny grafik — dobrze łączy się z nauką. Wymagany podstawowy angielski (A2+) do kontaktu z gośćmi i zespołem.",
     },
   },
   {
@@ -184,13 +184,13 @@ export const jobs = [
   },
   {
     partnerSlug: "euro-logistics", category: "hospitality", locationCode: "munich",
-    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["de"],
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["en"],
     salaryFrom: 1500, salaryTo: 1900, currency: "EUR",
     title: { uk: "Кухар", en: "Cook", pl: "Kucharz/-rka" },
     description: {
-      uk: "Приготування страв європейської кухні на кухні мережевого готелю: підготовка інгредієнтів, контроль якості подачі, дотримання санітарних норм HACCP. Потрібен досвід роботи на кухні від 1 року та базова німецька для роботи в команді.",
-      en: "Preparing European cuisine dishes in a chain hotel's kitchen: prepping ingredients, checking plating quality, following HACCP hygiene standards. Requires 1+ year of kitchen experience and basic German to work with the team.",
-      pl: "Przygotowywanie dań kuchni europejskiej w kuchni hotelu sieciowego: przygotowanie składników, kontrola jakości podania, przestrzeganie norm HACCP. Wymagany min. rok doświadczenia w kuchni i podstawowy niemiecki do pracy w zespole.",
+      uk: "Приготування страв європейської кухні на кухні мережевого готелю: підготовка інгредієнтів, контроль якості подачі, дотримання санітарних норм HACCP. Потрібен досвід роботи на кухні від 1 року та базова англійська для роботи в команді.",
+      en: "Preparing European cuisine dishes in a chain hotel's kitchen: prepping ingredients, checking plating quality, following HACCP hygiene standards. Requires 1+ year of kitchen experience and basic English to work with the team.",
+      pl: "Przygotowywanie dań kuchni europejskiej w kuchni hotelu sieciowego: przygotowanie składników, kontrola jakości podania, przestrzeganie norm HACCP. Wymagany min. rok doświadczenia w kuchni i podstawowy angielski do pracy w zespole.",
     },
   },
   {
@@ -228,13 +228,13 @@ export const jobs = [
   },
   {
     partnerSlug: "euro-logistics", category: "construction", locationCode: "berlin",
-    employmentType: "project", workFormat: "hybrid", experienceLevel: "5+", requiredLanguages: ["en", "de"],
+    employmentType: "project", workFormat: "hybrid", experienceLevel: "5+", requiredLanguages: ["en", "pl"],
     salaryFrom: 2600, salaryTo: 3200, currency: "EUR",
     title: { uk: "Проєктний менеджер (будівництво, тимчасовий проєкт)", en: "Construction Project Manager (temporary project)", pl: "Kierownik projektu budowlanego (projekt tymczasowy)" },
     description: {
-      uk: "Керівництво тимчасовим будівельним проєктом тривалістю 8 місяців: планування етапів, координація підрядників, звітність перед замовником. Контракт на строк проєкту з можливістю продовження на новий об'єкт. Потрібні англійська й німецька на робочому рівні.",
-      en: "Leading an 8-month temporary construction project: phase planning, coordinating contractors, reporting to the client. Contract for the project's duration with a chance to move to the next site. Working-level English and German required.",
-      pl: "Kierowanie tymczasowym projektem budowlanym trwającym 8 miesięcy: planowanie etapów, koordynacja podwykonawców, raportowanie do klienta. Kontrakt na czas projektu z możliwością przejścia na kolejny obiekt. Wymagany angielski i niemiecki na poziomie roboczym.",
+      uk: "Керівництво тимчасовим будівельним проєктом тривалістю 8 місяців: планування етапів, координація підрядників, звітність перед замовником. Контракт на строк проєкту з можливістю продовження на новий об'єкт. Потрібні англійська й польська на робочому рівні.",
+      en: "Leading an 8-month temporary construction project: phase planning, coordinating contractors, reporting to the client. Contract for the project's duration with a chance to move to the next site. Working-level English and Polish required.",
+      pl: "Kierowanie tymczasowym projektem budowlanym trwającym 8 miesięcy: planowanie etapów, koordynacja podwykonawców, raportowanie do klienta. Kontrakt na czas projektu z możliwością przejścia na kolejny obiekt. Wymagany angielski i polski na poziomie roboczym.",
     },
   },
   {
@@ -364,18 +364,18 @@ export const jobs = [
   },
   {
     partnerSlug: "hotel-alpina", category: "hospitality", locationCode: "salzburg",
-    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["en", "de"],
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["en"],
     salaryFrom: 1600, salaryTo: 1900, currency: "EUR",
     title: { uk: "Адміністратор готелю", en: "Hotel receptionist", pl: "Recepcjonista/-ka hotelowy/-a" },
     description: {
-      uk: "Заселення й виселення гостей, обробка бронювань, вирішення питань під час перебування. Робота позмінно, включно з вихідними. Потрібна англійська й німецька на розмовному рівні.",
-      en: "Checking guests in and out, handling bookings, resolving issues during their stay. Shift work, including weekends. Requires conversational English and German.",
-      pl: "Zameldowanie i wymeldowanie gości, obsługa rezerwacji, rozwiązywanie spraw w trakcie pobytu. Praca zmianowa, w tym w weekendy. Wymagany komunikatywny angielski i niemiecki.",
+      uk: "Заселення й виселення гостей, обробка бронювань, вирішення питань під час перебування. Робота позмінно, включно з вихідними. Потрібна англійська на розмовному рівні.",
+      en: "Checking guests in and out, handling bookings, resolving issues during their stay. Shift work, including weekends. Requires conversational English.",
+      pl: "Zameldowanie i wymeldowanie gości, obsługa rezerwacji, rozwiązywanie spraw w trakcie pobytu. Praca zmianowa, w tym w weekendy. Wymagany komunikatywny angielski.",
     },
   },
   {
     partnerSlug: "hotel-alpina", category: "hospitality", locationCode: "munich",
-    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["de"],
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["en"],
     salaryFrom: 1500, salaryTo: 1900, currency: "EUR",
     title: { uk: "Кухар", en: "Cook", pl: "Kucharz/-rka" },
     description: {
@@ -386,18 +386,18 @@ export const jobs = [
   },
   {
     partnerSlug: "hotel-alpina", category: "hospitality", locationCode: "munich",
-    employmentType: "part-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: ["de"],
+    employmentType: "part-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: ["en"],
     salaryFrom: 1100, salaryTo: 1350, currency: "EUR",
     title: { uk: "Офіціант/-ка", en: "Waiter/waitress", pl: "Kelner/-ka" },
     description: {
-      uk: "Обслуговування гостей у ресторані готелю під час сніданків і вечері, сервірування столів. Часткова зайнятість, зручно для студентів. Базова німецька потрібна.",
-      en: "Serving guests at the hotel restaurant during breakfast and dinner, setting tables. Part-time, convenient for students. Basic German required.",
-      pl: "Obsługa gości w restauracji hotelowej podczas śniadań i kolacji, nakrywanie stołów. Praca w niepełnym wymiarze, wygodna dla studentów. Wymagany podstawowy niemiecki.",
+      uk: "Обслуговування гостей у ресторані готелю під час сніданків і вечері, сервірування столів. Часткова зайнятість, зручно для студентів. Базова англійська потрібна.",
+      en: "Serving guests at the hotel restaurant during breakfast and dinner, setting tables. Part-time, convenient for students. Basic English required.",
+      pl: "Obsługa gości w restauracji hotelowej podczas śniadań i kolacji, nakrywanie stołów. Praca w niepełnym wymiarze, wygodna dla studentów. Wymagany podstawowy angielski.",
     },
   },
   {
     partnerSlug: "hotel-alpina", category: "hospitality", locationCode: "munich",
-    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["de"],
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["en"],
     salaryFrom: 1550, salaryTo: 1850, currency: "EUR",
     title: { uk: "Портьє (нічна зміна)", en: "Night porter", pl: "Portier (zmiana nocna)" },
     description: {
@@ -408,18 +408,18 @@ export const jobs = [
   },
   {
     partnerSlug: "hotel-alpina", category: "hospitality", locationCode: "salzburg",
-    employmentType: "full-time", workFormat: "onsite", experienceLevel: "3-5", requiredLanguages: ["de"],
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "3-5", requiredLanguages: ["en"],
     salaryFrom: 2000, salaryTo: 2400, currency: "EUR",
     title: { uk: "Керівник служби покоївок", en: "Head housekeeper", pl: "Kierownik służby pięter" },
     description: {
-      uk: "Організація роботи команди покоївок (8-10 осіб), контроль якості прибирання, розподіл змін. Потрібен досвід керівництва командою від 2 років і німецька на робочому рівні.",
-      en: "Organising the housekeeping team's work (8-10 people), quality control of cleaning, shift scheduling. Requires 2+ years of team leadership and working-level German.",
-      pl: "Organizacja pracy zespołu pokojówek (8-10 osób), kontrola jakości sprzątania, układanie grafiku zmian. Wymagane min. 2 lata doświadczenia w kierowaniu zespołem i niemiecki na poziomie roboczym.",
+      uk: "Організація роботи команди покоївок (8-10 осіб), контроль якості прибирання, розподіл змін. Потрібен досвід керівництва командою від 2 років і англійська на робочому рівні.",
+      en: "Organising the housekeeping team's work (8-10 people), quality control of cleaning, shift scheduling. Requires 2+ years of team leadership and working-level English.",
+      pl: "Organizacja pracy zespołu pokojówek (8-10 osób), kontrola jakości sprzątania, układanie grafiku zmian. Wymagane min. 2 lata doświadczenia w kierowaniu zespołem i angielski na poziomie roboczym.",
     },
   },
   {
     partnerSlug: "hotel-alpina", category: "hospitality", locationCode: "munich",
-    employmentType: "part-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: ["de"],
+    employmentType: "part-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: ["en"],
     salaryFrom: 1150, salaryTo: 1400, currency: "EUR",
     title: { uk: "Бармен/-ка", en: "Bartender", pl: "Barman/-ka" },
     description: {
@@ -430,13 +430,13 @@ export const jobs = [
   },
   {
     partnerSlug: "hotel-alpina", category: "hospitality", locationCode: "munich",
-    employmentType: "full-time", workFormat: "remote", experienceLevel: "1-3", requiredLanguages: ["de", "en"],
+    employmentType: "full-time", workFormat: "remote", experienceLevel: "1-3", requiredLanguages: ["en", "pl"],
     salaryFrom: 1500, salaryTo: 1800, currency: "EUR",
     title: { uk: "Спеціаліст з бронювання (кол-центр)", en: "Reservations specialist (call centre)", pl: "Specjalista ds. rezerwacji (call center)" },
     description: {
-      uk: "Обробка запитів на бронювання номерів телефоном і поштою, консультування щодо тарифів і послуг. Повністю віддалена робота. Потрібні німецька й англійська на розмовному рівні.",
-      en: "Handling room-booking enquiries by phone and email, advising on rates and services. Fully remote. Requires conversational German and English.",
-      pl: "Obsługa zapytań o rezerwacje pokoi telefonicznie i mailowo, doradztwo w zakresie cen i usług. Praca w pełni zdalna. Wymagany komunikatywny niemiecki i angielski.",
+      uk: "Обробка запитів на бронювання номерів телефоном і поштою, консультування щодо тарифів і послуг. Повністю віддалена робота. Потрібні англійська й польська на розмовному рівні.",
+      en: "Handling room-booking enquiries by phone and email, advising on rates and services. Fully remote. Requires conversational English and Polish.",
+      pl: "Obsługa zapytań o rezerwacje pokoi telefonicznie i mailowo, doradztwo w zakresie cen i usług. Praca w pełni zdalna. Wymagany komunikatywny angielski i polski.",
     },
   },
   {
@@ -487,7 +487,7 @@ export const jobs = [
   },
   {
     partnerSlug: "technova-solutions", category: "it", locationCode: "berlin",
-    employmentType: "full-time", workFormat: "hybrid", experienceLevel: "3-5", requiredLanguages: ["en", "de"],
+    employmentType: "full-time", workFormat: "hybrid", experienceLevel: "3-5", requiredLanguages: ["en"],
     salaryFrom: 3200, salaryTo: 4000, currency: "EUR",
     title: { uk: "Product Manager (SaaS-продукт)", en: "Product Manager (SaaS product)", pl: "Product Manager (produkt SaaS)" },
     description: {
@@ -531,13 +531,13 @@ export const jobs = [
   },
   {
     partnerSlug: "technova-solutions", category: "it", locationCode: "berlin",
-    employmentType: "full-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: ["en", "de"],
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: ["en", "pl"],
     salaryFrom: 1900, salaryTo: 2200, currency: "EUR",
     title: { uk: "IT Support Engineer (Level 1)", en: "IT Support Engineer (Level 1)", pl: "IT Support Engineer (Level 1)" },
     description: {
-      uk: "Технічна підтримка співробітників офісу: налаштування робочих станцій, вирішення заявок у service desk, базове адміністрування Windows/macOS. Потрібна англійська й німецька на базовому рівні.",
-      en: "Technical support for office staff: setting up workstations, resolving service desk tickets, basic Windows/macOS administration. Requires basic English and German.",
-      pl: "Wsparcie techniczne pracowników biura: konfiguracja stacji roboczych, obsługa zgłoszeń w service desk, podstawowa administracja Windows/macOS. Wymagany podstawowy angielski i niemiecki.",
+      uk: "Технічна підтримка співробітників офісу: налаштування робочих станцій, вирішення заявок у service desk, базове адміністрування Windows/macOS. Потрібна англійська й польська на базовому рівні.",
+      en: "Technical support for office staff: setting up workstations, resolving service desk tickets, basic Windows/macOS administration. Requires basic English and Polish.",
+      pl: "Wsparcie techniczne pracowników biura: konfiguracja stacji roboczych, obsługa zgłoszeń w service desk, podstawowa administracja Windows/macOS. Wymagany podstawowy angielski i polski.",
     },
   },
   {

@@ -109,11 +109,8 @@
     "languageFilterLabel": "Знання мови",
     "minSalaryLabel": "Зарплата від",
     "minSalaryPlaceholder": "напр. 1500",
-    "allEmploymentTypes": "Усі типи зайнятості",
-    "allWorkFormats": "Усі формати роботи",
-    "allExperienceLevels": "Будь-який досвід",
-    "allLanguages": "Будь-яка мова",
-    "filtersToggle": "Фільтри"
+    "filtersToggle": "Фільтри",
+    "resetFilters": "Скинути все"
   },
   "contact": {
     "title": "Зв'яжіться з нами",

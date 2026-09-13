@@ -109,11 +109,8 @@
     "languageFilterLabel": "Language",
     "minSalaryLabel": "Salary from",
     "minSalaryPlaceholder": "e.g. 1500",
-    "allEmploymentTypes": "All employment types",
-    "allWorkFormats": "All work formats",
-    "allExperienceLevels": "Any experience",
-    "allLanguages": "Any language",
-    "filtersToggle": "Filters"
+    "filtersToggle": "Filters",
+    "resetFilters": "Reset all"
   },
   "contact": {
     "title": "Get in touch",

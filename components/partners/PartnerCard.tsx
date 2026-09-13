@@ -3,6 +3,7 @@
 import { memo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { CATEGORY_COLORS } from "@/data/categoryColors";
 import { pickLocalized } from "@/lib/i18n/pickLocalized";
 import type { AppLocale } from "@/types/i18n";
 import type { Partner } from "@/types/partner";
@@ -32,7 +33,7 @@ function PartnerCardComponent({ partner }: PartnerCardProps) {
         {partner.categories.map((categoryId) => (
           <span
             key={categoryId}
-            className="rounded-full border border-gray-200 px-2 py-0.5 text-xs text-gray-600 dark:border-gray-700 dark:text-gray-300"
+            className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${CATEGORY_COLORS[categoryId]}`}
           >
             {tCategories(categoryId)}
           </span>

@@ -109,11 +109,8 @@
     "languageFilterLabel": "Znajomość języka",
     "minSalaryLabel": "Wynagrodzenie od",
     "minSalaryPlaceholder": "np. 1500",
-    "allEmploymentTypes": "Wszystkie rodzaje zatrudnienia",
-    "allWorkFormats": "Wszystkie formy pracy",
-    "allExperienceLevels": "Dowolne doświadczenie",
-    "allLanguages": "Dowolny język",
-    "filtersToggle": "Filtry"
+    "filtersToggle": "Filtry",
+    "resetFilters": "Wyczyść wszystko"
   },
   "contact": {
     "title": "Skontaktuj się z nami",

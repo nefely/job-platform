@@ -85,8 +85,8 @@ components/
   theme/      ThemeProvider, ThemeToggle
   home/       Hero, CategoryGrid, FeaturedPartnersSection(+Skeleton), EmployerCtaSection
   partners/   PartnerCard, PartnerHeader, PartnersIndexBoard, AllJobsBoard,
-              PartnerJobsBoard, JobSearchInput, JobFiltersPanel, CategoryFilter,
-              JobList, JobCard, JobListSkeleton, JobDetailView
+              PartnerJobsBoard, JobSearchInput, JobFiltersPanel, FilterChipGroup,
+              CategoryFilter, JobList, JobCard, JobListSkeleton, JobDetailView
   contact/    ContactForm
   shared/     Skeleton, RetryBlock
 
@@ -102,7 +102,8 @@ lib/
 
 hooks/       useDebouncedValue.ts, useAsync.ts, useMounted.ts
 data/        categories.ts, locations.ts, employmentTypes.ts, workFormats.ts,
-             experienceLevels.ts, languages.ts (фіксовані таксономії)
+             experienceLevels.ts, languages.ts (фіксовані таксономії),
+             categoryColors.ts (кольори категорій, спільні для бейджів і чіпів)
 types/       category, location, job, partner, contact, i18n, language
 i18n/        routing.ts, navigation.ts, request.ts (next-intl)
 messages/    uk.json, en.json, pl.json
@@ -157,25 +158,28 @@ identity, тож `React.memo(JobCard)`/`React.memo(PartnerCard)` не
 на місці (той самий `ContactForm`, що й на `/contact`) — не треба переходити
 на іншу сторінку, щоб відгукнутися.
 
-**Фільтри вакансій** (`JobFiltersPanel`, використовується і на `/jobs`, і на
-`/partners/[slug]`): пошук за назвою + категорія завжди на видноті; тип
-зайнятості (full-time/part-time/seasonal/**project**), формат роботи
-(на місці/віддалено/гібридно), досвід (0-1/1-3/3-5/5+ років), знання мови
-(uk/en/de/pl) і мінімальна зарплата — під кнопкою «Фільтри», щоб не
-перевантажувати основний рядок. Усі виміри комбінуються (`filterJobs`,
-5-й опційний аргумент `JobAdvancedFilters` — зворотньосумісно з попередньою
-4-аргументною сигнатурою).
+**Фільтри вакансій** (`JobFiltersPanel` + `FilterChipGroup`, використовується
+і на `/jobs`, і на `/partners/[slug]`): пошук за назвою завжди на видноті;
+іконка-кнопка «Фільтри» (з бейджем кількості активних фільтрів) розкриває
+панель, де **категорія, тип зайнятості, формат роботи, досвід і знання
+мови — усі мультиселект-чіпи** (можна обрати кілька значень одночасно, напр.
+"англійська АБО німецька"), плюс поле мінімальної зарплати. Кнопка «Скинути
+все» зникає, якщо жодного фільтра не активовано. `filterJobs(jobs, query,
+locale, filters: JobFilters)` — один об'єкт фільтрів із масивами замість
+розкиданих параметрів; порожній масив/undefined на вимір = без обмежень.
+Категорійні бейджі (на картках вакансій і партнерів) і чіпи категорій у
+фільтрі використовують одну спільну кольорову мапу (`data/categoryColors.ts`)
+— один колір скрізь означає одну категорію.
 
 ## Unit-тести
 
-`npm run test:coverage` — 49 тестів, **~96% покриття** логіки, яку оцінює
+`npm run test:coverage` — 54 тести, **~96% покриття** логіки, яку оцінює
 бриф (debounce, комбінація фільтрів, валідація форми, retry/abort-guard):
 
 - `lib/mockApi/simulateRequest.test.ts` — затримка 300–800мс, ~20% помилка, `ApiError`
-- `lib/filterJobs.test.ts` — пошук за локалізованою назвою + категорія + кожен
-  новий вимір фільтра (тип зайнятості/формат/досвід/мова/мінімальна
-  зарплата) окремо й у комбінації; 4-аргументні виклики (без нових фільтрів)
-  лишаються без змін
+- `lib/filterJobs.test.ts` — пошук за локалізованою назвою + кожен мультиселект-
+  вимір (категорія/тип зайнятості/формат/досвід/мова/мінімальна зарплата)
+  окремо, з кількома значеннями одночасно, і в комбінації; `countActiveJobFilters`
 - `lib/filterPartners.test.ts` — фільтр партнерів за категорією
 - `hooks/useDebouncedValue.test.ts` — не оновлюється до завершення delay, проміжні значення не просочуються
 - `hooks/useAsync.test.ts` — loading→success/error, `retry()`, застарілий (aborted) виклик не перезаписує новіший стан

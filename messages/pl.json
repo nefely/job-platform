@@ -1,0 +1,114 @@
+{
+  "nav": {
+    "logo": "VV Work",
+    "findJob": "Znajdź pracę",
+    "findEmployee": "Znajdź pracownika",
+    "about": "O nas",
+    "partners": "Partnerzy",
+    "contact": "Kontakt",
+    "languageLabel": "Język"
+  },
+  "hero": {
+    "title": "Znajdź pracę. Znajdź pracownika. Pracuj w Europie.",
+    "subtitle": "VV Work łączy kandydatów i pracodawców w całej Europie — szybko, przejrzyście, bez pośredników.",
+    "ctaFindJob": "Znajdź pracę",
+    "ctaFindEmployee": "Znajdź pracownika"
+  },
+  "categories": {
+    "construction": "Budownictwo",
+    "manufacturing": "Produkcja",
+    "logistics": "Logistyka",
+    "hospitality": "Hotelarstwo i gastronomia",
+    "it": "IT",
+    "drivers": "Kierowcy",
+    "other": "Inne"
+  },
+  "locations": {
+    "warsaw": "Warszawa, Polska",
+    "poznan": "Poznań, Polska",
+    "gdansk": "Gdańsk, Polska",
+    "wroclaw": "Wrocław, Polska",
+    "krakow": "Kraków, Polska",
+    "munich": "Monachium, Niemcy",
+    "berlin": "Berlin, Niemcy",
+    "salzburg": "Salzburg, Austria",
+    "prague": "Praga, Czechy"
+  },
+  "employmentType": {
+    "full-time": "Pełny etat",
+    "part-time": "Niepełny etat",
+    "seasonal": "Praca sezonowa"
+  },
+  "home": {
+    "categoriesTitle": "Popularne kategorie",
+    "categoriesSubtitle": "Wybierz branżę, aby zobaczyć odpowiednie oferty",
+    "partnersTitle": "Nasi partnerzy",
+    "partnersSubtitle": "Firmy, które już szukają pracowników przez VV Work",
+    "employerTitle": "Potrzebujesz pracowników?",
+    "employerText": "Dodaj ofertę pracy w VV Work i dotrzyj do zweryfikowanych kandydatów z całej Europy — bez prowizji agencyjnych i zbędnej biurokracji.",
+    "employerCta": "Znajdź pracownika",
+    "aboutTitle": "O nas",
+    "aboutText": "VV Work to platforma łącząca kandydatów i pracodawców w Europie. Upraszczamy poszukiwanie pracy i rekrutację dla setek firm."
+  },
+  "partner": {
+    "jobsTitle": "Oferty pracy",
+    "resultsCount": "Znaleziono ofert: {count}",
+    "backLink": "← Strona główna"
+  },
+  "jobs": {
+    "searchLabel": "Szukaj ofert",
+    "searchPlaceholder": "Szukaj po nazwie oferty…",
+    "categoryFilterLabel": "Kategoria",
+    "allCategories": "Wszystkie kategorie",
+    "emptyState": "Nic nie znaleziono. Spróbuj zmienić wyszukiwanie lub kategorię.",
+    "loading": "Ładowanie ofert…",
+    "errorTitle": "Nie udało się załadować ofert",
+    "salaryLabel": "Wynagrodzenie",
+    "salaryNotSpecified": "Do uzgodnienia",
+    "locationLabel": "Lokalizacja",
+    "postedLabel": "Opublikowano"
+  },
+  "contact": {
+    "title": "Skontaktuj się z nami",
+    "subtitle": "Zostaw zgłoszenie — odezwiemy się w ciągu dnia.",
+    "nameLabel": "Imię",
+    "namePlaceholder": "Jak się do Ciebie zwracać?",
+    "contactLabel": "Telefon lub Telegram",
+    "contactPlaceholder": "+380991234567 lub @username",
+    "messageLabel": "Wiadomość",
+    "messageOptionalHint": "Opcjonalnie, do 500 znaków",
+    "submit": "Wyślij zgłoszenie",
+    "submitting": "Wysyłanie…",
+    "successTitle": "Dziękujemy!",
+    "successText": "Zgłoszenie zostało wysłane. Skontaktujemy się wkrótce.",
+    "errorBanner": "Nie udało się wysłać zgłoszenia. Sprawdź dane i spróbuj ponownie.",
+    "errors": {
+      "nameTooShort": "Imię musi mieć co najmniej 2 znaki",
+      "contactInvalid": "Podaj numer telefonu (+380991234567) lub Telegram (@username)",
+      "messageTooLong": "Wiadomość jest zbyt długa (maks. 500 znaków)"
+    }
+  },
+  "footer": {
+    "tagline": "Platforma do szukania pracy i pracowników w Europie.",
+    "aboutTitle": "O firmie",
+    "aboutLink": "O nas",
+    "candidatesTitle": "Dla kandydatów",
+    "findJobLink": "Znajdź pracę",
+    "employersTitle": "Dla pracodawców",
+    "findEmployeeLink": "Znajdź pracownika",
+    "contactsTitle": "Kontakt",
+    "socialsTitle": "Media społecznościowe",
+    "privacy": "Polityka prywatności",
+    "terms": "Warunki korzystania",
+    "rights": "© {year} VV Work. Wszelkie prawa zastrzeżone."
+  },
+  "notFound": {
+    "title": "Nie znaleziono partnera",
+    "text": "Taki partner nie istnieje lub link jest nieaktualny.",
+    "backHome": "Strona główna"
+  },
+  "common": {
+    "retry": "Spróbuj ponownie",
+    "loading": "Ładowanie…"
+  }
+}

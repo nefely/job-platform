@@ -1,0 +1,114 @@
+{
+  "nav": {
+    "logo": "VV Work",
+    "findJob": "Find a job",
+    "findEmployee": "Find an employee",
+    "about": "About us",
+    "partners": "Partners",
+    "contact": "Contact",
+    "languageLabel": "Language"
+  },
+  "hero": {
+    "title": "Find a job. Find an employee. Work in Europe.",
+    "subtitle": "VV Work connects candidates and employers across Europe — fast, transparent, with no middlemen.",
+    "ctaFindJob": "Find a job",
+    "ctaFindEmployee": "Find an employee"
+  },
+  "categories": {
+    "construction": "Construction",
+    "manufacturing": "Manufacturing",
+    "logistics": "Logistics",
+    "hospitality": "Hospitality",
+    "it": "IT",
+    "drivers": "Drivers",
+    "other": "Other"
+  },
+  "locations": {
+    "warsaw": "Warsaw, Poland",
+    "poznan": "Poznań, Poland",
+    "gdansk": "Gdańsk, Poland",
+    "wroclaw": "Wrocław, Poland",
+    "krakow": "Kraków, Poland",
+    "munich": "Munich, Germany",
+    "berlin": "Berlin, Germany",
+    "salzburg": "Salzburg, Austria",
+    "prague": "Prague, Czechia"
+  },
+  "employmentType": {
+    "full-time": "Full-time",
+    "part-time": "Part-time",
+    "seasonal": "Seasonal"
+  },
+  "home": {
+    "categoriesTitle": "Popular categories",
+    "categoriesSubtitle": "Pick a field to see matching vacancies",
+    "partnersTitle": "Our partners",
+    "partnersSubtitle": "Companies already hiring through VV Work",
+    "employerTitle": "Need employees?",
+    "employerText": "List your vacancy on VV Work and reach vetted candidates across Europe — no agency fees, no red tape.",
+    "employerCta": "Find an employee",
+    "aboutTitle": "About us",
+    "aboutText": "VV Work is a platform connecting candidates and employers across Europe. We simplify job search and hiring for hundreds of companies."
+  },
+  "partner": {
+    "jobsTitle": "Vacancies",
+    "resultsCount": "Vacancies found: {count}",
+    "backLink": "← Back to home"
+  },
+  "jobs": {
+    "searchLabel": "Search vacancies",
+    "searchPlaceholder": "Search by job title…",
+    "categoryFilterLabel": "Category",
+    "allCategories": "All categories",
+    "emptyState": "Nothing matches your search. Try a different query or category.",
+    "loading": "Loading vacancies…",
+    "errorTitle": "Couldn't load vacancies",
+    "salaryLabel": "Salary",
+    "salaryNotSpecified": "Negotiable",
+    "locationLabel": "Location",
+    "postedLabel": "Posted"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subtitle": "Leave a request — we'll get back to you within a day.",
+    "nameLabel": "Name",
+    "namePlaceholder": "What should we call you?",
+    "contactLabel": "Phone or Telegram",
+    "contactPlaceholder": "+380991234567 or @username",
+    "messageLabel": "Message",
+    "messageOptionalHint": "Optional, up to 500 characters",
+    "submit": "Send request",
+    "submitting": "Sending…",
+    "successTitle": "Thank you!",
+    "successText": "Your request has been sent. We'll contact you soon.",
+    "errorBanner": "Couldn't send your request. Check the details and try again.",
+    "errors": {
+      "nameTooShort": "Name must be at least 2 characters",
+      "contactInvalid": "Enter a phone number (+380991234567) or Telegram (@username)",
+      "messageTooLong": "Message is too long (max 500 characters)"
+    }
+  },
+  "footer": {
+    "tagline": "A platform to find jobs and employees across Europe.",
+    "aboutTitle": "About",
+    "aboutLink": "About us",
+    "candidatesTitle": "For candidates",
+    "findJobLink": "Find a job",
+    "employersTitle": "For employers",
+    "findEmployeeLink": "Find an employee",
+    "contactsTitle": "Contacts",
+    "socialsTitle": "Social media",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "rights": "© {year} VV Work. All rights reserved."
+  },
+  "notFound": {
+    "title": "Partner not found",
+    "text": "This partner doesn't exist or the link is outdated.",
+    "backHome": "Back to home"
+  },
+  "common": {
+    "retry": "Try again",
+    "loading": "Loading…"
+  }
+}

@@ -11,9 +11,13 @@
 - **Tailwind CSS v4**
 - **Supabase** (Postgres + PostgREST) як бекенд даних
 - **next-intl** — локалізація (uk / en / pl)
+- **framer-motion** — виключно анімації (fade/stagger при появі, плавне
+  відкриття/закриття панелей); це не UI-кіт — жодного готового компонента
+  (інпута, селекта, чіпа, картки) звідти не використано, усі вони
+  hand-rolled
 - **Vitest + React Testing Library** — unit-тести
-- Без Redux/Zustand, без UI-кітів, без React Query/SWR — увесь стан і
-  асинхронність написані вручну
+- Без Redux/Zustand, без UI-кітів, без React Query/SWR — увесь стан,
+  асинхронність і UI-примітиви (селект, чіпи, фільтри) написані вручну
 
 > ⚠️ Це свідоме відхилення від брифу — детально пояснено в розділі
 > [«Відхилення від брифу»](#відхилення-від-брифу).
@@ -73,26 +77,33 @@ npm run build && npm run start   # прод-білд
 ```
 app/[locale]/                 # усі сторінки під локаллю (uk за замовч., en, pl)
   layout.tsx                   # <html lang>, NextIntlClientProvider, Header/Footer
+  error.tsx                    # error boundary для всього дерева [locale] (RetryBlock + "На головну")
+  not-found.tsx                # generic 404
   page.tsx                     # Home
   jobs/page.tsx                 # /jobs — усі вакансії всіх партнерів (той самий шлях у всіх локалях)
   jobs/[id]/page.tsx             # сторінка однієї вакансії (деталі + форма заявки)
   partners/page.tsx             # /partners — індекс партнерів (+ фільтр за категорією)
   partners/[slug]/page.tsx     # сторінка одного партнера (динамічна)
   contact/page.tsx             # /contact (той самий шлях у всіх локалях)
+app/global-error.tsx          # крайній фолбек (падіння самого layout.tsx) — без next-intl/Tailwind
 
 components/
   layout/     Header, Footer, LocaleSwitcher, MobileNav
   theme/      ThemeProvider, ThemeToggle
-  home/       Hero, CategoryGrid, FeaturedPartnersSection(+Skeleton), EmployerCtaSection
+  home/       Hero, DotBackground, GlowDots, CategoryGrid, FeaturedPartnersSection(+Skeleton),
+              EmployerCtaSection
+  motion/     FadeIn, Stagger (StaggerContainer/StaggerItem) — hand-rolled framer-motion обгортки
   partners/   PartnerCard, PartnerHeader, PartnersIndexBoard, AllJobsBoard,
               PartnerJobsBoard, JobSearchInput, JobFiltersPanel, FilterChipGroup,
               CategoryFilter, JobList, JobCard, JobListSkeleton, JobDetailView
   contact/    ContactForm
-  shared/     Skeleton, RetryBlock
+  shared/     Skeleton, RetryBlock, Select (generic стилізований <select>)
 
 lib/
   supabase/       client.ts (браузер) / server.ts (Server Components)
   mockApi/        simulateRequest.ts + partners.ts / jobs.ts / contact.ts
+  resolveErrorMessage.ts — мапить стабільні (не локалізовані) маркери
+                   помилок simulateRequest/useAsync у переклад під поточну локаль
   filterJobs.ts    чиста функція пошук+категорія+додаткові фільтри (для вакансій)
   filterPartners.ts чиста функція фільтр партнерів за категорією
   validation/      contactForm.ts — чисті валідатори
@@ -103,7 +114,8 @@ lib/
 hooks/       useDebouncedValue.ts, useAsync.ts, useMounted.ts
 data/        categories.ts, locations.ts, employmentTypes.ts, workFormats.ts,
              experienceLevels.ts, languages.ts (фіксовані таксономії),
-             categoryColors.ts (кольори категорій, спільні для бейджів і чіпів)
+             categoryColors.ts (кольори категорій, спільні для бейджів і чіпів),
+             categoryIcons.tsx (inline SVG-іконки категорій, без бібліотеки іконок)
 types/       category, location, job, partner, contact, i18n, language
 i18n/        routing.ts, navigation.ts, request.ts (next-intl)
 messages/    uk.json, en.json, pl.json
@@ -171,12 +183,55 @@ locale, filters: JobFilters)` — один об'єкт фільтрів із м�
 фільтрі використовують одну спільну кольорову мапу (`data/categoryColors.ts`)
 — один колір скрізь означає одну категорію.
 
+**Категорії на Головній** (`CategoryGrid`) — картка з іконкою (inline SVG,
+`data/categoryIcons.tsx`, без бібліотеки іконок) у кольоровому бейджі,
+заголовком і коротким описом напрямку (`categoryDescriptions` у
+`messages/*.json`), а не просто кольоровий прямокутник із текстом.
+
+**Анімації** (`components/motion/`, framer-motion) — `FadeIn` (поява
+знизу-вгору при скролі у в'юпорт, один раз) на Hero; `StaggerContainer`/
+`StaggerItem` (діти з'являються по черзі) на сітках категорій/партнерів.
+Важливий нюанс: `StaggerContainer` за замовчуванням прив'язаний до скролу
+(`whileInView` + `once: true`) — це підходить лише для статичних секцій,
+що не змінюють вміст. Для списку партнерів (`PartnersIndexBoard`), який
+фільтрується інтерактивно, це були б завжди-невидимі картки, що
+з'являються в DOM після першого спрацювання анімації (`once`) — тому там
+явно передається `viewportTriggered={false}` (анімація завжди програється
+наново). Список вакансій (`JobList`) анімується інакше:
+`AnimatePresence` + `motion.div` на кожній картці — реагує на кожну зміну
+пошуку/фільтрів, а не лише на перший рендер, тож картки плавно
+з'являються/зникають під час фільтрації. Мобільне меню й панель фільтрів
+вакансій розкриваються через `AnimatePresence` (фейд+зсув) замість
+миттєвого показу/приховання.
+
+**Фон Hero** (`DotBackground` + `GlowDots`) — статична сітка крапок
+(CSS `radial-gradient`) плюс друга, яскравіша копія того самого патерну,
+яка проявляється лише в колі, що само повільно "гуляє" випадковими
+точками (CSS `mask-image`, координати оновлює легкий `requestAnimationFrame`-
+цикл, без відстеження миші — попередня версія з canvas+pointermove
+ламала висоту/клікабельність секції, тому свідомо спрощено). Той самий
+фон перевикористаний і в блоці "Потрібні співробітники?"
+(`EmployerCtaSection`) — картка тепер у звичайних кольорах теми замість
+інвертованих (був чорний блок на світлій темі й навпаки).
+
+**Помилки поза async-шаром** (`app/[locale]/error.tsx`,
+`app/global-error.tsx`) — стандартний Next.js error boundary: ловить
+будь-яку необроблену помилку в дереві сторінок (напр. якби
+`resolveJobById`/`resolvePartnerBySlug` реально впали, а не повернули
+`null`), показує той самий `RetryBlock`, що й на списках. `global-error.tsx`
+— крайній фолбек на випадок падіння самого `layout.tsx` (немає окремого
+кореневого layout — `[locale]/layout.tsx` сам визначає `<html>`), тому
+навмисно без next-intl/Tailwind.
+
 ## Unit-тести
 
-`npm run test:coverage` — 54 тести, **~96% покриття** логіки, яку оцінює
+`npm run test:coverage` — 57 тестів, **~96% покриття** логіки, яку оцінює
 бриф (debounce, комбінація фільтрів, валідація форми, retry/abort-guard):
 
 - `lib/mockApi/simulateRequest.test.ts` — затримка 300–800мс, ~20% помилка, `ApiError`
+- `lib/mockApi/resolveErrorMessage.test.ts` — маркери simulateRequest/useAsync
+  перекладаються під поточну локаль, сира помилка (напр. від Supabase)
+  проходить без змін
 - `lib/filterJobs.test.ts` — пошук за локалізованою назвою + кожен мультиселект-
   вимір (категорія/тип зайнятості/формат/досвід/мова/мінімальна зарплата)
   окремо, з кількома значеннями одночасно, і в комбінації; `countActiveJobFilters`

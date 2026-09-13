@@ -48,14 +48,23 @@
     "employerText": "List your vacancy on VV Work and reach vetted candidates across Europe — no agency fees, no red tape.",
     "employerCta": "Find an employee",
     "aboutTitle": "About us",
-    "aboutText": "VV Work is a platform connecting candidates and employers across Europe. We simplify job search and hiring for hundreds of companies."
+    "aboutText": "VV Work is a platform connecting candidates and employers across Europe. We simplify job search and hiring for hundreds of companies.",
+    "viewAllPartners": "All partners →"
+  },
+  "partnersIndex": {
+    "title": "Partners",
+    "subtitle": "Companies hiring through VV Work.",
+    "emptyState": "No partners in this category yet.",
+    "errorTitle": "Couldn't load partners"
   },
   "partner": {
-    "jobsTitle": "Vacancies",
-    "resultsCount": "Vacancies found: {count}",
+    "jobsTitle": "Partner's vacancies",
     "backLink": "← Back to home"
   },
   "jobs": {
+    "pageTitle": "Find a job",
+    "pageSubtitle": "Every vacancy from our partners across Europe, in one place.",
+    "resultsCount": "Vacancies found: {count}",
     "searchLabel": "Search vacancies",
     "searchPlaceholder": "Search by job title…",
     "categoryFilterLabel": "Category",

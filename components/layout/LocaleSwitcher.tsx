@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -13,18 +12,11 @@ const LOCALE_LABELS: Record<(typeof routing.locales)[number], string> = {
 
 export function LocaleSwitcher() {
   const activeLocale = useLocale();
-  // usePathname() returns the internal (unlocalized) pathname template, e.g.
-  // "/partners/[slug]" rather than "/partners/euro-logistics" — the real
-  // params come from next/navigation's useParams() so the switcher can
-  // rebuild a valid href for dynamic routes too.
+  // Без localized pathnames usePathname() повертає вже реальний шлях
+  // (напр. "/partners/euro-logistics"), тож достатньо передати його як є —
+  // жодної спецобробки динамічних сегментів не потрібно.
   const pathname = usePathname();
-  const routeParams = useParams<{ slug?: string }>();
   const t = useTranslations("nav");
-
-  const href =
-    pathname === "/partners/[slug]"
-      ? ({ pathname, params: { slug: routeParams.slug ?? "" } } as const)
-      : pathname;
 
   return (
     <div
@@ -38,7 +30,7 @@ export function LocaleSwitcher() {
         return (
           <Link
             key={locale}
-            href={href}
+            href={pathname}
             locale={locale}
             aria-current={isActive ? "true" : undefined}
             className={`rounded-full px-2 py-1 transition-colors ${

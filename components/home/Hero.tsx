@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { DEFAULT_PARTNER_SLUG } from "@/data/constants";
 import { Link } from "@/i18n/navigation";
 
 export async function Hero() {
@@ -15,13 +14,13 @@ export async function Hero() {
       </p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <Link
-          href={{ pathname: "/partners/[slug]", params: { slug: DEFAULT_PARTNER_SLUG } }}
+          href="/jobs"
           className="rounded-full bg-gray-900 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
         >
           {t("ctaFindJob")}
         </Link>
         <Link
-          href={{ pathname: "/", hash: "for-employers" }}
+          href="/#for-employers"
           className="rounded-full border border-gray-300 px-6 py-3 text-center text-sm font-semibold transition-colors hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-900"
         >
           {t("ctaFindEmployee")}

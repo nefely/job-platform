@@ -48,14 +48,23 @@
     "employerText": "Dodaj ofertę pracy w VV Work i dotrzyj do zweryfikowanych kandydatów z całej Europy — bez prowizji agencyjnych i zbędnej biurokracji.",
     "employerCta": "Znajdź pracownika",
     "aboutTitle": "O nas",
-    "aboutText": "VV Work to platforma łącząca kandydatów i pracodawców w Europie. Upraszczamy poszukiwanie pracy i rekrutację dla setek firm."
+    "aboutText": "VV Work to platforma łącząca kandydatów i pracodawców w Europie. Upraszczamy poszukiwanie pracy i rekrutację dla setek firm.",
+    "viewAllPartners": "Wszyscy partnerzy →"
+  },
+  "partnersIndex": {
+    "title": "Partnerzy",
+    "subtitle": "Firmy, które szukają pracowników przez VV Work.",
+    "emptyState": "Na razie brak partnerów w tej kategorii.",
+    "errorTitle": "Nie udało się załadować partnerów"
   },
   "partner": {
-    "jobsTitle": "Oferty pracy",
-    "resultsCount": "Znaleziono ofert: {count}",
+    "jobsTitle": "Oferty partnera",
     "backLink": "← Strona główna"
   },
   "jobs": {
+    "pageTitle": "Znajdź pracę",
+    "pageSubtitle": "Wszystkie oferty naszych partnerów w całej Europie, w jednym miejscu.",
+    "resultsCount": "Znaleziono ofert: {count}",
     "searchLabel": "Szukaj ofert",
     "searchPlaceholder": "Szukaj po nazwie oferty…",
     "categoryFilterLabel": "Kategoria",

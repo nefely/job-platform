@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { DEFAULT_PARTNER_SLUG } from "@/data/constants";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileNav } from "./MobileNav";
@@ -12,19 +11,16 @@ export async function Header() {
 
   const navLinks = (
     <>
-      <Link href={{ pathname: "/", hash: "partners" }} className={linkClassName}>
-        {t("partners")}
-      </Link>
-      <Link
-        href={{ pathname: "/partners/[slug]", params: { slug: DEFAULT_PARTNER_SLUG } }}
-        className={linkClassName}
-      >
+      <Link href="/jobs" className={linkClassName}>
         {t("findJob")}
       </Link>
-      <Link href={{ pathname: "/", hash: "for-employers" }} className={linkClassName}>
+      <Link href="/partners" className={linkClassName}>
+        {t("partners")}
+      </Link>
+      <Link href="/#for-employers" className={linkClassName}>
         {t("findEmployee")}
       </Link>
-      <Link href={{ pathname: "/", hash: "about" }} className={linkClassName}>
+      <Link href="/#about" className={linkClassName}>
         {t("about")}
       </Link>
       <Link href="/contact" className={linkClassName}>

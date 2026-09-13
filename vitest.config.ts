@@ -15,6 +15,7 @@ export default defineConfig({
       // server-компонентів чи тонких Supabase-обгорток без розгалужень.
       include: [
         "lib/filterJobs.ts",
+        "lib/filterPartners.ts",
         "lib/validation/**/*.ts",
         "lib/mockApi/simulateRequest.ts",
         "hooks/**/*.ts",

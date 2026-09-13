@@ -18,4 +18,10 @@ export interface Job {
   title: LocalizedText;
   description: LocalizedText;
   postedAt: string;
+  // Заповнюються лише для агрегованого списку вакансій ("Знайти роботу" —
+  // fetchAllJobs), де потрібно показати, від якого партнера вакансія. На
+  // сторінці одного партнера (fetchJobsByPartnerId) лишаються undefined —
+  // партнер там і так один, показувати нема сенсу.
+  partnerSlug?: string;
+  partnerName?: LocalizedText;
 }

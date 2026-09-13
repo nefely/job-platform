@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { DEFAULT_PARTNER_SLUG } from "@/data/constants";
 import { Link } from "@/i18n/navigation";
 
 const columnLinkClassName =
@@ -21,7 +20,7 @@ export async function Footer() {
 
           <div className="flex flex-col gap-2">
             <p className="text-sm font-semibold">{t("aboutTitle")}</p>
-            <Link href={{ pathname: "/", hash: "about" }} className={columnLinkClassName}>
+            <Link href="/#about" className={columnLinkClassName}>
               {t("aboutLink")}
             </Link>
             <Link href="/contact" className={columnLinkClassName}>
@@ -31,17 +30,14 @@ export async function Footer() {
 
           <div className="flex flex-col gap-2">
             <p className="text-sm font-semibold">{t("candidatesTitle")}</p>
-            <Link
-              href={{ pathname: "/partners/[slug]", params: { slug: DEFAULT_PARTNER_SLUG } }}
-              className={columnLinkClassName}
-            >
+            <Link href="/jobs" className={columnLinkClassName}>
               {t("findJobLink")}
             </Link>
           </div>
 
           <div className="flex flex-col gap-2">
             <p className="text-sm font-semibold">{t("employersTitle")}</p>
-            <Link href={{ pathname: "/", hash: "for-employers" }} className={columnLinkClassName}>
+            <Link href="/#for-employers" className={columnLinkClassName}>
               {t("findEmployeeLink")}
             </Link>
           </div>

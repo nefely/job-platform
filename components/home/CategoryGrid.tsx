@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server";
 import { CATEGORY_IDS } from "@/data/categories";
-import { DEFAULT_PARTNER_SLUG } from "@/data/constants";
 import { Link } from "@/i18n/navigation";
 
 export async function CategoryGrid() {
@@ -16,11 +15,7 @@ export async function CategoryGrid() {
         {CATEGORY_IDS.map((categoryId) => (
           <Link
             key={categoryId}
-            href={{
-              pathname: "/partners/[slug]",
-              params: { slug: DEFAULT_PARTNER_SLUG },
-              query: { category: categoryId },
-            }}
+            href={`/jobs?category=${categoryId}`}
             className="rounded-xl border border-gray-200 px-4 py-4 text-sm font-medium transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-900"
           >
             {tCategories(categoryId)}

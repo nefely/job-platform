@@ -66,6 +66,7 @@
     "salaryLabel": "Зарплата",
     "salaryNotSpecified": "За домовленістю",
     "locationLabel": "Локація",
+    "employmentTypeLabel": "Тип зайнятості",
     "postedLabel": "Опубліковано"
   },
   "contact": {

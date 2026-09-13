@@ -118,7 +118,11 @@
     "minSalaryLabel": "Wynagrodzenie od",
     "minSalaryPlaceholder": "np. 1500",
     "filtersToggle": "Filtry",
-    "resetFilters": "Wyczyść wszystko"
+    "resetFilters": "Wyczyść wszystko",
+    "paginationLabel": "Strony listy ofert",
+    "paginationPrev": "Wstecz",
+    "paginationNext": "Dalej",
+    "paginationStatus": "Strona {page} z {total}"
   },
   "contact": {
     "title": "Skontaktuj się z nami",

@@ -11,6 +11,7 @@ import {
 import { fetchAllJobs } from "@/lib/mockApi/jobs";
 import { resolveErrorMessage } from "@/lib/mockApi/resolveErrorMessage";
 import type { AppLocale } from "@/types/i18n";
+import { Pagination } from "@/components/shared/Pagination";
 import { RetryBlock } from "@/components/shared/RetryBlock";
 import { JobFiltersPanel } from "./JobFiltersPanel";
 import { JobList } from "./JobList";
@@ -20,6 +21,8 @@ import { JobSearchInput } from "./JobSearchInput";
 interface AllJobsBoardProps {
   initialCategory: CategoryFilterValue;
 }
+
+const PAGE_SIZE = 12;
 
 // "Знайти роботу" — той самий пошук+фільтр+skeleton/retry, що й
 // PartnerJobsBoard, але над агрегованим списком вакансій усіх партнерів
@@ -37,6 +40,7 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
     initialCategory === "all" ? {} : { categories: [initialCategory] },
   );
   const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [page, setPage] = useState(1);
 
   const handleDebouncedQueryChange = useCallback((value: string) => {
     setDebouncedQuery(value);
@@ -49,6 +53,28 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
     const jobs = state.status === "success" ? state.data : [];
     return filterJobs(jobs, debouncedQuery, locale, filters);
   }, [state, debouncedQuery, locale, filters]);
+
+  // Нові пошук/фільтри завжди повертають на 1-шу сторінку — інакше можна
+  // лишитись на сторінці, якої після звуження результатів уже нема.
+  // "Коригування стану під час рендеру" (react.dev) замість setState в
+  // ефекті (react-hooks/set-state-in-effect) — той самий підхід, що й
+  // requestKey у useAsync.ts.
+  const resetKey = `${debouncedQuery}|${JSON.stringify(filters)}`;
+  const [lastResetKey, setLastResetKey] = useState(resetKey);
+  if (resetKey !== lastResetKey) {
+    setLastResetKey(resetKey);
+    setPage(1);
+  }
+
+  const totalPages = Math.max(1, Math.ceil(filteredJobs.length / PAGE_SIZE));
+  // Захист від застарілої сторінки (напр. якщо filteredJobs зменшився між
+  // рендерами до того, як спрацював ефект вище) — ніколи не сплайсимо поза
+  // межами масиву.
+  const safePage = Math.min(page, totalPages);
+  const pagedJobs = useMemo(
+    () => filteredJobs.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE),
+    [filteredJobs, safePage],
+  );
 
   return (
     <div className="py-8">
@@ -74,7 +100,12 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
             onRetry={retry}
           />
         )}
-        {state.status === "success" && <JobList jobs={filteredJobs} />}
+        {state.status === "success" && (
+          <>
+            <JobList jobs={pagedJobs} />
+            <Pagination page={safePage} totalPages={totalPages} onPageChange={setPage} />
+          </>
+        )}
       </div>
     </div>
   );

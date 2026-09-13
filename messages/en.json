@@ -118,7 +118,11 @@
     "minSalaryLabel": "Salary from",
     "minSalaryPlaceholder": "e.g. 1500",
     "filtersToggle": "Filters",
-    "resetFilters": "Reset all"
+    "resetFilters": "Reset all",
+    "paginationLabel": "Job list pages",
+    "paginationPrev": "Previous",
+    "paginationNext": "Next",
+    "paginationStatus": "Page {page} of {total}"
   },
   "contact": {
     "title": "Get in touch",

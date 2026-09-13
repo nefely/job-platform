@@ -118,7 +118,11 @@
     "minSalaryLabel": "Зарплата від",
     "minSalaryPlaceholder": "напр. 1500",
     "filtersToggle": "Фільтри",
-    "resetFilters": "Скинути все"
+    "resetFilters": "Скинути все",
+    "paginationLabel": "Сторінки списку вакансій",
+    "paginationPrev": "Назад",
+    "paginationNext": "Далі",
+    "paginationStatus": "Сторінка {page} з {total}"
   },
   "contact": {
     "title": "Зв'яжіться з нами",

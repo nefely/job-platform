@@ -11,6 +11,7 @@ import {
 import { fetchJobsByPartnerId } from "@/lib/mockApi/jobs";
 import { resolveErrorMessage } from "@/lib/mockApi/resolveErrorMessage";
 import type { AppLocale } from "@/types/i18n";
+import { Pagination } from "@/components/shared/Pagination";
 import { RetryBlock } from "@/components/shared/RetryBlock";
 import { JobFiltersPanel } from "./JobFiltersPanel";
 import { JobList } from "./JobList";
@@ -21,6 +22,8 @@ interface PartnerJobsBoardProps {
   partnerId: string;
   initialCategory: CategoryFilterValue;
 }
+
+const PAGE_SIZE = 12;
 
 export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoardProps) {
   const locale = useLocale() as AppLocale;
@@ -38,6 +41,7 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
     initialCategory === "all" ? {} : { categories: [initialCategory] },
   );
   const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [page, setPage] = useState(1);
 
   // Стабільні callback-и: JobSearchInput/JobFiltersPanel не ре-рендеряться
   // через активність цього компонента.
@@ -52,6 +56,25 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
     const jobs = state.status === "success" ? state.data : [];
     return filterJobs(jobs, debouncedQuery, locale, filters);
   }, [state, debouncedQuery, locale, filters]);
+
+  // Нові пошук/фільтри завжди повертають на 1-шу сторінку — інакше можна
+  // лишитись на сторінці, якої після звуження результатів уже нема.
+  // "Коригування стану під час рендеру" (react.dev) замість setState в
+  // ефекті (react-hooks/set-state-in-effect) — той самий підхід, що й
+  // requestKey у useAsync.ts.
+  const resetKey = `${debouncedQuery}|${JSON.stringify(filters)}`;
+  const [lastResetKey, setLastResetKey] = useState(resetKey);
+  if (resetKey !== lastResetKey) {
+    setLastResetKey(resetKey);
+    setPage(1);
+  }
+
+  const totalPages = Math.max(1, Math.ceil(filteredJobs.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const pagedJobs = useMemo(
+    () => filteredJobs.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE),
+    [filteredJobs, safePage],
+  );
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
@@ -79,7 +102,12 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
             onRetry={retry}
           />
         )}
-        {state.status === "success" && <JobList jobs={filteredJobs} />}
+        {state.status === "success" && (
+          <>
+            <JobList jobs={pagedJobs} />
+            <Pagination page={safePage} totalPages={totalPages} onPageChange={setPage} />
+          </>
+        )}
       </div>
     </div>
   );

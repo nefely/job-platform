@@ -20,7 +20,7 @@ function PartnerCardComponent({ partner }: PartnerCardProps) {
   return (
     <Link
       href={`/partners/${partner.slug}`}
-      className="block rounded-xl border border-gray-200 p-4 transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-900"
+      className="block h-full rounded-xl border border-gray-200 p-4 transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-900"
     >
       <p className="font-semibold">{pickLocalized(partner.name, locale)}</p>
       <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">

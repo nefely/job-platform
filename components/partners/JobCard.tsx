@@ -26,7 +26,7 @@ function JobCardComponent({ job }: JobCardProps) {
       : t("salaryNotSpecified");
 
   return (
-    <article className="rounded-xl border border-gray-200 p-4 dark:border-gray-800">
+    <article className="h-full rounded-xl border border-gray-200 p-4 dark:border-gray-800">
       <span
         className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${CATEGORY_COLORS[job.category]}`}
       >

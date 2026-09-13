@@ -1,20 +1,20 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/motion/FadeIn";
-import { InteractiveDots } from "./InteractiveDots";
+import { DotBackground } from "./DotBackground";
+import { GlowDots } from "./GlowDots";
 
 export async function Hero() {
   const t = await getTranslations("hero");
 
   return (
     <section className="relative overflow-hidden border-b border-gray-200 dark:border-gray-800">
-      <InteractiveDots />
+      <DotBackground />
+      <GlowDots />
 
-      {/* relative: разом з absolute-позиціонованим InteractiveDots вище
-          обидва стають "positioned"-елементами, тож порядок у DOM (крапки
-          першими) визначає стек — контент лишається зверху. Без relative
-          тут absolute-фон малювався б поверх звичайного статичного вмісту
-          незалежно від порядку в розмітці. */}
+      {/* relative: разом з absolute-позиціонованими шарами вище всі стають
+          "positioned"-елементами, тож порядок у DOM (фон першим) визначає
+          стек — контент лишається зверху й клікабельний. */}
       <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
         <FadeIn>
           <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">

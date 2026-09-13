@@ -28,6 +28,15 @@
     "drivers": "Kierowcy",
     "other": "Inne"
   },
+  "categoryDescriptions": {
+    "construction": "Place budowy, remonty, montaż — w całej Europie.",
+    "manufacturing": "Linie produkcyjne, montaż, kontrola jakości.",
+    "logistics": "Magazyn, kompletacja zamówień, kierowcy dostaw.",
+    "hospitality": "Hotele, restauracje, obsługa gości.",
+    "it": "Programowanie, wsparcie, zdalne zespoły IT.",
+    "drivers": "Kategorie B/C/CE — trasy krajowe i międzynarodowe.",
+    "other": "Wszystko inne — od ochrony po sprzątanie."
+  },
   "locations": {
     "warsaw": "Warszawa, Polska",
     "poznan": "Poznań, Polska",

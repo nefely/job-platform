@@ -4,6 +4,7 @@ import { memo } from "react";
 import { useTranslations } from "next-intl";
 import { CATEGORY_IDS } from "@/data/categories";
 import type { CategoryFilterValue } from "@/lib/filterJobs";
+import { Select } from "@/components/shared/Select";
 
 interface CategoryFilterProps {
   value: CategoryFilterValue;
@@ -15,21 +16,15 @@ function CategoryFilterComponent({ value, onChange }: CategoryFilterProps) {
   const tCategories = useTranslations("categories");
 
   return (
-    <label className="flex flex-col gap-1 text-sm font-medium">
-      <span className="sr-only">{t("categoryFilterLabel")}</span>
-      <select
-        value={value}
-        onChange={(event) => onChange(event.target.value as CategoryFilterValue)}
-        className="rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-normal focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:focus:border-gray-100"
-      >
-        <option value="all">{t("allCategories")}</option>
-        {CATEGORY_IDS.map((categoryId) => (
-          <option key={categoryId} value={categoryId}>
-            {tCategories(categoryId)}
-          </option>
-        ))}
-      </select>
-    </label>
+    <Select
+      label={t("categoryFilterLabel")}
+      value={value}
+      onChange={onChange}
+      options={[
+        { value: "all" as CategoryFilterValue, label: t("allCategories") },
+        ...CATEGORY_IDS.map((id) => ({ value: id as CategoryFilterValue, label: tCategories(id) })),
+      ]}
+    />
   );
 }
 

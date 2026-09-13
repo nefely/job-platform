@@ -28,6 +28,15 @@
     "drivers": "Drivers",
     "other": "Other"
   },
+  "categoryDescriptions": {
+    "construction": "Building sites, renovation, installation — across Europe.",
+    "manufacturing": "Production lines, assembly, quality control.",
+    "logistics": "Warehouse, order picking, delivery drivers.",
+    "hospitality": "Hotels, restaurants, guest service.",
+    "it": "Development, support, remote IT teams.",
+    "drivers": "Categories B/C/CE — local and international routes.",
+    "other": "Everything else — from security to cleaning."
+  },
   "locations": {
     "warsaw": "Warsaw, Poland",
     "poznan": "Poznań, Poland",

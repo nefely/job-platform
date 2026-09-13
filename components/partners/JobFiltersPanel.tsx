@@ -10,6 +10,7 @@ import { EXPERIENCE_LEVEL_IDS } from "@/data/experienceLevels";
 import { LANGUAGE_CODES } from "@/data/languages";
 import { WORK_FORMAT_IDS } from "@/data/workFormats";
 import { countActiveJobFilters, EMPTY_JOB_FILTERS, type JobFilters } from "@/lib/filterJobs";
+import { Select } from "@/components/shared/Select";
 import { FilterChipGroup } from "./FilterChipGroup";
 
 interface JobFiltersPanelProps {
@@ -19,6 +20,22 @@ interface JobFiltersPanelProps {
 
 const inputClassName =
   "h-10.5 rounded-lg border border-gray-300 px-4 text-sm font-normal focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:focus:border-gray-100";
+
+// "Дата розміщення" — односелект (не масив, як інші виміри): "за тиждень"
+// і так включає "за добу", мультивибір тут не мав би сенсу.
+type PostedWithinOption = "any" | "1" | "7" | "30";
+
+const POSTED_WITHIN_DAYS: Record<PostedWithinOption, number | null> = {
+  any: null,
+  "1": 1,
+  "7": 7,
+  "30": 30,
+};
+
+function daysToPostedWithinOption(days: number | null | undefined): PostedWithinOption {
+  if (days === 1 || days === 7 || days === 30) return String(days) as PostedWithinOption;
+  return "any";
+}
 
 // Кнопка-іконка (42×42, як інпут пошуку) стоїть в одному рядку з пошуком —
 // рендериться батьком (AllJobsBoard/PartnerJobsBoard) поруч із
@@ -73,7 +90,9 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
     experienceLevels = [],
     languages = [],
     minSalary = null,
+    postedWithinDays = null,
   } = filters;
+  const postedWithinValue = daysToPostedWithinOption(postedWithinDays);
 
   return (
     <div ref={containerRef} className="contents">
@@ -181,6 +200,25 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
               className={inputClassName}
             />
           </label>
+
+          <div className="flex max-w-xs flex-col gap-1">
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+              {t("postedWithinLabel")}
+            </span>
+            <Select
+              label={t("postedWithinLabel")}
+              value={postedWithinValue}
+              onChange={(next: PostedWithinOption) =>
+                onFiltersChange({ ...filters, postedWithinDays: POSTED_WITHIN_DAYS[next] })
+              }
+              options={[
+                { value: "any", label: t("postedWithinAny") },
+                { value: "1", label: t("postedWithin1") },
+                { value: "7", label: t("postedWithin7") },
+                { value: "30", label: t("postedWithin30") },
+              ]}
+            />
+          </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -22,6 +22,10 @@ export interface JobFilters {
   /** Вакансія проходить, якщо (salaryFrom ?? salaryTo) >= minSalary. Вакансії
    * без жодної вказаної зарплати виключаються, якщо поріг заданий. */
   minSalary?: number | null;
+  /** Показувати лише вакансії, опубліковані не пізніше ніж N днів тому.
+   * Односелект (не масив, на відміну від інших вимірів) — "за тиждень" і
+   * так включає "за добу", мультивибір тут не має сенсу. */
+  postedWithinDays?: number | null;
 }
 
 export const EMPTY_JOB_FILTERS: JobFilters = {};
@@ -33,7 +37,8 @@ export function countActiveJobFilters(filters: JobFilters): number {
     (filters.workFormats?.length ?? 0) +
     (filters.experienceLevels?.length ?? 0) +
     (filters.languages?.length ?? 0) +
-    (filters.minSalary != null ? 1 : 0)
+    (filters.minSalary != null ? 1 : 0) +
+    (filters.postedWithinDays != null ? 1 : 0)
   );
 }
 
@@ -57,6 +62,7 @@ export function filterJobs(
     experienceLevels = [],
     languages = [],
     minSalary = null,
+    postedWithinDays = null,
   } = filters;
 
   return jobs.filter((job) => {
@@ -73,6 +79,9 @@ export function filterJobs(
       languages.length === 0 || job.requiredLanguages.some((code) => languages.includes(code));
     const matchesSalary =
       minSalary == null || (job.salaryFrom ?? job.salaryTo ?? -Infinity) >= minSalary;
+    const matchesPostedWithin =
+      postedWithinDays == null ||
+      Date.now() - new Date(job.postedAt).getTime() <= postedWithinDays * 24 * 60 * 60 * 1000;
 
     return (
       matchesQuery &&
@@ -81,7 +90,8 @@ export function filterJobs(
       matchesWorkFormat &&
       matchesExperience &&
       matchesLanguage &&
-      matchesSalary
+      matchesSalary &&
+      matchesPostedWithin
     );
   });
 }

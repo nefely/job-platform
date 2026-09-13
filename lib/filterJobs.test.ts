@@ -161,6 +161,41 @@ describe("filterJobs", () => {
       ).toEqual([]);
     });
   });
+
+  describe("postedWithinDays filter", () => {
+    const now = Date.now();
+    const hour = 60 * 60 * 1000;
+    const day = 24 * hour;
+    const recentJob = makeJob({ id: "recent", postedAt: new Date(now - 2 * hour).toISOString() });
+    const weekOldJob = makeJob({ id: "week", postedAt: new Date(now - 5 * day).toISOString() });
+    const monthOldJob = makeJob({ id: "month", postedAt: new Date(now - 20 * day).toISOString() });
+    const oldJob = makeJob({ id: "old", postedAt: new Date(now - 60 * day).toISOString() });
+    const datedJobs = [recentJob, weekOldJob, monthOldJob, oldJob];
+
+    it("returns all jobs when postedWithinDays is omitted or null (single-select, not an array)", () => {
+      expect(filterJobs(datedJobs, "", "uk")).toEqual(datedJobs);
+      expect(filterJobs(datedJobs, "", "uk", { postedWithinDays: null })).toEqual(datedJobs);
+    });
+
+    it("filters to jobs posted within the last day", () => {
+      expect(filterJobs(datedJobs, "", "uk", { postedWithinDays: 1 })).toEqual([recentJob]);
+    });
+
+    it("filters to jobs posted within the last week", () => {
+      expect(filterJobs(datedJobs, "", "uk", { postedWithinDays: 7 })).toEqual([
+        recentJob,
+        weekOldJob,
+      ]);
+    });
+
+    it("filters to jobs posted within the last month", () => {
+      expect(filterJobs(datedJobs, "", "uk", { postedWithinDays: 30 })).toEqual([
+        recentJob,
+        weekOldJob,
+        monthOldJob,
+      ]);
+    });
+  });
 });
 
 describe("countActiveJobFilters", () => {
@@ -181,5 +216,10 @@ describe("countActiveJobFilters", () => {
   it("counts minSalary as exactly one active filter when set", () => {
     expect(countActiveJobFilters({ minSalary: 1500 })).toBe(1);
     expect(countActiveJobFilters({ minSalary: null })).toBe(0);
+  });
+
+  it("counts postedWithinDays as exactly one active filter when set", () => {
+    expect(countActiveJobFilters({ postedWithinDays: 7 })).toBe(1);
+    expect(countActiveJobFilters({ postedWithinDays: null })).toBe(0);
   });
 });

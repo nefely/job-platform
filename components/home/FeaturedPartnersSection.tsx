@@ -8,6 +8,7 @@ import { Link } from "@/i18n/navigation";
 import { resolveErrorMessage } from "@/lib/mockApi/resolveErrorMessage";
 import { RetryBlock } from "@/components/shared/RetryBlock";
 import { PartnerCard } from "@/components/partners/PartnerCard";
+import { StaggerContainer, StaggerItem } from "@/components/motion/Stagger";
 import { FeaturedPartnersSkeleton } from "./FeaturedPartnersSkeleton";
 
 export function FeaturedPartnersSection() {
@@ -45,11 +46,13 @@ export function FeaturedPartnersSection() {
         )}
 
         {state.status === "success" && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {state.data.map((partner) => (
-              <PartnerCard key={partner.id} partner={partner} />
+              <StaggerItem key={partner.id}>
+                <PartnerCard partner={partner} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         )}
       </div>
     </section>

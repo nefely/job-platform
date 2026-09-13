@@ -8,6 +8,7 @@ import type { CategoryFilterValue } from "@/lib/filterJobs";
 import { fetchPartners } from "@/lib/mockApi/partners";
 import { resolveErrorMessage } from "@/lib/mockApi/resolveErrorMessage";
 import { RetryBlock } from "@/components/shared/RetryBlock";
+import { StaggerContainer, StaggerItem } from "@/components/motion/Stagger";
 import { CategoryFilter } from "./CategoryFilter";
 import { FeaturedPartnersSkeleton } from "@/components/home/FeaturedPartnersSkeleton";
 import { PartnerCard } from "./PartnerCard";
@@ -52,11 +53,13 @@ export function PartnersIndexBoard({ initialCategory }: PartnersIndexBoardProps)
           <p className="text-gray-500 dark:text-gray-400">{tIndex("emptyState")}</p>
         )}
         {state.status === "success" && filteredPartners.length > 0 && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPartners.map((partner) => (
-              <PartnerCard key={partner.id} partner={partner} />
+              <StaggerItem key={partner.id}>
+                <PartnerCard partner={partner} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         )}
       </div>
     </div>

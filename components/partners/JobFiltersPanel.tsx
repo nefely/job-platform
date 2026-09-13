@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { CATEGORY_COLORS } from "@/data/categoryColors";
 import { CATEGORY_IDS } from "@/data/categories";
@@ -113,8 +114,15 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
         </button>
       )}
 
-      {isExpanded && (
-        <div className="absolute inset-x-0 top-full z-20 mt-2 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-800 dark:bg-gray-950">
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute inset-x-0 top-full z-20 mt-2 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-800 dark:bg-gray-950"
+          >
           <FilterChipGroup
             legend={t("categoryFilterLabel")}
             selected={categories}
@@ -173,8 +181,9 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
               className={inputClassName}
             />
           </label>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

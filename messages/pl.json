@@ -150,6 +150,11 @@
     "text": "Taka strona nie istnieje lub link jest nieaktualny.",
     "backHome": "Strona główna"
   },
+  "pageError": {
+    "title": "Coś poszło nie tak",
+    "text": "Nie udało się otworzyć tej strony. Spróbuj ponownie.",
+    "backHome": "Strona główna"
+  },
   "common": {
     "retry": "Spróbuj ponownie",
     "loading": "Ładowanie…",

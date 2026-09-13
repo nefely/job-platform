@@ -150,6 +150,11 @@
     "text": "This page doesn't exist or the link is outdated.",
     "backHome": "Back to home"
   },
+  "pageError": {
+    "title": "Something went wrong",
+    "text": "We couldn't open this page. Please try again.",
+    "backHome": "Back to home"
+  },
   "common": {
     "retry": "Try again",
     "loading": "Loading…",

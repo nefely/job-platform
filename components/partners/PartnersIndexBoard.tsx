@@ -6,6 +6,7 @@ import { useAsync } from "@/hooks/useAsync";
 import { filterPartnersByCategory } from "@/lib/filterPartners";
 import type { CategoryFilterValue } from "@/lib/filterJobs";
 import { fetchPartners } from "@/lib/mockApi/partners";
+import { resolveErrorMessage } from "@/lib/mockApi/resolveErrorMessage";
 import { RetryBlock } from "@/components/shared/RetryBlock";
 import { CategoryFilter } from "./CategoryFilter";
 import { FeaturedPartnersSkeleton } from "@/components/home/FeaturedPartnersSkeleton";
@@ -17,6 +18,7 @@ interface PartnersIndexBoardProps {
 
 export function PartnersIndexBoard({ initialCategory }: PartnersIndexBoardProps) {
   const tIndex = useTranslations("partnersIndex");
+  const tCommon = useTranslations("common");
 
   const fetchFn = useCallback((signal: AbortSignal) => fetchPartners({ signal }), []);
   const { state, retry } = useAsync(fetchFn, []);
@@ -40,7 +42,11 @@ export function PartnersIndexBoard({ initialCategory }: PartnersIndexBoardProps)
       <div className="mt-4">
         {state.status === "loading" && <FeaturedPartnersSkeleton />}
         {state.status === "error" && (
-          <RetryBlock title={tIndex("errorTitle")} message={state.error} onRetry={retry} />
+          <RetryBlock
+            title={tIndex("errorTitle")}
+            message={resolveErrorMessage(state.error, tCommon)}
+            onRetry={retry}
+          />
         )}
         {state.status === "success" && filteredPartners.length === 0 && (
           <p className="text-gray-500 dark:text-gray-400">{tIndex("emptyState")}</p>

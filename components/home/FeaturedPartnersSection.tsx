@@ -5,13 +5,15 @@ import { useTranslations } from "next-intl";
 import { fetchPartners } from "@/lib/mockApi/partners";
 import { useAsync } from "@/hooks/useAsync";
 import { Link } from "@/i18n/navigation";
+import { resolveErrorMessage } from "@/lib/mockApi/resolveErrorMessage";
 import { RetryBlock } from "@/components/shared/RetryBlock";
 import { PartnerCard } from "@/components/partners/PartnerCard";
 import { FeaturedPartnersSkeleton } from "./FeaturedPartnersSkeleton";
 
 export function FeaturedPartnersSection() {
   const t = useTranslations("home");
-  const tJobs = useTranslations("jobs");
+  const tIndex = useTranslations("partnersIndex");
+  const tCommon = useTranslations("common");
 
   const fetchFn = useCallback((signal: AbortSignal) => fetchPartners({ signal }), []);
   const { state, retry } = useAsync(fetchFn, []);
@@ -35,7 +37,11 @@ export function FeaturedPartnersSection() {
         {state.status === "loading" && <FeaturedPartnersSkeleton />}
 
         {state.status === "error" && (
-          <RetryBlock title={tJobs("errorTitle")} message={state.error} onRetry={retry} />
+          <RetryBlock
+            title={tIndex("errorTitle")}
+            message={resolveErrorMessage(state.error, tCommon)}
+            onRetry={retry}
+          />
         )}
 
         {state.status === "success" && (

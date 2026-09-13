@@ -152,6 +152,8 @@
   },
   "common": {
     "retry": "Try again",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "simulatedErrorMessage": "Couldn't complete the request. Please try again.",
+    "unknownErrorMessage": "An unknown error occurred. Please try again."
   }
 }

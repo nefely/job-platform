@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { UNKNOWN_ERROR_MESSAGE } from "@/lib/mockApi/simulateRequest";
 
 export type AsyncState<T> =
   | { status: "loading" }
@@ -47,7 +48,7 @@ export function useAsync<T>(
             key: requestKey,
             state: {
               status: "error",
-              error: err instanceof Error ? err.message : "Сталася помилка",
+              error: err instanceof Error ? err.message : UNKNOWN_ERROR_MESSAGE,
             },
           });
         }

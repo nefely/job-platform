@@ -9,6 +9,7 @@ import {
   type JobFilters,
 } from "@/lib/filterJobs";
 import { fetchJobsByPartnerId } from "@/lib/mockApi/jobs";
+import { resolveErrorMessage } from "@/lib/mockApi/resolveErrorMessage";
 import type { AppLocale } from "@/types/i18n";
 import { RetryBlock } from "@/components/shared/RetryBlock";
 import { JobFiltersPanel } from "./JobFiltersPanel";
@@ -25,6 +26,7 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
   const locale = useLocale() as AppLocale;
   const t = useTranslations("jobs");
   const tPartner = useTranslations("partner");
+  const tCommon = useTranslations("common");
 
   const fetchFn = useCallback(
     (signal: AbortSignal) => fetchJobsByPartnerId(partnerId, { signal }),
@@ -71,7 +73,11 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
       <div className="mt-4">
         {state.status === "loading" && <JobListSkeleton />}
         {state.status === "error" && (
-          <RetryBlock title={t("errorTitle")} message={state.error} onRetry={retry} />
+          <RetryBlock
+            title={t("errorTitle")}
+            message={resolveErrorMessage(state.error, tCommon)}
+            onRetry={retry}
+          />
         )}
         {state.status === "success" && <JobList jobs={filteredJobs} />}
       </div>

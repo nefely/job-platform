@@ -9,6 +9,14 @@ export class ApiError extends Error {
   }
 }
 
+// Стабільні (не локалізовані) маркери помилок — самі рядки ніколи не
+// показуються користувачу напряму; компонент, що рендерить RetryBlock,
+// звіряє state.error з цими константами й підставляє переклад під
+// поточну локаль (lib/mockApi/resolveErrorMessage.ts). Так title і
+// message завжди лишаються однією мовою.
+export const SIMULATED_FAILURE_MESSAGE = "SIMULATED_FAILURE";
+export const UNKNOWN_ERROR_MESSAGE = "UNKNOWN_ERROR";
+
 export interface SimulateRequestOptions {
   minDelayMs?: number;
   maxDelayMs?: number;
@@ -45,7 +53,7 @@ export async function simulateRequest<T>(
   await wait(minDelayMs + Math.random() * (maxDelayMs - minDelayMs), signal);
 
   if (Math.random() < failureRate) {
-    throw new ApiError("Не вдалося виконати запит. Спробуйте ще раз.");
+    throw new ApiError(SIMULATED_FAILURE_MESSAGE);
   }
 
   return resolve();

@@ -22,7 +22,7 @@ export function LocaleSwitcher() {
     <div
       role="group"
       aria-label={t("languageLabel")}
-      className="flex h-10.5 shrink-0 items-center gap-1 rounded-full border border-gray-200 px-1 text-xs font-medium dark:border-gray-700"
+      className="flex h-10.5 shrink-0 items-center gap-1 rounded-lg border border-gray-200 text-xs font-medium dark:border-gray-700"
     >
       {routing.locales.map((locale) => {
         const isActive = locale === activeLocale;
@@ -33,7 +33,7 @@ export function LocaleSwitcher() {
             href={pathname}
             locale={locale}
             aria-current={isActive ? "true" : undefined}
-            className={`rounded-full px-2 py-1 transition-colors ${
+            className={`flex h-full items-center rounded-md px-2 transition-colors ${
               isActive
                 ? "bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900"
                 : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"

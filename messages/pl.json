@@ -8,6 +8,11 @@
     "contact": "Kontakt",
     "languageLabel": "Język"
   },
+  "theme": {
+    "light": "Jasny motyw",
+    "dark": "Ciemny motyw",
+    "toggle": "Przełącz motyw"
+  },
   "hero": {
     "title": "Znajdź pracę. Znajdź pracownika. Pracuj w Europie.",
     "subtitle": "VV Work łączy kandydatów i pracodawców w całej Europie — szybko, przejrzyście, bez pośredników.",

@@ -27,8 +27,10 @@ export function MobileNav({ children, toggleLabel }: MobileNavProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute inset-x-0 top-full z-20 flex flex-col gap-1 border-b border-gray-200 bg-white p-4 shadow-lg dark:border-gray-800 dark:bg-gray-950">
-          {children}
+        <div className="absolute inset-x-0 top-full z-20 flex justify-center px-4 pt-2">
+          <div className="flex w-full max-w-xs flex-col items-center gap-3 rounded-2xl border border-gray-200 bg-white p-5 text-center shadow-lg dark:border-gray-800 dark:bg-gray-950">
+            {children}
+          </div>
         </div>
       )}
     </div>

@@ -101,8 +101,16 @@ proxy.ts     next-intl middleware (Next.js 16 перейменував middlewar
 
 **Server/Client межа:** усе, що не тримає стан (Header, Footer, Hero,
 CategoryGrid, PartnerHeader, сторінки) — Server Component. Інтерактивне
-(пошук, фільтр, форма, перемикач мови) — `'use client'`. Це мінімізує
+(пошук, фільтр, форма, перемикач мови/теми) — `'use client'`. Це мінімізує
 клієнтський JS-бандл.
+
+**Світла/темна тема** (`components/theme/ThemeProvider.tsx` + `ThemeToggle.tsx`)
+— ручна реалізація без бібліотек (за тим самим патерном, що вже
+використовується в іншому проєкті команди): light/dark/system,
+`localStorage`, `@custom-variant dark (&:where(.dark, .dark *))` у
+`globals.css` (щоб наявні `dark:`-класи реагували на клас `.dark`, не лише
+на системну тему), блокуючий inline-скрипт через `useServerInsertedHTML`
+проти флешу неправильної теми при завантаженні.
 
 **Дані:** реальні Supabase-запити (не локальні seed-масиви), обгорнуті
 `simulateRequest` — додає 300–800мс затримки й ~20% випадкову помилку
@@ -136,7 +144,7 @@ identity, тож `React.memo(JobCard)`/`React.memo(PartnerCard)` не
 
 ## Unit-тести
 
-`npm run test:coverage` — 41 тест, **~97% покриття** логіки, яку оцінює
+`npm run test:coverage` — 42 тести, **~96% покриття** логіки, яку оцінює
 бриф (debounce, комбінація фільтрів, валідація форми, retry/abort-guard):
 
 - `lib/mockApi/simulateRequest.test.ts` — затримка 300–800мс, ~20% помилка, `ApiError`

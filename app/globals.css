@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Ручне перемикання теми (ThemeProvider ставить .dark/.light на <html>) —
+   без цього dark: реагував би лише на системну тему, не на перемикач. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,15 +16,33 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Фолбек без JS: поки не спрацював inline-скрипт ThemeProvider, орієнтуємось
+   на системну тему (якщо користувач ще не обрав явно light). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+:root.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }

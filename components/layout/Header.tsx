@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileNav } from "./MobileNav";
 
@@ -42,14 +43,16 @@ export async function Header() {
 
         <div className="flex items-center gap-3">
           {/* md:hidden wrapper (MobileNav) and md:block here are mutually
-              exclusive at every width, so the switcher never renders twice. */}
-          <div className="hidden md:block">
+              exclusive at every width, so these never render twice. */}
+          <div className="hidden items-center gap-3 md:flex">
             <LocaleSwitcher />
+            <ThemeToggle />
           </div>
           <MobileNav toggleLabel={t("logo")}>
-            <div className="flex flex-col gap-3">{navLinks}</div>
-            <div className="mt-3">
+            <div className="flex flex-col items-center gap-3">{navLinks}</div>
+            <div className="mt-3 flex items-center gap-3">
               <LocaleSwitcher />
+              <ThemeToggle />
             </div>
           </MobileNav>
         </div>

@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+dev-out.log
+dev-err.log
+dev-pid.txt
 
 # next.js
 /.next/

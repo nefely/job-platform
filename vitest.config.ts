@@ -10,12 +10,22 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
+      // Покриття рахуємо для "логіки", яку оцінює бриф (debounce-пошук,
+      // валідація форми, retry-логіка), а не для презентаційних
+      // server-компонентів чи тонких Supabase-обгорток без розгалужень.
       include: [
-        "lib/**/*.{ts,tsx}",
-        "hooks/**/*.{ts,tsx}",
-        "components/**/*.{ts,tsx}",
+        "lib/filterJobs.ts",
+        "lib/validation/**/*.ts",
+        "lib/mockApi/simulateRequest.ts",
+        "hooks/**/*.ts",
       ],
       exclude: ["**/*.test.{ts,tsx}", "**/*.d.ts"],
+      thresholds: {
+        statements: 60,
+        lines: 60,
+        functions: 60,
+        branches: 60,
+      },
     },
   },
   resolve: {

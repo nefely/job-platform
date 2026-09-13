@@ -7,6 +7,15 @@
 --
 -- Safe to re-run: uses `if not exists` / `drop policy if exists` throughout.
 -- Paste this whole file into the Supabase SQL Editor for the shared project.
+--
+-- NOTE: if you already ran an earlier version of this file (plain `text`
+-- columns for name/summary/title/description/location instead of jsonb +
+-- location_code), the `if not exists` guards below will NOT migrate those
+-- columns automatically. Drop the 3 tables first:
+--   drop table if exists public.job_platform_jobs cascade;
+--   drop table if exists public.job_platform_partners cascade;
+--   drop table if exists public.job_platform_contact_submissions cascade;
+-- then re-run this file and supabase/seed.sql.
 
 create extension if not exists pgcrypto;
 
@@ -16,11 +25,11 @@ create extension if not exists pgcrypto;
 create table if not exists public.job_platform_partners (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,
-  name text not null,
   logo_url text,
-  location text not null,
-  summary text not null,
+  location_code text not null, -- код міста; лейбл — messages/*.json ("locations")
   categories text[] not null default '{}',
+  name jsonb not null,    -- { "uk": "...", "en": "...", "pl": "..." }
+  summary jsonb not null, -- { "uk": "...", "en": "...", "pl": "..." }
   created_at timestamptz not null default now()
 );
 
@@ -30,15 +39,15 @@ create table if not exists public.job_platform_partners (
 create table if not exists public.job_platform_jobs (
   id uuid primary key default gen_random_uuid(),
   partner_id uuid not null references public.job_platform_partners (id) on delete cascade,
-  title text not null,
   category text not null check (category in
     ('construction', 'manufacturing', 'logistics', 'hospitality', 'it', 'drivers', 'other')),
-  location text not null,
+  location_code text not null, -- код міста; лейбл — messages/*.json ("locations")
   employment_type text not null check (employment_type in ('full-time', 'part-time', 'seasonal')),
   salary_from int,
   salary_to int,
   currency text check (currency in ('UAH', 'EUR', 'PLN')),
-  description text not null default '',
+  title jsonb not null,       -- { "uk": "...", "en": "...", "pl": "..." }
+  description jsonb not null, -- { "uk": "...", "en": "...", "pl": "..." }
   posted_at timestamptz not null default now()
 );
 
@@ -48,6 +57,8 @@ create index if not exists job_platform_jobs_category_idx on public.job_platform
 -- ---------------------------------------------------------------------------
 -- job_platform_contact_submissions
 -- ---------------------------------------------------------------------------
+-- Не перекладається: це вхідні дані від користувача (заявка), а не контент,
+-- який показуємо різними мовами.
 create table if not exists public.job_platform_contact_submissions (
   id uuid primary key default gen_random_uuid(),
   name text not null,

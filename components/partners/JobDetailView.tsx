@@ -48,7 +48,7 @@ export async function JobDetailView({ job }: JobDetailViewProps) {
         </Link>
       )}
 
-      <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500 dark:text-gray-400">
+      <dl className="mt-4 flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400">
         <div className="flex gap-1">
           <dt className="font-medium">{t("locationLabel")}:</dt>
           <dd>{tLocations(job.locationCode)}</dd>

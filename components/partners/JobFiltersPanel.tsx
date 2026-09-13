@@ -17,8 +17,13 @@ interface JobFiltersPanelProps {
 }
 
 const inputClassName =
-  "rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-normal focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:focus:border-gray-100";
+  "h-10.5 rounded-lg border border-gray-300 px-4 text-sm font-normal focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:focus:border-gray-100";
 
+// Кнопка-іконка (42×42, як інпут пошуку) стоїть в одному рядку з пошуком —
+// рендериться батьком (AllJobsBoard/PartnerJobsBoard) поруч із
+// JobSearchInput у спільному relative-рядку. Розкривна панель із чіпами
+// позиціонується absolute на всю ширину ТОГО рядка (inset-x-0 відносно
+// найближчого relative-предка), а не лише колонки кнопки.
 export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelProps) {
   const t = useTranslations("jobs");
   const tCategories = useTranslations("categories");
@@ -39,15 +44,15 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
   } = filters;
 
   return (
-    <div>
-      <div className="flex items-center gap-2">
+    <>
+      <div className="flex shrink-0 flex-col items-center gap-1">
         <button
           type="button"
           onClick={() => setIsExpanded((prev) => !prev)}
           aria-expanded={isExpanded}
           aria-label={t("filtersToggle")}
           title={t("filtersToggle")}
-          className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-300 text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-900"
+          className="relative flex h-10.5 w-10.5 shrink-0 items-center justify-center rounded-lg border border-gray-300 text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-900"
         >
           <svg
             viewBox="0 0 24 24"
@@ -72,7 +77,7 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
           <button
             type="button"
             onClick={() => onFiltersChange(EMPTY_JOB_FILTERS)}
-            className="text-sm font-medium text-gray-500 underline-offset-2 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
+            className="whitespace-nowrap text-xs font-medium text-gray-500 underline-offset-2 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
           >
             {t("resetFilters")}
           </button>
@@ -80,7 +85,7 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
       </div>
 
       {isExpanded && (
-        <div className="mt-3 flex flex-col gap-4 rounded-xl border border-gray-200 p-4 dark:border-gray-800">
+        <div className="absolute inset-x-0 top-full z-20 mt-2 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-800 dark:bg-gray-950">
           <FilterChipGroup
             legend={t("categoryFilterLabel")}
             selected={categories}
@@ -141,6 +146,6 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
           </label>
         </div>
       )}
-    </div>
+    </>
   );
 }

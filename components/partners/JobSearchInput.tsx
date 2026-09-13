@@ -26,14 +26,14 @@ function JobSearchInputComponent({
   }, [debouncedValue, onDebouncedChange]);
 
   return (
-    <label className="flex flex-col gap-1 text-sm font-medium">
+    <label className="flex w-full flex-col gap-1 text-sm font-medium">
       <span className="sr-only">{t("searchLabel")}</span>
       <input
         type="search"
         value={value}
         onChange={(event) => setValue(event.target.value)}
         placeholder={t("searchPlaceholder")}
-        className="rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-normal focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:focus:border-gray-100"
+        className="h-10.5 w-full rounded-lg border border-gray-300 px-4 text-sm font-normal focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:focus:border-gray-100"
       />
     </label>
   );

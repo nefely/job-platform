@@ -55,8 +55,10 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <h2 className="text-xl font-bold tracking-tight">{tPartner("jobsTitle")}</h2>
 
-      <div className="mt-4 flex flex-col gap-3">
-        <JobSearchInput onDebouncedChange={handleDebouncedQueryChange} />
+      <div className="relative mt-4 flex items-start gap-3">
+        <div className="flex-1">
+          <JobSearchInput onDebouncedChange={handleDebouncedQueryChange} />
+        </div>
         <JobFiltersPanel filters={filters} onFiltersChange={handleFiltersChange} />
       </div>
 

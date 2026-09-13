@@ -45,7 +45,7 @@ export function MobileNav({ children, toggleLabel }: MobileNavProps) {
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-label={toggleLabel}
-        className="relative flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700"
+        className="relative flex h-10.5 w-10.5 shrink-0 flex-col items-center justify-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700"
       >
         <span
           className={`h-0.5 w-5 bg-current transition-transform duration-200 ${

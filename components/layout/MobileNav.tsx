@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 interface MobileNavProps {
   children: ReactNode;
@@ -11,26 +11,62 @@ interface MobileNavProps {
 // сервером (Header.tsx) і передається як children, щоб не дублювати JSX.
 export function MobileNav({ children, toggleLabel }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Клік/тап поза меню або Escape — закриває його.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function handlePointerDown(event: MouseEvent | TouchEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
 
   return (
-    <div className="md:hidden">
+    <div ref={containerRef} className="md:hidden">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-label={toggleLabel}
-        className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700"
+        className="relative flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700"
       >
-        <span className="h-0.5 w-5 bg-current" />
-        <span className="h-0.5 w-5 bg-current" />
-        <span className="h-0.5 w-5 bg-current" />
+        <span
+          className={`h-0.5 w-5 bg-current transition-transform duration-200 ${
+            isOpen ? "translate-y-2 rotate-45" : ""
+          }`}
+        />
+        <span
+          className={`h-0.5 w-5 bg-current transition-opacity duration-200 ${
+            isOpen ? "opacity-0" : "opacity-100"
+          }`}
+        />
+        <span
+          className={`h-0.5 w-5 bg-current transition-transform duration-200 ${
+            isOpen ? "-translate-y-2 -rotate-45" : ""
+          }`}
+        />
       </button>
 
       {isOpen && (
-        <div className="absolute inset-x-0 top-full z-20 flex justify-center px-4 pt-2">
-          <div className="flex w-full max-w-xs flex-col items-center gap-3 rounded-2xl border border-gray-200 bg-white p-5 text-center shadow-lg dark:border-gray-800 dark:bg-gray-950">
-            {children}
-          </div>
+        <div className="absolute inset-x-0 top-full z-20 flex flex-col items-center gap-3 border-b border-gray-200 bg-white p-5 text-center shadow-lg dark:border-gray-800 dark:bg-gray-950">
+          {children}
         </div>
       )}
     </div>

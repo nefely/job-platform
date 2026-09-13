@@ -45,7 +45,7 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
 
   return (
     <>
-      <div className="flex shrink-0 flex-col items-center gap-1">
+      <div className="relative h-10.5 w-10.5 shrink-0">
         <button
           type="button"
           onClick={() => setIsExpanded((prev) => !prev)}
@@ -77,7 +77,7 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
           <button
             type="button"
             onClick={() => onFiltersChange(EMPTY_JOB_FILTERS)}
-            className="whitespace-nowrap text-xs font-medium text-gray-500 underline-offset-2 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
+            className="absolute right-0 top-full mt-1 whitespace-nowrap text-xs font-medium text-gray-500 underline-offset-2 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
           >
             {t("resetFilters")}
           </button>

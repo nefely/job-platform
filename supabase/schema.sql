@@ -8,14 +8,22 @@
 -- Safe to re-run: uses `if not exists` / `drop policy if exists` throughout.
 -- Paste this whole file into the Supabase SQL Editor for the shared project.
 --
--- NOTE: if you already ran an earlier version of this file (plain `text`
--- columns for name/summary/title/description/location instead of jsonb +
--- location_code), the `if not exists` guards below will NOT migrate those
--- columns automatically. Drop the 3 tables first:
+-- NOTE: if you already ran a version of this file predating jsonb content
+-- (plain `text` columns for name/summary/title/description/location instead
+-- of jsonb + location_code), the `if not exists` guards below will NOT
+-- migrate those columns automatically. Drop the 3 tables first:
 --   drop table if exists public.job_platform_jobs cascade;
 --   drop table if exists public.job_platform_partners cascade;
 --   drop table if exists public.job_platform_contact_submissions cascade;
 -- then re-run this file and supabase/seed.sql.
+--
+-- If you already have the jsonb-based schema and are only picking up the
+-- job filter fields added later (work_format/experience_level/
+-- required_languages, employment_type gaining 'project'), no drop is
+-- needed — just re-run this file, then:
+--   delete from public.job_platform_jobs;
+-- and re-run the updated supabase/seed.sql (partners are untouched, only
+-- jobs are replaced since the job dataset grew substantially).
 
 create extension if not exists pgcrypto;
 
@@ -42,7 +50,10 @@ create table if not exists public.job_platform_jobs (
   category text not null check (category in
     ('construction', 'manufacturing', 'logistics', 'hospitality', 'it', 'drivers', 'other')),
   location_code text not null, -- код міста; лейбл — messages/*.json ("locations")
-  employment_type text not null check (employment_type in ('full-time', 'part-time', 'seasonal')),
+  employment_type text not null check (employment_type in ('full-time', 'part-time', 'seasonal', 'project')),
+  work_format text not null default 'onsite' check (work_format in ('onsite', 'remote', 'hybrid')),
+  experience_level text not null default '0-1' check (experience_level in ('0-1', '1-3', '3-5', '5+')),
+  required_languages text[] not null default '{}', -- коди мов, messages/*.json ("languages")
   salary_from int,
   salary_to int,
   currency text check (currency in ('UAH', 'EUR', 'PLN')),
@@ -50,6 +61,27 @@ create table if not exists public.job_platform_jobs (
   description jsonb not null, -- { "uk": "...", "en": "...", "pl": "..." }
   posted_at timestamptz not null default now()
 );
+
+-- Міграція для вже існуючої таблиці job_platform_jobs (безпечно
+-- перезапускати, нічого не видаляє). `default` у `add column` потрібен
+-- лише щоб ALTER не впав на вже заповненій таблиці — реальні значення для
+-- кожного рядка все одно приходять із seed.sql.
+alter table public.job_platform_jobs
+  add column if not exists work_format text not null default 'onsite',
+  add column if not exists experience_level text not null default '0-1',
+  add column if not exists required_languages text[] not null default '{}';
+
+alter table public.job_platform_jobs drop constraint if exists job_platform_jobs_employment_type_check;
+alter table public.job_platform_jobs add constraint job_platform_jobs_employment_type_check
+  check (employment_type in ('full-time', 'part-time', 'seasonal', 'project'));
+
+alter table public.job_platform_jobs drop constraint if exists job_platform_jobs_work_format_check;
+alter table public.job_platform_jobs add constraint job_platform_jobs_work_format_check
+  check (work_format in ('onsite', 'remote', 'hybrid'));
+
+alter table public.job_platform_jobs drop constraint if exists job_platform_jobs_experience_level_check;
+alter table public.job_platform_jobs add constraint job_platform_jobs_experience_level_check
+  check (experience_level in ('0-1', '1-3', '3-5', '5+'));
 
 create index if not exists job_platform_jobs_partner_id_idx on public.job_platform_jobs (partner_id);
 create index if not exists job_platform_jobs_category_idx on public.job_platform_jobs (category);

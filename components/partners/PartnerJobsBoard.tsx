@@ -3,11 +3,11 @@
 import { useCallback, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useAsync } from "@/hooks/useAsync";
-import { filterJobs, type CategoryFilterValue } from "@/lib/filterJobs";
+import { filterJobs, type CategoryFilterValue, type JobAdvancedFilters } from "@/lib/filterJobs";
 import { fetchJobsByPartnerId } from "@/lib/mockApi/jobs";
 import type { AppLocale } from "@/types/i18n";
 import { RetryBlock } from "@/components/shared/RetryBlock";
-import { CategoryFilter } from "./CategoryFilter";
+import { JobFiltersPanel } from "./JobFiltersPanel";
 import { JobList } from "./JobList";
 import { JobListSkeleton } from "./JobListSkeleton";
 import { JobSearchInput } from "./JobSearchInput";
@@ -29,9 +29,10 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
   const { state, retry } = useAsync(fetchFn, [partnerId]);
 
   const [category, setCategory] = useState<CategoryFilterValue>(initialCategory);
+  const [advancedFilters, setAdvancedFilters] = useState<JobAdvancedFilters>({});
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
-  // Стабільні callback-и: JobSearchInput/CategoryFilter (обидва memo) не
+  // Стабільні callback-и: JobSearchInput/JobFiltersPanel (обидва memo) не
   // ре-рендеряться через активність цього компонента.
   const handleDebouncedQueryChange = useCallback((value: string) => {
     setDebouncedQuery(value);
@@ -39,21 +40,27 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
   const handleCategoryChange = useCallback((value: CategoryFilterValue) => {
     setCategory(value);
   }, []);
+  const handleAdvancedFiltersChange = useCallback((filters: JobAdvancedFilters) => {
+    setAdvancedFilters(filters);
+  }, []);
 
   const filteredJobs = useMemo(() => {
     const jobs = state.status === "success" ? state.data : [];
-    return filterJobs(jobs, debouncedQuery, category, locale);
-  }, [state, debouncedQuery, category, locale]);
+    return filterJobs(jobs, debouncedQuery, category, locale, advancedFilters);
+  }, [state, debouncedQuery, category, locale, advancedFilters]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <h2 className="text-xl font-bold tracking-tight">{tPartner("jobsTitle")}</h2>
 
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-        <div className="sm:flex-1">
-          <JobSearchInput onDebouncedChange={handleDebouncedQueryChange} />
-        </div>
-        <CategoryFilter value={category} onChange={handleCategoryChange} />
+      <div className="mt-4 flex flex-col gap-3">
+        <JobSearchInput onDebouncedChange={handleDebouncedQueryChange} />
+        <JobFiltersPanel
+          category={category}
+          onCategoryChange={handleCategoryChange}
+          advancedFilters={advancedFilters}
+          onAdvancedFiltersChange={handleAdvancedFiltersChange}
+        />
       </div>
 
       {state.status === "success" && (

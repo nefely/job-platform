@@ -42,7 +42,25 @@
   "employmentType": {
     "full-time": "Pełny etat",
     "part-time": "Niepełny etat",
-    "seasonal": "Praca sezonowa"
+    "seasonal": "Praca sezonowa",
+    "project": "Praca projektowa"
+  },
+  "workFormat": {
+    "onsite": "Na miejscu",
+    "remote": "Zdalnie",
+    "hybrid": "Hybrydowo"
+  },
+  "experienceLevel": {
+    "0-1": "0–1 rok",
+    "1-3": "1–3 lata",
+    "3-5": "3–5 lat",
+    "5+": "5+ lat"
+  },
+  "languages": {
+    "uk": "Ukraiński",
+    "en": "Angielski",
+    "de": "Niemiecki",
+    "pl": "Polski"
   },
   "home": {
     "categoriesTitle": "Popularne kategorie",
@@ -81,7 +99,21 @@
     "salaryNotSpecified": "Do uzgodnienia",
     "locationLabel": "Lokalizacja",
     "employmentTypeLabel": "Rodzaj zatrudnienia",
-    "postedLabel": "Opublikowano"
+    "postedLabel": "Opublikowano",
+    "backLink": "← Wszystkie oferty",
+    "applyTitle": "Zainteresowała Cię ta oferta?",
+    "applySubtitle": "Zostaw zgłoszenie — skontaktujemy się ze szczegółami.",
+    "workFormatLabel": "Forma pracy",
+    "experienceLabel": "Doświadczenie",
+    "languagesLabel": "Języki",
+    "languageFilterLabel": "Znajomość języka",
+    "minSalaryLabel": "Wynagrodzenie od",
+    "minSalaryPlaceholder": "np. 1500",
+    "allEmploymentTypes": "Wszystkie rodzaje zatrudnienia",
+    "allWorkFormats": "Wszystkie formy pracy",
+    "allExperienceLevels": "Dowolne doświadczenie",
+    "allLanguages": "Dowolny język",
+    "filtersToggle": "Filtry"
   },
   "contact": {
     "title": "Skontaktuj się z nami",
@@ -118,8 +150,8 @@
     "rights": "© {year} VV Work. Wszelkie prawa zastrzeżone."
   },
   "notFound": {
-    "title": "Nie znaleziono partnera",
-    "text": "Taki partner nie istnieje lub link jest nieaktualny.",
+    "title": "Nie znaleziono strony",
+    "text": "Taka strona nie istnieje lub link jest nieaktualny.",
     "backHome": "Strona główna"
   },
   "common": {

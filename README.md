@@ -42,10 +42,17 @@ npm install
    - [`supabase/schema.sql`](supabase/schema.sql) — таблиці `job_platform_partners`,
      `job_platform_jobs`, `job_platform_contact_submissions` + RLS-політики
      (публічний `select` на partners/jobs, публічний `insert`-без-`select`
-     на заявки). Ідемпотентний, можна перезапускати.
-   - [`supabase/seed.sql`](supabase/seed.sql) — 6 демо-партнерів (усі 7
-     категорій), ~20 вакансій, кожен текстовий запис — jsonb `{ uk, en, pl }`.
-     Теж ідемпотентний (`on conflict do nothing` / `where not exists`).
+     на заявки). Ідемпотентний, можна перезапускати (безпечно і для вже
+     заповненої бази — нові колонки/constraint'и додаються через `alter
+     table ... add column if not exists` / `drop constraint if exists`).
+   - Якщо база вже має старіший набір вакансій (без `work_format`/
+     `experience_level`/`required_languages`): `delete from
+     public.job_platform_jobs;` — партнерів це не чіпає.
+   - [`supabase/seed.sql`](supabase/seed.sql) — 6 демо-партнерів, **60
+     вакансій**, кожен текстовий запис — jsonb `{ uk, en, pl }`. Ідемпотентний
+     (`on conflict do nothing` / `where not exists`). Це **згенерований**
+     файл — джерело правди [`supabase/seed-data.mjs`](supabase/seed-data.mjs)
+     (структуровані дані), перегенерувати: `npm run seed:generate`.
 
 Без цього кроку `/jobs`, `/partners`, сторінка партнера й блок партнерів
 на Головній коректно покажуть **retry-блок** ("не вдалося завантажити") —
@@ -68,34 +75,38 @@ app/[locale]/                 # усі сторінки під локаллю (u
   layout.tsx                   # <html lang>, NextIntlClientProvider, Header/Footer
   page.tsx                     # Home
   jobs/page.tsx                 # /jobs — усі вакансії всіх партнерів (той самий шлях у всіх локалях)
+  jobs/[id]/page.tsx             # сторінка однієї вакансії (деталі + форма заявки)
   partners/page.tsx             # /partners — індекс партнерів (+ фільтр за категорією)
   partners/[slug]/page.tsx     # сторінка одного партнера (динамічна)
   contact/page.tsx             # /contact (той самий шлях у всіх локалях)
 
 components/
   layout/     Header, Footer, LocaleSwitcher, MobileNav
+  theme/      ThemeProvider, ThemeToggle
   home/       Hero, CategoryGrid, FeaturedPartnersSection(+Skeleton), EmployerCtaSection
   partners/   PartnerCard, PartnerHeader, PartnersIndexBoard, AllJobsBoard,
-              PartnerJobsBoard, JobSearchInput, CategoryFilter, JobList,
-              JobCard, JobListSkeleton
+              PartnerJobsBoard, JobSearchInput, JobFiltersPanel, CategoryFilter,
+              JobList, JobCard, JobListSkeleton, JobDetailView
   contact/    ContactForm
   shared/     Skeleton, RetryBlock
 
 lib/
   supabase/       client.ts (браузер) / server.ts (Server Components)
   mockApi/        simulateRequest.ts + partners.ts / jobs.ts / contact.ts
-  filterJobs.ts    чиста функція пошук+категорія (для вакансій)
+  filterJobs.ts    чиста функція пошук+категорія+додаткові фільтри (для вакансій)
   filterPartners.ts чиста функція фільтр партнерів за категорією
   validation/      contactForm.ts — чисті валідатори
   i18n/            pickLocalized.ts
   partners/        resolvePartnerBySlug.ts (server-side lookup для notFound())
+  jobs/            resolveJobById.ts (server-side lookup для notFound())
 
-hooks/       useDebouncedValue.ts, useAsync.ts
-data/        categories.ts, locations.ts (фіксовані таксономії)
-types/       category, location, job, partner, contact, i18n
+hooks/       useDebouncedValue.ts, useAsync.ts, useMounted.ts
+data/        categories.ts, locations.ts, employmentTypes.ts, workFormats.ts,
+             experienceLevels.ts, languages.ts (фіксовані таксономії)
+types/       category, location, job, partner, contact, i18n, language
 i18n/        routing.ts, navigation.ts, request.ts (next-intl)
 messages/    uk.json, en.json, pl.json
-supabase/    schema.sql, seed.sql
+supabase/    schema.sql, seed-data.mjs (джерело), generate-seed.mjs → seed.sql (згенеровано)
 proxy.ts     next-intl middleware (Next.js 16 перейменував middleware → proxy)
 ```
 
@@ -140,15 +151,31 @@ identity, тож `React.memo(JobCard)`/`React.memo(PartnerCard)` не
 компаній-роботодавців (теж фільтрується за категорією), корисний як
 "каталог працевлаштування", а заглиблення в конкретного партнера
 (`/partners/[slug]`) показує вже тільки його вакансії — той самий
-пошук+фільтр, але в межах одного партнера, як і вимагає бриф.
+пошук+фільтр, але в межах одного партнера, як і вимагає бриф. Клік по
+назві вакансії (з будь-якого списку) веде на `/jobs/[id]` — повний опис,
+дані про роботодавця з посиланням на його сторінку, і форма заявки одразу
+на місці (той самий `ContactForm`, що й на `/contact`) — не треба переходити
+на іншу сторінку, щоб відгукнутися.
+
+**Фільтри вакансій** (`JobFiltersPanel`, використовується і на `/jobs`, і на
+`/partners/[slug]`): пошук за назвою + категорія завжди на видноті; тип
+зайнятості (full-time/part-time/seasonal/**project**), формат роботи
+(на місці/віддалено/гібридно), досвід (0-1/1-3/3-5/5+ років), знання мови
+(uk/en/de/pl) і мінімальна зарплата — під кнопкою «Фільтри», щоб не
+перевантажувати основний рядок. Усі виміри комбінуються (`filterJobs`,
+5-й опційний аргумент `JobAdvancedFilters` — зворотньосумісно з попередньою
+4-аргументною сигнатурою).
 
 ## Unit-тести
 
-`npm run test:coverage` — 42 тести, **~96% покриття** логіки, яку оцінює
+`npm run test:coverage` — 49 тестів, **~96% покриття** логіки, яку оцінює
 бриф (debounce, комбінація фільтрів, валідація форми, retry/abort-guard):
 
 - `lib/mockApi/simulateRequest.test.ts` — затримка 300–800мс, ~20% помилка, `ApiError`
-- `lib/filterJobs.test.ts` — пошук за локалізованою назвою + категорія, разом і окремо
+- `lib/filterJobs.test.ts` — пошук за локалізованою назвою + категорія + кожен
+  новий вимір фільтра (тип зайнятості/формат/досвід/мова/мінімальна
+  зарплата) окремо й у комбінації; 4-аргументні виклики (без нових фільтрів)
+  лишаються без змін
 - `lib/filterPartners.test.ts` — фільтр партнерів за категорією
 - `hooks/useDebouncedValue.test.ts` — не оновлюється до завершення delay, проміжні значення не просочуються
 - `hooks/useAsync.test.ts` — loading→success/error, `retry()`, застарілий (aborted) виклик не перезаписує новіший стан
@@ -228,3 +255,11 @@ identity, тож `React.memo(JobCard)`/`React.memo(PartnerCard)` не
   пошук+фільтр) як основний кандидатський сценарій і `/partners` (індекс
   компаній) як окремий каталог роботодавців — `/partners/[slug]` лишається
   сторінкою одного партнера з вакансіями саме в межах брифу.
+- **Розширені фільтри вакансій і сторінка окремої вакансії — понад бриф.**
+  Бриф вимагає лише пошук+категорію. Додано: тип зайнятості (+ проєктна
+  робота), формат роботи (на місці/віддалено/гібридно), досвід у роках,
+  знання мови, мінімальна зарплата — і `/jobs/[id]` зі сторінкою деталей
+  та формою заявки прямо на місці. ~60 вакансій у seed згенеровано з
+  структурованих даних (`supabase/seed-data.mjs` → `npm run seed:generate`)
+  замість руки-писаного SQL — менше ризику помилок екранування лапок у
+  такому обсязі багатомовного контенту.

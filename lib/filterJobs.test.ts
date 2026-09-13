@@ -9,6 +9,9 @@ function makeJob(overrides: Partial<Job>): Job {
     category: "it",
     locationCode: "berlin",
     employmentType: "full-time",
+    workFormat: "onsite",
+    experienceLevel: "0-1",
+    requiredLanguages: [],
     title: { uk: "Frontend-розробник", en: "Frontend developer", pl: "Programista frontend" },
     description: { uk: "", en: "", pl: "" },
     postedAt: "2026-01-01T00:00:00.000Z",
@@ -60,5 +63,90 @@ describe("filterJobs", () => {
   it("preserves referential identity of unfiltered job objects", () => {
     const [result] = filterJobs(jobs, "", "drivers", "uk");
     expect(result).toBe(driverJob);
+  });
+
+  describe("advanced filters (5th argument, backward compatible)", () => {
+    const fullTimeOnsite = makeJob({
+      id: "a",
+      employmentType: "full-time",
+      workFormat: "onsite",
+      experienceLevel: "0-1",
+      requiredLanguages: [],
+      salaryFrom: 1200,
+    });
+    const projectRemote = makeJob({
+      id: "b",
+      employmentType: "project",
+      workFormat: "remote",
+      experienceLevel: "3-5",
+      requiredLanguages: ["en", "de"],
+      salaryFrom: 2500,
+    });
+    const noSalarySpecified = makeJob({
+      id: "c",
+      employmentType: "part-time",
+      workFormat: "hybrid",
+      experienceLevel: "1-3",
+      requiredLanguages: ["pl"],
+      salaryFrom: undefined,
+      salaryTo: undefined,
+    });
+    const advancedJobs = [fullTimeOnsite, projectRemote, noSalarySpecified];
+
+    it("defaults to no extra filtering when the 5th argument is omitted", () => {
+      expect(filterJobs(advancedJobs, "", "all", "uk")).toEqual(advancedJobs);
+    });
+
+    it("filters by employmentType", () => {
+      expect(filterJobs(advancedJobs, "", "all", "uk", { employmentType: "project" })).toEqual([
+        projectRemote,
+      ]);
+    });
+
+    it("filters by workFormat", () => {
+      expect(filterJobs(advancedJobs, "", "all", "uk", { workFormat: "remote" })).toEqual([
+        projectRemote,
+      ]);
+    });
+
+    it("filters by experienceLevel", () => {
+      expect(filterJobs(advancedJobs, "", "all", "uk", { experienceLevel: "3-5" })).toEqual([
+        projectRemote,
+      ]);
+    });
+
+    it("filters by required language", () => {
+      expect(filterJobs(advancedJobs, "", "all", "uk", { language: "de" })).toEqual([projectRemote]);
+      expect(filterJobs(advancedJobs, "", "all", "uk", { language: "pl" })).toEqual([
+        noSalarySpecified,
+      ]);
+    });
+
+    it("filters by minSalary, excluding jobs with no salary specified", () => {
+      expect(filterJobs(advancedJobs, "", "all", "uk", { minSalary: 2000 })).toEqual([
+        projectRemote,
+      ]);
+      expect(filterJobs(advancedJobs, "", "all", "uk", { minSalary: 1000 })).toEqual([
+        fullTimeOnsite,
+        projectRemote,
+      ]);
+    });
+
+    it("combines multiple advanced filters at once", () => {
+      expect(
+        filterJobs(advancedJobs, "", "all", "uk", {
+          workFormat: "remote",
+          experienceLevel: "3-5",
+          minSalary: 2000,
+        }),
+      ).toEqual([projectRemote]);
+
+      expect(
+        filterJobs(advancedJobs, "", "all", "uk", {
+          workFormat: "remote",
+          experienceLevel: "0-1",
+        }),
+      ).toEqual([]);
+    });
   });
 });

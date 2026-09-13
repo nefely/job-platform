@@ -42,7 +42,25 @@
   "employmentType": {
     "full-time": "Full-time",
     "part-time": "Part-time",
-    "seasonal": "Seasonal"
+    "seasonal": "Seasonal",
+    "project": "Project-based"
+  },
+  "workFormat": {
+    "onsite": "On-site",
+    "remote": "Remote",
+    "hybrid": "Hybrid"
+  },
+  "experienceLevel": {
+    "0-1": "0–1 year",
+    "1-3": "1–3 years",
+    "3-5": "3–5 years",
+    "5+": "5+ years"
+  },
+  "languages": {
+    "uk": "Ukrainian",
+    "en": "English",
+    "de": "German",
+    "pl": "Polish"
   },
   "home": {
     "categoriesTitle": "Popular categories",
@@ -81,7 +99,21 @@
     "salaryNotSpecified": "Negotiable",
     "locationLabel": "Location",
     "employmentTypeLabel": "Employment type",
-    "postedLabel": "Posted"
+    "postedLabel": "Posted",
+    "backLink": "← All vacancies",
+    "applyTitle": "Interested in this role?",
+    "applySubtitle": "Leave a request — we'll get in touch with the details.",
+    "workFormatLabel": "Work format",
+    "experienceLabel": "Experience",
+    "languagesLabel": "Languages",
+    "languageFilterLabel": "Language",
+    "minSalaryLabel": "Salary from",
+    "minSalaryPlaceholder": "e.g. 1500",
+    "allEmploymentTypes": "All employment types",
+    "allWorkFormats": "All work formats",
+    "allExperienceLevels": "Any experience",
+    "allLanguages": "Any language",
+    "filtersToggle": "Filters"
   },
   "contact": {
     "title": "Get in touch",
@@ -118,8 +150,8 @@
     "rights": "© {year} VV Work. All rights reserved."
   },
   "notFound": {
-    "title": "Partner not found",
-    "text": "This partner doesn't exist or the link is outdated.",
+    "title": "Page not found",
+    "text": "This page doesn't exist or the link is outdated.",
     "backHome": "Back to home"
   },
   "common": {

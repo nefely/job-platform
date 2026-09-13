@@ -1,10 +1,16 @@
 -- VV Work (job-platform) demo data.
+-- GENERATED FILE — do not edit by hand. Source of truth is
+-- supabase/seed-data.mjs; regenerate with `node supabase/generate-seed.mjs`.
+--
 -- Idempotent: safe to re-run (partners via `on conflict (slug) do nothing`,
 -- jobs via `where not exists` keyed on partner + English title).
 -- Run this AFTER schema.sql, in the Supabase SQL Editor.
 --
--- If you ran an earlier (pre-localization) version of this file, drop the
--- tables first and re-run schema.sql — see the note at the top of that file.
+-- If you're picking up the job-filters update (work_format/experience_level/
+-- required_languages, more jobs) on a database that already has the older
+-- 20-job dataset, run this first:
+--   delete from public.job_platform_jobs;
+-- (partners are untouched — this file only adds them via on-conflict-do-nothing)
 
 -- ---------------------------------------------------------------------------
 -- Partners
@@ -16,239 +22,121 @@ values
     'warsaw',
     array['logistics', 'drivers', 'manufacturing', 'construction', 'hospitality', 'it', 'other'],
     jsonb_build_object('uk', 'EuroLogistics Group', 'en', 'EuroLogistics Group', 'pl', 'EuroLogistics Group'),
-    jsonb_build_object(
-      'uk', 'Кадрове агентство повного циклу: підбираємо персонал для логістики, виробництва, будівництва, готельно-ресторанної сфери та IT по всій Європі.',
-      'en', 'Full-cycle staffing agency: we recruit for logistics, manufacturing, construction, hospitality and IT across Europe.',
-      'pl', 'Agencja rekrutacyjna pełnego cyklu: rekrutujemy do logistyki, produkcji, budownictwa, hotelarstwa i IT w całej Europie.'
-    )
+    jsonb_build_object('uk', 'Кадрове агентство повного циклу: підбираємо персонал для логістики, виробництва, будівництва, готельно-ресторанної сфери та IT по всій Європі.', 'en', 'Full-cycle staffing agency: we recruit for logistics, manufacturing, construction, hospitality and IT across Europe.', 'pl', 'Agencja rekrutacyjna pełnego cyklu: rekrutujemy do logistyki, produkcji, budownictwa, hotelarstwa i IT w całej Europie.')
   ),
   (
     'buildpro-europe',
     'gdansk',
     array['construction'],
     jsonb_build_object('uk', 'BuildPro Europe', 'en', 'BuildPro Europe', 'pl', 'BuildPro Europe'),
-    jsonb_build_object(
-      'uk', 'Будівельна компанія повного циклу — житлові та комерційні об''єкти в Польщі й Німеччині.',
-      'en', 'Full-cycle construction company — residential and commercial projects in Poland and Germany.',
-      'pl', 'Firma budowlana pełnego cyklu — obiekty mieszkalne i komercyjne w Polsce i Niemczech.'
-    )
+    jsonb_build_object('uk', 'Будівельна компанія повного циклу — житлові та комерційні об''єкти в Польщі й Німеччині.', 'en', 'Full-cycle construction company — residential and commercial projects in Poland and Germany.', 'pl', 'Firma budowlana pełnego cyklu — obiekty mieszkalne i komercyjne w Polsce i Niemczech.')
   ),
   (
     'hotel-alpina',
     'munich',
     array['hospitality'],
     jsonb_build_object('uk', 'Hotel Alpina Group', 'en', 'Hotel Alpina Group', 'pl', 'Hotel Alpina Group'),
-    jsonb_build_object(
-      'uk', 'Мережа готелів у Баварії — від рецепції до кухні, стабільна зайнятість цілий рік.',
-      'en', 'A hotel chain in Bavaria — from reception to kitchen, stable year-round employment.',
-      'pl', 'Sieć hoteli w Bawarii — od recepcji po kuchnię, stabilne zatrudnienie przez cały rok.'
-    )
+    jsonb_build_object('uk', 'Мережа готелів у Баварії — від рецепції до кухні, стабільна зайнятість цілий рік.', 'en', 'A hotel chain in Bavaria — from reception to kitchen, stable year-round employment.', 'pl', 'Sieć hoteli w Bawarii — od recepcji po kuchnię, stabilne zatrudnienie przez cały rok.')
   ),
   (
     'technova-solutions',
     'berlin',
     array['it'],
     jsonb_build_object('uk', 'TechNova Solutions', 'en', 'TechNova Solutions', 'pl', 'TechNova Solutions'),
-    jsonb_build_object(
-      'uk', 'IT-аутсорсинг та продуктова розробка — remote-friendly команди для проєктів у Європі.',
-      'en', 'IT outsourcing and product development — remote-friendly teams for projects across Europe.',
-      'pl', 'Outsourcing IT i rozwój produktów — zespoły przyjazne pracy zdalnej dla projektów w Europie.'
-    )
+    jsonb_build_object('uk', 'IT-аутсорсинг та продуктова розробка — remote-friendly команди для проєктів у Європі.', 'en', 'IT outsourcing and product development — remote-friendly teams for projects across Europe.', 'pl', 'Outsourcing IT i rozwój produktów — zespoły przyjazne pracy zdalnej dla projektów w Europie.')
   ),
   (
     'primefoods-manufacturing',
     'krakow',
     array['manufacturing'],
     jsonb_build_object('uk', 'PrimeFoods Manufacturing', 'en', 'PrimeFoods Manufacturing', 'pl', 'PrimeFoods Manufacturing'),
-    jsonb_build_object(
-      'uk', 'Харчове виробництво повного циклу, сучасні лінії, офіційне працевлаштування.',
-      'en', 'Full-cycle food manufacturing, modern production lines, official employment.',
-      'pl', 'Produkcja spożywcza pełnego cyklu, nowoczesne linie produkcyjne, legalne zatrudnienie.'
-    )
+    jsonb_build_object('uk', 'Харчове виробництво повного циклу, сучасні лінії, офіційне працевлаштування.', 'en', 'Full-cycle food manufacturing, modern production lines, official employment.', 'pl', 'Produkcja spożywcza pełnego cyklu, nowoczesne linie produkcyjne, legalne zatrudnienie.')
   ),
   (
     'allroles-staffing',
     'prague',
     array['other', 'logistics'],
     jsonb_build_object('uk', 'AllRoles Staffing', 'en', 'AllRoles Staffing', 'pl', 'AllRoles Staffing'),
-    jsonb_build_object(
-      'uk', 'Гнучкі підробітки та постійні вакансії без вимог до досвіду — від кур''єра до вантажника.',
-      'en', 'Flexible side jobs and permanent vacancies with no experience required — from courier to warehouse loader.',
-      'pl', 'Elastyczne dorywcze prace i stałe oferty bez wymaganego doświadczenia — od kuriera po magazyniera.'
-    )
+    jsonb_build_object('uk', 'Гнучкі підробітки та постійні вакансії без вимог до досвіду — від кур''єра до вантажника.', 'en', 'Flexible side jobs and permanent vacancies with no experience required — from courier to warehouse loader.', 'pl', 'Elastyczne dorywcze prace i stałe oferty bez wymaganego doświadczenia — od kuriera po magazyniera.')
   )
 on conflict (slug) do nothing;
 
 -- ---------------------------------------------------------------------------
--- Jobs
+-- Jobs (60)
 -- ---------------------------------------------------------------------------
 insert into public.job_platform_jobs
-  (partner_id, category, location_code, employment_type, salary_from, salary_to, currency, title, description)
+  (partner_id, category, location_code, employment_type, work_format, experience_level,
+   required_languages, salary_from, salary_to, currency, title, description)
 select
-  p.id,
-  v.category,
-  v.location_code,
-  v.employment_type,
-  v.salary_from,
-  v.salary_to,
-  v.currency,
+  p.id, v.category, v.location_code, v.employment_type, v.work_format, v.experience_level,
+  v.required_languages, v.salary_from, v.salary_to, v.currency,
   jsonb_build_object('uk', v.title_uk, 'en', v.title_en, 'pl', v.title_pl),
   jsonb_build_object('uk', v.description_uk, 'en', v.description_en, 'pl', v.description_pl)
 from (
   values
-    -- EuroLogistics Group — по одній-дві вакансії на кожну категорію
-    (
-      'euro-logistics', 'drivers', 'warsaw', 'full-time', 1800, 2400, 'EUR',
-      'Водій категорії CE (міжнародні рейси)', 'CE category driver (international routes)', 'Kierowca kat. CE (trasy międzynarodowe)',
-      'Регулярні міжнародні рейси по ЄС, власний тягач компанії, оплата палива й проживання.',
-      'Regular international routes across the EU, company-owned truck, fuel and accommodation covered.',
-      'Regularne trasy międzynarodowe po UE, ciągnik firmowy, opłacone paliwo i zakwaterowanie.'
-    ),
-    (
-      'euro-logistics', 'drivers', 'poznan', 'full-time', 1400, 1700, 'EUR',
-      'Водій-експедитор категорії B', 'Category B delivery driver', 'Kierowca-spedytor kat. B',
-      'Розвізка товару в межах міста та області, службовий автомобіль.',
-      'Local and regional deliveries, company vehicle provided.',
-      'Dostawy towaru w mieście i okolicy, samochód służbowy.'
-    ),
-    (
-      'euro-logistics', 'logistics', 'warsaw', 'full-time', 1300, 1500, 'EUR',
-      'Комплектувальник складу', 'Warehouse picker', 'Kompletator magazynowy',
-      'Прийом і комплектація замовлень на сучасному складі, навчання на місці.',
-      'Order receiving and picking at a modern warehouse, on-the-job training.',
-      'Przyjmowanie i kompletacja zamówień w nowoczesnym magazynie, szkolenie na miejscu.'
-    ),
-    (
-      'euro-logistics', 'logistics', 'warsaw', 'full-time', 1600, 2000, 'EUR',
-      'Диспетчер логістики', 'Logistics dispatcher', 'Dyspozytor logistyki',
-      'Координація маршрутів і водіїв, англійська на рівні B1.',
-      'Coordinating routes and drivers, English at B1 level.',
-      'Koordynacja tras i kierowców, angielski na poziomie B1.'
-    ),
-    (
-      'euro-logistics', 'construction', 'gdansk', 'seasonal', 1200, 1500, 'EUR',
-      'Різноробочий на будівництво', 'General construction laborer', 'Pracownik ogólnobudowlany',
-      'Загальнобудівельні роботи, сезонний контракт із можливістю продовження.',
-      'General construction work, seasonal contract with a chance of extension.',
-      'Prace ogólnobudowlane, kontrakt sezonowy z możliwością przedłużenia.'
-    ),
-    (
-      'euro-logistics', 'manufacturing', 'krakow', 'full-time', 1350, 1600, 'EUR',
-      'Оператор виробничої лінії', 'Production line operator', 'Operator linii produkcyjnej',
-      'Робота на автоматизованій лінії, позмінний графік.',
-      'Work on an automated line, shift schedule.',
-      'Praca przy zautomatyzowanej linii, harmonogram zmianowy.'
-    ),
-    (
-      'euro-logistics', 'hospitality', 'munich', 'part-time', 1100, 1400, 'EUR',
-      'Офіціант/-ка в готель', 'Hotel waiter/waitress', 'Kelner/-ka w hotelu',
-      'Обслуговування гостей ресторану при готелі, гнучкий графік.',
-      'Serving guests at the hotel restaurant, flexible schedule.',
-      'Obsługa gości restauracji hotelowej, elastyczny grafik.'
-    ),
-    (
-      'euro-logistics', 'it', 'berlin', 'full-time', 2200, 2800, 'EUR',
-      'Frontend-розробник (Junior)', 'Frontend Developer (Junior)', 'Programista Frontend (Junior)',
-      'React/TypeScript, віддалена робота, англомовна команда.',
-      'React/TypeScript, remote work, English-speaking team.',
-      'React/TypeScript, praca zdalna, zespół anglojęzyczny.'
-    ),
-    (
-      'euro-logistics', 'other', 'wroclaw', 'seasonal', 1100, 1300, 'EUR',
-      'Різноробочий (склад, логістика)', 'General worker (warehouse, logistics)', 'Pracownik ogólny (magazyn, logistyka)',
-      'Допоміжні роботи на складі, без досвіду, навчання на місці.',
-      'Auxiliary warehouse work, no experience required, on-the-job training.',
-      'Prace pomocnicze w magazynie, bez doświadczenia, szkolenie na miejscu.'
-    ),
-    (
-      'euro-logistics', 'hospitality', 'munich', 'full-time', 1500, 1900, 'EUR',
-      'Кухар', 'Cook', 'Kucharz/-rka',
-      'Кухня європейської мережі готелів, офіційне працевлаштування.',
-      'Kitchen of a European hotel chain, official employment.',
-      'Kuchnia europejskiej sieci hotelowej, legalne zatrudnienie.'
-    ),
-
-    -- BuildPro Europe
-    (
-      'buildpro-europe', 'construction', 'gdansk', 'full-time', 1600, 2000, 'EUR',
-      'Муляр', 'Bricklayer', 'Murarz',
-      'Мурування, монолітні роботи, досвід від 1 року.',
-      'Bricklaying, cast-in-place concrete work, 1+ year of experience.',
-      'Murowanie, prace żelbetowe, min. rok doświadczenia.'
-    ),
-    (
-      'buildpro-europe', 'construction', 'warsaw', 'full-time', 2000, 2600, 'EUR',
-      'Бригадир будівельної бригади', 'Construction crew foreman', 'Brygadzista budowlany',
-      'Керівництво бригадою 5-8 осіб, досвід від 3 років.',
-      'Leading a crew of 5-8 people, 3+ years of experience.',
-      'Kierowanie brygadą 5-8 osób, min. 3 lata doświadczenia.'
-    ),
-
-    -- Hotel Alpina Group
-    (
-      'hotel-alpina', 'hospitality', 'munich', 'full-time', 1300, 1500, 'EUR',
-      'Покоївка', 'Housekeeper', 'Pokojówka',
-      'Прибирання номерів, графік 5/2, проживання надається.',
-      'Room cleaning, 5/2 schedule, accommodation provided.',
-      'Sprzątanie pokoi, grafik 5/2, zapewnione zakwaterowanie.'
-    ),
-    (
-      'hotel-alpina', 'hospitality', 'salzburg', 'full-time', 1600, 1900, 'EUR',
-      'Адміністратор готелю', 'Hotel receptionist', 'Recepcjonista/-ka hotelowy/-a',
-      'Рецепція, англійська/німецька розмовна, робота позмінно.',
-      'Front desk, conversational English/German, shift work.',
-      'Recepcja, komunikatywny angielski/niemiecki, praca zmianowa.'
-    ),
-
-    -- TechNova Solutions
-    (
-      'technova-solutions', 'it', 'berlin', 'full-time', 2400, 3000, 'EUR',
-      'QA-інженер', 'QA Engineer', 'Inżynier QA',
-      'Мануальне й автоматизоване тестування веб-застосунків, remote.',
-      'Manual and automated testing of web applications, remote.',
-      'Testowanie manualne i automatyczne aplikacji webowych, zdalnie.'
-    ),
-    (
-      'technova-solutions', 'it', 'berlin', 'full-time', 3000, 3800, 'EUR',
-      'DevOps-інженер', 'DevOps Engineer', 'Inżynier DevOps',
-      'CI/CD, Docker/Kubernetes, remote-friendly.',
-      'CI/CD, Docker/Kubernetes, remote-friendly.',
-      'CI/CD, Docker/Kubernetes, przyjazne pracy zdalnej.'
-    ),
-
-    -- PrimeFoods Manufacturing
-    (
-      'primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 1250, 1450, 'EUR',
-      'Пакувальник на виробництві', 'Production packer', 'Pakowacz na produkcji',
-      'Пакування готової продукції, позмінний графік.',
-      'Packing finished products, shift schedule.',
-      'Pakowanie gotowych produktów, grafik zmianowy.'
-    ),
-    (
-      'primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 1800, 2200, 'EUR',
-      'Технолог харчового виробництва', 'Food production technologist', 'Technolog produkcji spożywczej',
-      'Контроль якості й техпроцесу, профільна освіта.',
-      'Quality and process control, relevant education required.',
-      'Kontrola jakości i procesu technologicznego, wykształcenie kierunkowe.'
-    ),
-
-    -- AllRoles Staffing
-    (
-      'allroles-staffing', 'other', 'prague', 'part-time', 1000, 1300, 'EUR',
-      'Кур''єр', 'Courier', 'Kurier',
-      'Доставка замовлень по місту, власний транспорт вітається.',
-      'Delivering orders around the city, own transport is a plus.',
-      'Dostawa zamówień po mieście, mile widziany własny transport.'
-    ),
-    (
-      'allroles-staffing', 'logistics', 'prague', 'full-time', 1200, 1400, 'EUR',
-      'Вантажник', 'Warehouse loader', 'Magazynier',
-      'Навантаження/розвантаження на складі, змінний графік.',
-      'Loading/unloading at the warehouse, shift schedule.',
-      'Załadunek/rozładunek w magazynie, grafik zmianowy.'
-    )
+  ('euro-logistics', 'drivers', 'warsaw', 'full-time', 'onsite', '3-5', array['en'], 1800, 2400, 'EUR', 'Водій категорії CE (міжнародні рейси)', 'CE category driver (international routes)', 'Kierowca kat. CE (trasy międzynarodowe)', 'Регулярні міжнародні рейси по маршрутах ЄС на сучасному тягачі компанії. Оплачуємо паливо, проживання та добові, надаємо GPS-навігацію і цілодобову диспетчерську підтримку. Очікуємо чинну категорію CE, картку водія та досвід міжнародних перевезень від 3 років.', 'Regular international routes across the EU on a modern company-owned truck. We cover fuel, accommodation and per diems, and provide GPS navigation with round-the-clock dispatcher support. Requires a valid category CE licence, a driver card, and at least 3 years of international hauling experience.', 'Regularne trasy międzynarodowe po UE nowoczesnym ciągnikiem firmowym. Pokrywamy paliwo, nocleg i diety, zapewniamy nawigację GPS oraz całodobowe wsparcie dyspozytora. Wymagane aktualne prawo jazdy kat. CE, karta kierowcy i min. 3 lata doświadczenia w transporcie międzynarodowym.'),
+  ('euro-logistics', 'drivers', 'poznan', 'full-time', 'onsite', '1-3', array['pl'], 1400, 1700, 'EUR', 'Водій-експедитор категорії B', 'Category B delivery driver', 'Kierowca-spedytor kat. B', 'Розвезення товару по місту та області на службовому авто категорії B. Графік 5/2, паливна картка компанії, підтримка логіста при плануванні маршруту. Потрібне посвідчення категорії B від 2 років і базове знання польської для спілкування з клієнтами.', 'City and regional deliveries in a category B company vehicle. 5/2 schedule, company fuel card, route planning support from our logistics team. Requires a category B licence held for 2+ years and basic Polish for talking to clients.', 'Rozwożenie towaru po mieście i okolicy samochodem służbowym kat. B. Grafik 5/2, karta paliwowa firmy, wsparcie logistyka przy planowaniu trasy. Wymagane prawo jazdy kat. B od 2 lat i podstawowa znajomość polskiego do kontaktu z klientami.'),
+  ('euro-logistics', 'logistics', 'warsaw', 'full-time', 'onsite', '0-1', array[]::text[], 1300, 1500, 'EUR', 'Комплектувальник складу', 'Warehouse picker', 'Kompletator magazynowy', 'Прийом, сортування та комплектація замовлень на сучасному автоматизованому складі. Навчання проводимо на місці протягом першого тижня, фізичне навантаження помірне (термінал збору даних, візок). Досвід не обов''язковий — головне уважність і готовність працювати позмінно.', 'Receiving, sorting and picking orders at a modern automated warehouse. On-the-job training during the first week, moderate physical workload (handheld scanner, trolley). No experience required — attentiveness and willingness to work shifts matter most.', 'Przyjmowanie, sortowanie i kompletacja zamówień w nowoczesnym, zautomatyzowanym magazynie. Szkolenie na miejscu w pierwszym tygodniu, umiarkowany wysiłek fizyczny (skaner, wózek). Doświadczenie niewymagane — liczy się uważność i gotowość do pracy zmianowej.'),
+  ('euro-logistics', 'logistics', 'warsaw', 'full-time', 'hybrid', '3-5', array['en'], 1600, 2000, 'EUR', 'Диспетчер логістики', 'Logistics dispatcher', 'Dyspozytor logistyki', 'Координація маршрутів і графіків 15-20 водіїв, оперативне вирішення форс-мажорів у дорозі, ведення звітності в TMS-системі. 2 дні на тиждень можна працювати віддалено. Потрібна впевнена англійська (рівень B1+) для спілкування із закордонними партнерами.', 'Coordinating routes and schedules for 15-20 drivers, resolving on-road issues in real time, keeping records in the TMS system. Two days a week can be worked remotely. Confident English (B1+) is needed for talking to partners abroad.', 'Koordynacja tras i grafików dla 15-20 kierowców, bieżące rozwiązywanie problemów w trasie, prowadzenie ewidencji w systemie TMS. Dwa dni w tygodniu pracy zdalnej. Wymagany pewny angielski (B1+) do kontaktu z partnerami zagranicznymi.'),
+  ('euro-logistics', 'construction', 'gdansk', 'seasonal', 'onsite', '0-1', array[]::text[], 1200, 1500, 'EUR', 'Різноробочий на будівництво', 'General construction laborer', 'Pracownik ogólnobudowlany', 'Загальнобудівельні роботи на об''єктах компанії-партнера: підготовка матеріалів, прибирання майданчика, допомога кваліфікованим робітникам. Сезонний контракт (квітень-жовтень) із реальною можливістю продовження на постійну зайнятість. Спецодяг і інструктаж з техніки безпеки надаються.', 'General construction work on partner sites: preparing materials, keeping the site tidy, assisting skilled workers. Seasonal contract (April-October) with a real chance of moving to permanent employment. Workwear and safety briefing provided.', 'Prace ogólnobudowlane na obiektach firmy partnerskiej: przygotowanie materiałów, porządkowanie placu budowy, pomoc wykwalifikowanym pracownikom. Kontrakt sezonowy (kwiecień-październik) z realną szansą na stałe zatrudnienie. Odzież robocza i szkolenie BHP zapewnione.'),
+  ('euro-logistics', 'manufacturing', 'krakow', 'full-time', 'onsite', '0-1', array[]::text[], 1350, 1600, 'EUR', 'Оператор виробничої лінії', 'Production line operator', 'Operator linii produkcyjnej', 'Обслуговування автоматизованої виробничої лінії: завантаження сировини, контроль якості на виході, усунення дрібних несправностей за інструкцією. Позмінний графік (день/ніч через тиждень), доплата за нічні зміни. Навчання на робочому місці.', 'Operating an automated production line: loading raw materials, checking output quality, clearing minor faults per the instructions. Shift schedule (day/night alternating weekly), night-shift bonus. On-the-job training provided.', 'Obsługa zautomatyzowanej linii produkcyjnej: załadunek surowca, kontrola jakości na wyjściu, usuwanie drobnych usterek wg instrukcji. Grafik zmianowy (dzień/noc na przemian), dodatek za zmiany nocne. Szkolenie na stanowisku.'),
+  ('euro-logistics', 'hospitality', 'munich', 'part-time', 'onsite', '0-1', array['de'], 1100, 1400, 'EUR', 'Офіціант/-ка в готель', 'Hotel waiter/waitress', 'Kelner/-ka w hotelu', 'Обслуговування гостей ресторану при готелі: сервірування, прийом замовлень, розрахунок. Гнучкий графік — підходить для суміщення з навчанням. Базова німецька (A2+) потрібна для спілкування з гостями та колегами.', 'Serving guests at the hotel restaurant: table setting, taking orders, billing. Flexible schedule — works well alongside studies. Basic German (A2+) needed to talk with guests and colleagues.', 'Obsługa gości restauracji hotelowej: nakrywanie do stołu, przyjmowanie zamówień, rozliczenia. Elastyczny grafik — dobrze łączy się z nauką. Wymagany podstawowy niemiecki (A2+) do kontaktu z gośćmi i zespołem.'),
+  ('euro-logistics', 'it', 'berlin', 'full-time', 'remote', '0-1', array['en'], 2200, 2800, 'EUR', 'Frontend-розробник (Junior)', 'Frontend Developer (Junior)', 'Programista Frontend (Junior)', 'Розробка й підтримка інтерфейсів на React/TypeScript у складі невеликої продуктової команди. Код-рев''ю, парне програмування з мідлами, поступове занурення в продакшн-код. Повністю віддалена робота, англомовна команда.', 'Building and maintaining interfaces in React/TypeScript within a small product team. Code reviews, pair programming with mid-level engineers, gradual ramp-up into the production codebase. Fully remote, English-speaking team.', 'Tworzenie i utrzymanie interfejsów w React/TypeScript w małym zespole produktowym. Code review, programowanie w parach z inżynierami mid-level, stopniowe wdrażanie się w kod produkcyjny. Praca w pełni zdalna, zespół anglojęzyczny.'),
+  ('euro-logistics', 'other', 'wroclaw', 'seasonal', 'onsite', '0-1', array[]::text[], 1100, 1300, 'EUR', 'Різноробочий (склад, логістика)', 'General worker (warehouse, logistics)', 'Pracownik ogólny (magazyn, logistyka)', 'Допоміжні роботи на складі: розвантаження фур, пакування, маркування товару. Без досвіду, повне навчання на місці, графік погоджується заздалегідь. Гарний варіант для першого досвіду роботи в логістиці.', 'Auxiliary warehouse work: unloading trucks, packing, labelling goods. No experience needed, full on-the-job training, schedule agreed in advance. A good first step into logistics work.', 'Prace pomocnicze w magazynie: rozładunek ciężarówek, pakowanie, etykietowanie towaru. Bez doświadczenia, pełne szkolenie na miejscu, grafik ustalany z wyprzedzeniem. Dobry start w pracy w logistyce.'),
+  ('euro-logistics', 'hospitality', 'munich', 'full-time', 'onsite', '1-3', array['de'], 1500, 1900, 'EUR', 'Кухар', 'Cook', 'Kucharz/-rka', 'Приготування страв європейської кухні на кухні мережевого готелю: підготовка інгредієнтів, контроль якості подачі, дотримання санітарних норм HACCP. Потрібен досвід роботи на кухні від 1 року та базова німецька для роботи в команді.', 'Preparing European cuisine dishes in a chain hotel''s kitchen: prepping ingredients, checking plating quality, following HACCP hygiene standards. Requires 1+ year of kitchen experience and basic German to work with the team.', 'Przygotowywanie dań kuchni europejskiej w kuchni hotelu sieciowego: przygotowanie składników, kontrola jakości podania, przestrzeganie norm HACCP. Wymagany min. rok doświadczenia w kuchni i podstawowy niemiecki do pracy w zespole.'),
+  ('euro-logistics', 'logistics', 'poznan', 'full-time', 'onsite', '1-3', array['pl'], 1400, 1650, 'EUR', 'Комірник', 'Warehouse keeper', 'Magazynier-ewidencjoner', 'Ведення обліку товару на складі, приймання й видача продукції з WMS-системою, інвентаризація раз на місяць. Потрібен досвід роботи комірником від 1 року й впевнене користування комп''ютером.', 'Tracking warehouse stock, receiving and issuing goods through a WMS system, monthly stocktaking. Requires 1+ year of experience as a warehouse keeper and confident computer skills.', 'Prowadzenie ewidencji towaru w magazynie, przyjmowanie i wydawanie towaru w systemie WMS, inwentaryzacja raz w miesiącu. Wymagany min. rok doświadczenia na stanowisku magazyniera i pewna obsługa komputera.'),
+  ('euro-logistics', 'other', 'warsaw', 'full-time', 'hybrid', '1-3', array['en', 'pl'], 1900, 2400, 'EUR', 'HR-спеціаліст із підбору персоналу', 'HR Recruiter', 'Specjalista ds. rekrutacji', 'Повний цикл підбору персоналу для клієнтів агентства: складання вакансій, скринінг резюме, співбесіди, супровід кандидата до виходу на роботу. 2-3 дні в офісі, решта — віддалено. Потрібна англійська В1+ і польська для спілкування з роботодавцями.', 'Full-cycle recruitment for agency clients: writing job ads, screening CVs, interviewing, supporting candidates through onboarding. 2-3 office days, the rest remote. Requires English B1+ and Polish to talk with employers.', 'Pełny cykl rekrutacji dla klientów agencji: tworzenie ogłoszeń, screening CV, rozmowy kwalifikacyjne, wsparcie kandydata do momentu zatrudnienia. 2-3 dni w biurze, reszta zdalnie. Wymagany angielski B1+ i polski do kontaktu z pracodawcami.'),
+  ('euro-logistics', 'logistics', 'wroclaw', 'full-time', 'onsite', '1-3', array[]::text[], 1450, 1700, 'EUR', 'Водій навантажувача', 'Forklift driver', 'Kierowca wózka widłowego', 'Робота на електронавантажувачі на складі: переміщення палет, завантаження й розвантаження транспорту. Потрібне чинне посвідчення водія навантажувача й досвід від 1 року.', 'Operating an electric forklift in a warehouse: moving pallets, loading and unloading trucks. Requires a valid forklift licence and 1+ year of experience.', 'Praca na wózku widłowym elektrycznym w magazynie: przemieszczanie palet, załadunek i rozładunek transportu. Wymagane aktualne uprawnienia na wózki widłowe i min. rok doświadczenia.'),
+  ('euro-logistics', 'construction', 'berlin', 'project', 'hybrid', '5+', array['en', 'de'], 2600, 3200, 'EUR', 'Проєктний менеджер (будівництво, тимчасовий проєкт)', 'Construction Project Manager (temporary project)', 'Kierownik projektu budowlanego (projekt tymczasowy)', 'Керівництво тимчасовим будівельним проєктом тривалістю 8 місяців: планування етапів, координація підрядників, звітність перед замовником. Контракт на строк проєкту з можливістю продовження на новий об''єкт. Потрібні англійська й німецька на робочому рівні.', 'Leading an 8-month temporary construction project: phase planning, coordinating contractors, reporting to the client. Contract for the project''s duration with a chance to move to the next site. Working-level English and German required.', 'Kierowanie tymczasowym projektem budowlanym trwającym 8 miesięcy: planowanie etapów, koordynacja podwykonawców, raportowanie do klienta. Kontrakt na czas projektu z możliwością przejścia na kolejny obiekt. Wymagany angielski i niemiecki na poziomie roboczym.'),
+  ('euro-logistics', 'logistics', 'warsaw', 'project', 'remote', '0-1', array['en'], 1300, 1600, 'EUR', 'Аналітик з логістики (проєктна зайнятість)', 'Logistics Analyst (project-based)', 'Analityk logistyki (zatrudnienie projektowe)', 'Аналіз маршрутів і витрат на перевезення, побудова звітів у Excel/Power BI, пропозиції з оптимізації логістичних витрат. Проєктна зайнятість на 3 місяці, повністю віддалено, гнучкий графік — підходить студентам.', 'Analysing routes and shipping costs, building reports in Excel/Power BI, proposing ways to optimise logistics spend. 3-month project engagement, fully remote, flexible schedule — suitable for students.', 'Analiza tras i kosztów transportu, tworzenie raportów w Excel/Power BI, propozycje optymalizacji kosztów logistycznych. Zaangażowanie projektowe na 3 miesiące, w pełni zdalnie, elastyczny grafik — odpowiednie dla studentów.'),
+  ('buildpro-europe', 'construction', 'gdansk', 'full-time', 'onsite', '1-3', array[]::text[], 1600, 2000, 'EUR', 'Муляр', 'Bricklayer', 'Murarz', 'Мурування стін і перегородок, монолітні роботи на житлових об''єктах. Працюємо за кресленнями, у команді з 4-6 осіб. Потрібен досвід від 1 року та власний ручний інструмент.', 'Bricklaying walls and partitions, cast-in-place concrete work on residential sites. We work from blueprints, in teams of 4-6. Requires 1+ year of experience and your own hand tools.', 'Murowanie ścian i przegród, prace żelbetowe na obiektach mieszkalnych. Pracujemy według rysunków, w zespołach 4-6 osób. Wymagany min. rok doświadczenia i własne narzędzia ręczne.'),
+  ('buildpro-europe', 'construction', 'warsaw', 'full-time', 'onsite', '3-5', array['pl'], 2000, 2600, 'EUR', 'Бригадир будівельної бригади', 'Construction crew foreman', 'Brygadzista budowlany', 'Керівництво бригадою 5-8 осіб на об''єкті: розподіл завдань, контроль якості й термінів, взаємодія з прорабом. Потрібен досвід керівництва бригадою від 3 років і польська на розмовному рівні.', 'Leading a crew of 5-8 people on site: assigning tasks, controlling quality and deadlines, liaising with the site manager. Requires 3+ years leading a crew and conversational Polish.', 'Kierowanie brygadą 5-8 osób na budowie: przydzielanie zadań, kontrola jakości i terminów, kontakt z kierownikiem budowy. Wymagane min. 3 lata doświadczenia w kierowaniu brygadą i komunikatywny polski.'),
+  ('buildpro-europe', 'construction', 'gdansk', 'full-time', 'onsite', '1-3', array[]::text[], 1700, 2100, 'EUR', 'Електрик на будівництві', 'Construction electrician', 'Elektryk budowlany', 'Монтаж та підключення електропроводки на об''єктах житлового будівництва, читання електросхем, тестування мереж. Потрібна кваліфікація електрика й досвід від 1 року.', 'Installing and connecting wiring on residential construction sites, reading electrical schematics, testing networks. Requires an electrician qualification and 1+ year of experience.', 'Montaż i podłączanie instalacji elektrycznej na obiektach mieszkaniowych, czytanie schematów elektrycznych, testowanie sieci. Wymagane uprawnienia elektryka i min. rok doświadczenia.'),
+  ('buildpro-europe', 'construction', 'warsaw', 'full-time', 'onsite', '1-3', array[]::text[], 1650, 2000, 'EUR', 'Сантехнік', 'Plumber', 'Hydraulik', 'Монтаж систем опалення, водопостачання й каналізації на нових об''єктах. Робота за проєктною документацією, командою з досвідченим майстром. Досвід від 1 року вітається.', 'Installing heating, water supply and sewage systems on new sites. Work follows project documentation, alongside an experienced foreman. 1+ year of experience is a plus.', 'Montaż instalacji grzewczych, wodociągowych i kanalizacyjnych na nowych obiektach. Praca według dokumentacji projektowej, w zespole z doświadczonym majstrem. Mile widziany min. rok doświadczenia.'),
+  ('buildpro-europe', 'construction', 'wroclaw', 'project', 'onsite', '0-1', array[]::text[], 1250, 1500, 'EUR', 'Різноробочий (внутрішні роботи)', 'General laborer (interior finishing)', 'Pracownik ogólny (wykończenia wnętrz)', 'Допоміжні роботи на етапі внутрішнього оздоблення: підготовка поверхонь, прибирання, підноска матеріалів. Проєктна зайнятість на конкретний об''єкт (~4 місяці), без досвіду.', 'Auxiliary work at the interior-finishing stage: surface prep, cleanup, carrying materials. Project-based work for a specific site (~4 months), no experience required.', 'Prace pomocnicze na etapie wykończenia wnętrz: przygotowanie powierzchni, sprzątanie, przenoszenie materiałów. Zatrudnienie projektowe na konkretny obiekt (~4 miesiące), bez doświadczenia.'),
+  ('buildpro-europe', 'construction', 'gdansk', 'full-time', 'onsite', '3-5', array[]::text[], 2100, 2600, 'EUR', 'Кранівник (баштовий кран)', 'Tower crane operator', 'Operator żurawia wieżowego', 'Робота на баштовому крані на будівельному майданчику: підйом і переміщення вантажів за вказівками стропальника, щоденний огляд механізмів. Потрібне чинне посвідчення кранівника й досвід від 3 років.', 'Operating a tower crane on the construction site: lifting and moving loads per the rigger''s signals, daily equipment checks. Requires a valid crane operator licence and 3+ years of experience.', 'Praca na żurawiu wieżowym na placu budowy: podnoszenie i przenoszenie ładunków wg wskazówek hakowego, codzienny przegląd urządzeń. Wymagane aktualne uprawnienia operatora żurawia i min. 3 lata doświadczenia.'),
+  ('buildpro-europe', 'construction', 'warsaw', 'full-time', 'hybrid', '3-5', array['pl', 'en'], 2300, 2900, 'EUR', 'Кошторисник (будівництво)', 'Construction cost estimator', 'Kosztorysant budowlany', 'Складання кошторисної документації за проєктами, аналіз тендерної документації, взаємодія з постачальниками матеріалів. 3 дні в офісі, 2 — віддалено. Потрібен досвід кошторисника від 2 років.', 'Preparing cost estimates for projects, analysing tender documentation, liaising with material suppliers. 3 office days, 2 remote. Requires 2+ years as a cost estimator.', 'Sporządzanie kosztorysów dla projektów, analiza dokumentacji przetargowej, kontakt z dostawcami materiałów. 3 dni w biurze, 2 zdalnie. Wymagane min. 2 lata doświadczenia jako kosztorysant.'),
+  ('buildpro-europe', 'construction', 'wroclaw', 'part-time', 'onsite', '0-1', array[]::text[], 1150, 1400, 'EUR', 'Опоряджувальник (малярні роботи)', 'Painter/finisher', 'Malarz-wykończeniowiec', 'Фарбування стін і стель, шпаклювання дрібних дефектів на об''єктах, що здаються в оренду. Гнучкий графік, оплата за виконаний обсяг або погодинно на вибір.', 'Painting walls and ceilings, patching minor defects on properties being prepared for rent. Flexible schedule, paid per completed scope or hourly, your choice.', 'Malowanie ścian i sufitów, szpachlowanie drobnych ubytków na obiektach przygotowywanych pod wynajem. Elastyczny grafik, płatność za wykonany zakres lub godzinowo do wyboru.'),
+  ('buildpro-europe', 'construction', 'gdansk', 'full-time', 'onsite', '3-5', array['pl'], 2000, 2500, 'EUR', 'Інженер з охорони праці (будівництво)', 'Construction safety engineer', 'Inżynier BHP (budownictwo)', 'Контроль дотримання норм безпеки на будмайданчику, проведення інструктажів, розслідування інцидентів. Потрібен сертифікат з охорони праці й досвід у будівництві від 2 років.', 'Monitoring safety compliance on the construction site, running briefings, investigating incidents. Requires an occupational safety certificate and 2+ years in construction.', 'Kontrola przestrzegania zasad BHP na budowie, prowadzenie szkoleń, badanie zdarzeń. Wymagany certyfikat BHP i min. 2 lata doświadczenia w budownictwie.'),
+  ('hotel-alpina', 'hospitality', 'munich', 'full-time', 'onsite', '0-1', array[]::text[], 1300, 1500, 'EUR', 'Покоївка', 'Housekeeper', 'Pokojówka', 'Прибирання та підготовка номерів до заїзду гостей, заміна білизни, поповнення міні-бару. Графік 5/2, змінний. Проживання надається за потреби, без досвіду.', 'Cleaning and preparing rooms for guest check-in, changing linens, restocking the minibar. 5/2 rotating schedule. Accommodation provided if needed, no experience required.', 'Sprzątanie i przygotowanie pokoi na przyjazd gości, wymiana pościeli, uzupełnianie minibaru. Grafik 5/2, zmianowy. Zakwaterowanie w razie potrzeby, bez doświadczenia.'),
+  ('hotel-alpina', 'hospitality', 'salzburg', 'full-time', 'onsite', '1-3', array['en', 'de'], 1600, 1900, 'EUR', 'Адміністратор готелю', 'Hotel receptionist', 'Recepcjonista/-ka hotelowy/-a', 'Заселення й виселення гостей, обробка бронювань, вирішення питань під час перебування. Робота позмінно, включно з вихідними. Потрібна англійська й німецька на розмовному рівні.', 'Checking guests in and out, handling bookings, resolving issues during their stay. Shift work, including weekends. Requires conversational English and German.', 'Zameldowanie i wymeldowanie gości, obsługa rezerwacji, rozwiązywanie spraw w trakcie pobytu. Praca zmianowa, w tym w weekendy. Wymagany komunikatywny angielski i niemiecki.'),
+  ('hotel-alpina', 'hospitality', 'munich', 'full-time', 'onsite', '1-3', array['de'], 1500, 1900, 'EUR', 'Кухар', 'Cook', 'Kucharz/-rka', 'Приготування страв для ресторану готелю за затвердженим меню, контроль термінів придатності продуктів. Потрібен досвід роботи на кухні від 1 року.', 'Preparing dishes for the hotel restaurant per the approved menu, tracking product shelf life. Requires 1+ year of kitchen experience.', 'Przygotowywanie dań do restauracji hotelowej według zatwierdzonego menu, kontrola terminów przydatności produktów. Wymagany min. rok doświadczenia w kuchni.'),
+  ('hotel-alpina', 'hospitality', 'munich', 'part-time', 'onsite', '0-1', array['de'], 1100, 1350, 'EUR', 'Офіціант/-ка', 'Waiter/waitress', 'Kelner/-ka', 'Обслуговування гостей у ресторані готелю під час сніданків і вечері, сервірування столів. Часткова зайнятість, зручно для студентів. Базова німецька потрібна.', 'Serving guests at the hotel restaurant during breakfast and dinner, setting tables. Part-time, convenient for students. Basic German required.', 'Obsługa gości w restauracji hotelowej podczas śniadań i kolacji, nakrywanie stołów. Praca w niepełnym wymiarze, wygodna dla studentów. Wymagany podstawowy niemiecki.'),
+  ('hotel-alpina', 'hospitality', 'munich', 'full-time', 'onsite', '1-3', array['de'], 1550, 1850, 'EUR', 'Портьє (нічна зміна)', 'Night porter', 'Portier (zmiana nocna)', 'Прийом гостей у нічну зміну, обробка пізніх заїздів, контроль безпеки будівлі. Доплата за нічні години. Потрібен досвід на рецепції від 1 року.', 'Welcoming guests on the night shift, handling late check-ins, monitoring building security. Night-shift bonus paid. Requires 1+ year of front-desk experience.', 'Przyjmowanie gości na nocnej zmianie, obsługa późnych zameldowań, dbanie o bezpieczeństwo budynku. Dodatek za godziny nocne. Wymagany min. rok doświadczenia na recepcji.'),
+  ('hotel-alpina', 'hospitality', 'salzburg', 'full-time', 'onsite', '3-5', array['de'], 2000, 2400, 'EUR', 'Керівник служби покоївок', 'Head housekeeper', 'Kierownik służby pięter', 'Організація роботи команди покоївок (8-10 осіб), контроль якості прибирання, розподіл змін. Потрібен досвід керівництва командою від 2 років і німецька на робочому рівні.', 'Organising the housekeeping team''s work (8-10 people), quality control of cleaning, shift scheduling. Requires 2+ years of team leadership and working-level German.', 'Organizacja pracy zespołu pokojówek (8-10 osób), kontrola jakości sprzątania, układanie grafiku zmian. Wymagane min. 2 lata doświadczenia w kierowaniu zespołem i niemiecki na poziomie roboczym.'),
+  ('hotel-alpina', 'hospitality', 'munich', 'part-time', 'onsite', '0-1', array['de'], 1150, 1400, 'EUR', 'Бармен/-ка', 'Bartender', 'Barman/-ka', 'Приготування напоїв у готельному барі, обслуговування гостей увечері та на заходах. Гнучкий графік, навчання рецептурі на місці.', 'Preparing drinks at the hotel bar, serving guests in the evenings and at events. Flexible schedule, recipe training provided on the job.', 'Przygotowywanie napojów w barze hotelowym, obsługa gości wieczorami i na wydarzeniach. Elastyczny grafik, szkolenie z receptur na miejscu.'),
+  ('hotel-alpina', 'hospitality', 'munich', 'full-time', 'remote', '1-3', array['de', 'en'], 1500, 1800, 'EUR', 'Спеціаліст з бронювання (кол-центр)', 'Reservations specialist (call centre)', 'Specjalista ds. rezerwacji (call center)', 'Обробка запитів на бронювання номерів телефоном і поштою, консультування щодо тарифів і послуг. Повністю віддалена робота. Потрібні німецька й англійська на розмовному рівні.', 'Handling room-booking enquiries by phone and email, advising on rates and services. Fully remote. Requires conversational German and English.', 'Obsługa zapytań o rezerwacje pokoi telefonicznie i mailowo, doradztwo w zakresie cen i usług. Praca w pełni zdalna. Wymagany komunikatywny niemiecki i angielski.'),
+  ('hotel-alpina', 'hospitality', 'salzburg', 'seasonal', 'onsite', '0-1', array[]::text[], 1200, 1450, 'EUR', 'Садівник/доглядач території', 'Groundskeeper', 'Ogrodnik terenów zielonych', 'Догляд за прилеглою територією готелю: газони, клумби, доріжки. Сезонна робота (березень-жовтень), інструмент надається.', 'Maintaining the hotel grounds: lawns, flower beds, footpaths. Seasonal work (March-October), tools provided.', 'Dbanie o teren wokół hotelu: trawniki, klomby, alejki. Praca sezonowa (marzec-październik), narzędzia zapewnione.'),
+  ('technova-solutions', 'it', 'berlin', 'full-time', 'remote', '1-3', array['en'], 2400, 3000, 'EUR', 'QA-інженер', 'QA Engineer', 'Inżynier QA', 'Мануальне й автоматизоване тестування вебзастосунків, написання тест-кейсів, взаємодія з розробниками при виправленні багів. Повністю віддалено. Потрібен досвід у QA від 1 року й англійська B1+.', 'Manual and automated testing of web applications, writing test cases, working with developers on bug fixes. Fully remote. Requires 1+ year in QA and English B1+.', 'Testowanie manualne i automatyczne aplikacji webowych, pisanie przypadków testowych, współpraca z programistami przy naprawie błędów. Praca w pełni zdalna. Wymagany min. rok doświadczenia w QA i angielski B1+.'),
+  ('technova-solutions', 'it', 'berlin', 'full-time', 'remote', '3-5', array['en'], 3000, 3800, 'EUR', 'DevOps-інженер', 'DevOps Engineer', 'Inżynier DevOps', 'Підтримка CI/CD-пайплайнів, адміністрування Docker/Kubernetes-кластерів, моніторинг продакшн-середовища. Досвід від 3 років, впевнена англійська для роботи в розподіленій команді.', 'Maintaining CI/CD pipelines, administering Docker/Kubernetes clusters, monitoring production. 3+ years of experience, confident English for a distributed team.', 'Utrzymanie pipeline''ów CI/CD, administrowanie klastrami Docker/Kubernetes, monitorowanie środowiska produkcyjnego. Min. 3 lata doświadczenia, pewny angielski do pracy w zespole rozproszonym.'),
+  ('technova-solutions', 'it', 'berlin', 'full-time', 'remote', '1-3', array['en'], 2600, 3200, 'EUR', 'Backend-розробник (Node.js)', 'Backend Developer (Node.js)', 'Programista Backend (Node.js)', 'Розробка REST/GraphQL API на Node.js/TypeScript, проєктування схем бази даних, код-рев''ю. Продуктова команда з 6 розробників, повністю віддалено.', 'Building REST/GraphQL APIs in Node.js/TypeScript, designing database schemas, code reviews. Product team of 6 engineers, fully remote.', 'Tworzenie API REST/GraphQL w Node.js/TypeScript, projektowanie schematów bazy danych, code review. Zespół produktowy liczący 6 inżynierów, w pełni zdalnie.'),
+  ('technova-solutions', 'it', 'berlin', 'full-time', 'hybrid', '3-5', array['en', 'de'], 3200, 4000, 'EUR', 'Product Manager (SaaS-продукт)', 'Product Manager (SaaS product)', 'Product Manager (produkt SaaS)', 'Формування бекложу продукту, пріоритизація фіч на основі метрик і фідбеку клієнтів, взаємодія з дизайном і розробкою. 2 дні в офісі в Берліні. Потрібен досвід продакт-менеджменту від 3 років.', 'Shaping the product backlog, prioritising features based on metrics and customer feedback, working with design and engineering. 2 office days in Berlin. Requires 3+ years of product management experience.', 'Kształtowanie backlogu produktu, priorytetyzacja funkcji na podstawie metryk i opinii klientów, współpraca z designem i inżynierią. 2 dni w biurze w Berlinie. Wymagane min. 3 lata doświadczenia w product management.'),
+  ('technova-solutions', 'it', 'berlin', 'full-time', 'remote', '1-3', array['en'], 2200, 2700, 'EUR', 'UI/UX-дизайнер', 'UI/UX Designer', 'Projektant UI/UX', 'Проєктування інтерфейсів SaaS-продукту у Figma, проведення юзабіліті-тестів, підтримка дизайн-системи. Портфоліо обов''язкове. Повністю віддалено.', 'Designing SaaS product interfaces in Figma, running usability tests, maintaining the design system. Portfolio required. Fully remote.', 'Projektowanie interfejsów produktu SaaS w Figmie, przeprowadzanie testów użyteczności, utrzymanie systemu projektowego. Wymagane portfolio. Praca w pełni zdalna.'),
+  ('technova-solutions', 'it', 'berlin', 'full-time', 'hybrid', '0-1', array['en'], 1900, 2300, 'EUR', 'Junior Data Analyst', 'Junior Data Analyst', 'Junior Data Analyst', 'Аналіз продуктових метрик у SQL/Python, побудова дашбордів, підготовка щотижневих звітів для команди. Наставник на перші 3 місяці. 1 день в офісі.', 'Analysing product metrics in SQL/Python, building dashboards, preparing weekly reports for the team. Mentor assigned for the first 3 months. 1 office day.', 'Analiza metryk produktowych w SQL/Python, tworzenie dashboardów, przygotowywanie cotygodniowych raportów dla zespołu. Mentor przez pierwsze 3 miesiące. 1 dzień w biurze.'),
+  ('technova-solutions', 'it', 'berlin', 'part-time', 'remote', '1-3', array['en'], 1800, 2200, 'EUR', 'Технічний письменник', 'Technical Writer', 'Technical Writer', 'Написання й підтримка технічної документації для API та SDK, співпраця з розробниками для перевірки точності. Часткова зайнятість, повністю віддалено.', 'Writing and maintaining technical documentation for APIs and SDKs, working with engineers to verify accuracy. Part-time, fully remote.', 'Pisanie i utrzymanie dokumentacji technicznej dla API i SDK, współpraca z inżynierami w celu weryfikacji poprawności. Praca w niepełnym wymiarze, w pełni zdalna.'),
+  ('technova-solutions', 'it', 'berlin', 'full-time', 'onsite', '0-1', array['en', 'de'], 1900, 2200, 'EUR', 'IT Support Engineer (Level 1)', 'IT Support Engineer (Level 1)', 'IT Support Engineer (Level 1)', 'Технічна підтримка співробітників офісу: налаштування робочих станцій, вирішення заявок у service desk, базове адміністрування Windows/macOS. Потрібна англійська й німецька на базовому рівні.', 'Technical support for office staff: setting up workstations, resolving service desk tickets, basic Windows/macOS administration. Requires basic English and German.', 'Wsparcie techniczne pracowników biura: konfiguracja stacji roboczych, obsługa zgłoszeń w service desk, podstawowa administracja Windows/macOS. Wymagany podstawowy angielski i niemiecki.'),
+  ('technova-solutions', 'it', 'berlin', 'project', 'remote', '0-1', array['en'], 1200, 1500, 'EUR', 'Software Engineering Intern (стажування)', 'Software Engineering Intern', 'Stażysta Software Engineering', '3-місячне оплачуване стажування в команді розробки: робота над реальними задачами під керівництвом ментора, щотижневий фідбек. Підходить студентам технічних спеціальностей.', 'A 3-month paid internship on the engineering team: working on real tasks under a mentor''s guidance, weekly feedback. Suitable for students in technical fields.', '3-miesięczny płatny staż w zespole inżynierskim: praca nad realnymi zadaniami pod okiem mentora, cotygodniowy feedback. Odpowiedni dla studentów kierunków technicznych.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 'onsite', '0-1', array[]::text[], 1250, 1450, 'EUR', 'Пакувальник на виробництві', 'Production packer', 'Pakowacz na produkcji', 'Пакування готової продукції на автоматизованій лінії, контроль ваги й маркування упаковки. Позмінний графік, без досвіду, навчання на місці.', 'Packing finished products on an automated line, checking pack weight and labelling. Shift schedule, no experience needed, on-the-job training.', 'Pakowanie gotowych produktów na zautomatyzowanej linii, kontrola wagi i etykietowanie opakowań. Grafik zmianowy, bez doświadczenia, szkolenie na miejscu.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 'onsite', '3-5', array['pl'], 1800, 2200, 'EUR', 'Технолог харчового виробництва', 'Food production technologist', 'Technolog produkcji spożywczej', 'Контроль дотримання технологічного процесу і якості на всіх етапах виробництва, розробка й коригування рецептур. Профільна освіта обов''язкова, досвід від 2 років.', 'Ensuring the process and quality standards are followed at every production stage, developing and adjusting recipes. Relevant education required, 2+ years of experience.', 'Kontrola przestrzegania procesu technologicznego i jakości na każdym etapie produkcji, opracowywanie i korygowanie receptur. Wymagane wykształcenie kierunkowe, min. 2 lata doświadczenia.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 'onsite', '0-1', array[]::text[], 1300, 1550, 'EUR', 'Оператор лінії розливу', 'Bottling line operator', 'Operator linii rozlewniczej', 'Обслуговування лінії розливу напоїв: налаштування обладнання, контроль якості тари, усунення дрібних несправностей. Навчання на робочому місці.', 'Operating a beverage bottling line: setting up equipment, checking container quality, clearing minor faults. On-the-job training.', 'Obsługa linii rozlewniczej napojów: ustawianie sprzętu, kontrola jakości opakowań, usuwanie drobnych usterek. Szkolenie na stanowisku pracy.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'part-time', 'onsite', '0-1', array[]::text[], 1050, 1250, 'EUR', 'Санітар виробничих приміщень', 'Production facility cleaner', 'Pracownik sanitarny hali produkcyjnej', 'Прибирання й дезінфекція виробничих і складських приміщень відповідно до стандартів харчової безпеки. Часткова зайнятість, гнучкий графік.', 'Cleaning and disinfecting production and storage areas per food-safety standards. Part-time, flexible schedule.', 'Sprzątanie i dezynfekcja pomieszczeń produkcyjnych i magazynowych zgodnie ze standardami bezpieczeństwa żywności. Praca w niepełnym wymiarze, elastyczny grafik.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 'onsite', '1-3', array[]::text[], 1700, 2100, 'EUR', 'Механік з обслуговування обладнання', 'Equipment maintenance mechanic', 'Mechanik utrzymania ruchu', 'Плановий і аварійний ремонт виробничого обладнання, ведення журналу обслуговування. Потрібна технічна освіта й досвід від 1 року.', 'Scheduled and emergency repair of production equipment, keeping a maintenance log. Requires technical education and 1+ year of experience.', 'Planowe i awaryjne naprawy sprzętu produkcyjnego, prowadzenie dziennika serwisowego. Wymagane wykształcenie techniczne i min. rok doświadczenia.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 'onsite', '1-3', array['pl'], 1600, 1950, 'EUR', 'Контролер якості (ВТК)', 'Quality control inspector', 'Kontroler jakości', 'Перевірка сировини та готової продукції на відповідність стандартам якості, оформлення протоколів невідповідностей. Потрібна увага до деталей і базова польська.', 'Checking raw materials and finished products against quality standards, documenting non-conformance reports. Requires attention to detail and basic Polish.', 'Kontrola surowców i gotowych produktów pod kątem zgodności ze standardami jakości, dokumentowanie niezgodności. Wymagana skrupulatność i podstawowy polski.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 'hybrid', '1-3', array['pl'], 1750, 2100, 'EUR', 'Логіст складу готової продукції', 'Finished-goods warehouse logistician', 'Logistyk magazynu wyrobów gotowych', 'Планування відвантажень готової продукції, взаємодія з перевізниками, ведення складського обліку. 1 день на тиждень можна працювати з дому.', 'Planning finished-goods shipments, liaising with carriers, keeping warehouse records. One day a week can be worked from home.', 'Planowanie wysyłek gotowych produktów, kontakt z przewoźnikami, prowadzenie ewidencji magazynowej. Jeden dzień w tygodniu pracy z domu.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'project', 'onsite', '0-1', array[]::text[], 1100, 1350, 'EUR', 'Стажист-технолог (виробнича практика)', 'Technologist intern (production placement)', 'Stażysta-technolog (praktyka produkcyjna)', '3-місячна практика у виробничому відділі: участь у контролі якості, документування процесів під керівництвом технолога. Підходить студентам харчових спеціальностей.', 'A 3-month placement in the production department: assisting with quality control, documenting processes under a technologist''s guidance. Suitable for food-science students.', '3-miesięczna praktyka w dziale produkcji: udział w kontroli jakości, dokumentowanie procesów pod okiem technologa. Odpowiednia dla studentów kierunków spożywczych.'),
+  ('primefoods-manufacturing', 'manufacturing', 'krakow', 'full-time', 'onsite', '1-3', array[]::text[], 1450, 1700, 'EUR', 'Оператор автонавантажувача (виробництво)', 'Forklift operator (production)', 'Operator wózka widłowego (produkcja)', 'Переміщення сировини й готової продукції складом на електронавантажувачі. Потрібне чинне посвідчення й досвід від 1 року.', 'Moving raw materials and finished goods around the warehouse on an electric forklift. Requires a valid licence and 1+ year of experience.', 'Przemieszczanie surowców i gotowych produktów po magazynie wózkiem widłowym elektrycznym. Wymagane aktualne uprawnienia i min. rok doświadczenia.'),
+  ('allroles-staffing', 'other', 'prague', 'part-time', 'onsite', '0-1', array[]::text[], 1000, 1300, 'EUR', 'Кур''єр', 'Courier', 'Kurier', 'Доставка замовлень по місту на власному або наданому транспорті, підтвердження отримання через застосунок. Гнучкий графік, оплата за доставку плюс бонуси.', 'Delivering orders around the city on your own or provided transport, confirming delivery via the app. Flexible schedule, paid per delivery plus bonuses.', 'Dostawa zamówień po mieście własnym lub udostępnionym transportem, potwierdzanie dostawy w aplikacji. Elastyczny grafik, płatność za dostawę plus premie.'),
+  ('allroles-staffing', 'logistics', 'prague', 'full-time', 'onsite', '0-1', array[]::text[], 1200, 1400, 'EUR', 'Вантажник', 'Warehouse loader', 'Magazynier', 'Навантаження й розвантаження товару на складі та в торгових точках, переміщення важких предметів (до 25 кг). Змінний графік.', 'Loading and unloading goods at the warehouse and retail locations, moving heavy items (up to 25 kg). Shift schedule.', 'Załadunek i rozładunek towaru w magazynie i punktach sprzedaży, przenoszenie ciężkich przedmiotów (do 25 kg). Grafik zmianowy.'),
+  ('allroles-staffing', 'other', 'prague', 'part-time', 'onsite', '0-1', array[]::text[], 900, 1150, 'EUR', 'Прибиральник/-ця офісних приміщень', 'Office cleaner', 'Sprzątacz/-ka biur', 'Прибирання офісних приміщень у вечірні години після закінчення робочого дня орендарів. Гнучкий графік, підходить для суміщення.', 'Cleaning office premises in the evening after tenants finish their working day. Flexible schedule, suits a side job.', 'Sprzątanie pomieszczeń biurowych wieczorem po zakończeniu dnia pracy najemców. Elastyczny grafik, odpowiedni jako praca dodatkowa.'),
+  ('allroles-staffing', 'other', 'prague', 'part-time', 'onsite', '0-1', array[]::text[], 950, 1200, 'EUR', 'Промоутер (розповсюдження рекламних матеріалів)', 'Promoter (flyer distribution)', 'Promotor (dystrybucja materiałów reklamowych)', 'Розповсюдження рекламних матеріалів у людних місцях міста, консультування перехожих про акції клієнта. Погодинна оплата, гнучкий графік.', 'Distributing promotional materials in busy city spots, telling passers-by about the client''s offers. Hourly pay, flexible schedule.', 'Rozdawanie materiałów promocyjnych w ruchliwych miejscach miasta, informowanie przechodniów o ofertach klienta. Wynagrodzenie godzinowe, elastyczny grafik.'),
+  ('allroles-staffing', 'logistics', 'prague', 'full-time', 'onsite', '0-1', array[]::text[], 1150, 1350, 'EUR', 'Комплектувальник замовлень (dark store)', 'Order picker (dark store)', 'Kompletator zamówień (dark store)', 'Комплектація онлайн-замовлень у міні-складі (dark store) для швидкої доставки, робота з термінала збору даних. Позмінний графік.', 'Picking online orders at a dark store for fast delivery, working with a handheld scanner. Shift schedule.', 'Kompletacja zamówień online w mini-magazynie (dark store) do szybkiej dostawy, praca ze skanerem. Grafik zmianowy.'),
+  ('allroles-staffing', 'other', 'prague', 'project', 'onsite', '0-1', array[]::text[], 1000, 1300, 'EUR', 'Різноробочий на подієві заходи', 'Event support worker', 'Pracownik obsługi wydarzeń', 'Допомога в організації подій: монтаж і демонтаж обладнання, розстановка меблів, підтримка гостей. Проєктна зайнятість під конкретні заходи, оплата за захід.', 'Helping organise events: setting up and dismantling equipment, arranging furniture, assisting guests. Project-based per event, paid per event.', 'Pomoc w organizacji wydarzeń: montaż i demontaż sprzętu, ustawianie mebli, wsparcie gości. Zatrudnienie projektowe pod konkretne wydarzenia, płatność za wydarzenie.'),
+  ('allroles-staffing', 'other', 'prague', 'full-time', 'remote', '0-1', array['en'], 1150, 1400, 'EUR', 'Оператор кол-центру (підтримка клієнтів)', 'Call centre operator (customer support)', 'Operator call center (obsługa klienta)', 'Обробка вхідних звернень клієнтів телефоном і чатом, фіксація заявок у CRM. Повністю віддалено, потрібна базова англійська.', 'Handling inbound customer enquiries by phone and chat, logging tickets in the CRM. Fully remote, basic English required.', 'Obsługa przychodzących zapytań klientów telefonicznie i na czacie, rejestrowanie zgłoszeń w CRM. Praca w pełni zdalna, wymagany podstawowy angielski.'),
+  ('allroles-staffing', 'logistics', 'prague', 'seasonal', 'onsite', '0-1', array[]::text[], 1100, 1300, 'EUR', 'Різноробочий на склад (сезонний пік)', 'Seasonal warehouse worker (peak season)', 'Pracownik magazynu (szczyt sezonowy)', 'Додаткові руки на складі під час сезонного піку замовлень (листопад-грудень): пакування, сортування, комплектація. Короткостроковий контракт.', 'Extra hands at the warehouse during the seasonal order peak (November-December): packing, sorting, picking. Short-term contract.', 'Dodatkowe wsparcie w magazynie podczas sezonowego szczytu zamówień (listopad-grudzień): pakowanie, sortowanie, kompletacja. Krótkoterminowy kontrakt.'),
+  ('allroles-staffing', 'logistics', 'prague', 'part-time', 'onsite', '1-3', array[]::text[], 1200, 1500, 'EUR', 'Водій-кур''єр на власному авто', 'Courier driver (own car)', 'Kierowca-kurier (własny samochód)', 'Доставка замовлень власним автомобілем у межах міста, компенсація пального за пройдені кілометри. Потрібне посвідчення категорії B від 1 року.', 'Delivering orders in your own car within the city, fuel compensated per kilometre driven. Requires a category B licence held for 1+ year.', 'Dostawa zamówień własnym samochodem na terenie miasta, zwrot kosztów paliwa za przejechane kilometry. Wymagane prawo jazdy kat. B od roku.')
 ) as v(
-  partner_slug, category, location_code, employment_type, salary_from, salary_to, currency,
+  partner_slug, category, location_code, employment_type, work_format, experience_level,
+  required_languages, salary_from, salary_to, currency,
   title_uk, title_en, title_pl, description_uk, description_en, description_pl
 )
 join public.job_platform_partners p on p.slug = v.partner_slug

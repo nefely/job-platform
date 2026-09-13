@@ -1,8 +1,13 @@
 import type { CategoryId } from "./category";
 import type { LocalizedText } from "./i18n";
+import type { LanguageCode } from "./language";
 import type { LocationCode } from "./location";
 
-export type EmploymentType = "full-time" | "part-time" | "seasonal";
+export type EmploymentType = "full-time" | "part-time" | "seasonal" | "project";
+
+export type WorkFormat = "onsite" | "remote" | "hybrid";
+
+export type ExperienceLevel = "0-1" | "1-3" | "3-5" | "5+";
 
 export type Currency = "UAH" | "EUR" | "PLN";
 
@@ -12,6 +17,9 @@ export interface Job {
   category: CategoryId;
   locationCode: LocationCode;
   employmentType: EmploymentType;
+  workFormat: WorkFormat;
+  experienceLevel: ExperienceLevel;
+  requiredLanguages: LanguageCode[];
   salaryFrom?: number;
   salaryTo?: number;
   currency?: Currency;

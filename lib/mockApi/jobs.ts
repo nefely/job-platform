@@ -1,9 +1,13 @@
 import { createClient } from "@/lib/supabase/client";
 import type { CategoryId } from "@/types/category";
-import type { Currency, EmploymentType, Job } from "@/types/job";
+import type { Currency, EmploymentType, ExperienceLevel, Job, WorkFormat } from "@/types/job";
 import type { LocalizedText } from "@/types/i18n";
+import type { LanguageCode } from "@/types/language";
 import type { LocationCode } from "@/types/location";
 import { ApiError, simulateRequest, type SimulateRequestOptions } from "./simulateRequest";
+
+const JOB_COLUMNS =
+  "id, partner_id, category, location_code, employment_type, work_format, experience_level, required_languages, salary_from, salary_to, currency, title, description, posted_at";
 
 interface JobRow {
   id: string;
@@ -11,6 +15,9 @@ interface JobRow {
   category: string;
   location_code: string;
   employment_type: string;
+  work_format: string;
+  experience_level: string;
+  required_languages: string[];
   salary_from: number | null;
   salary_to: number | null;
   currency: string | null;
@@ -26,6 +33,9 @@ function mapJobRow(row: JobRow): Job {
     category: row.category as CategoryId,
     locationCode: row.location_code as LocationCode,
     employmentType: row.employment_type as EmploymentType,
+    workFormat: row.work_format as WorkFormat,
+    experienceLevel: row.experience_level as ExperienceLevel,
+    requiredLanguages: row.required_languages as LanguageCode[],
     salaryFrom: row.salary_from ?? undefined,
     salaryTo: row.salary_to ?? undefined,
     currency: (row.currency as Currency | null) ?? undefined,
@@ -42,9 +52,7 @@ export function fetchJobsByPartnerId(
   return simulateRequest(async () => {
     const { data, error } = await createClient()
       .from("job_platform_jobs")
-      .select(
-        "id, partner_id, category, location_code, employment_type, salary_from, salary_to, currency, title, description, posted_at",
-      )
+      .select(JOB_COLUMNS)
       .eq("partner_id", partnerId)
       .order("posted_at", { ascending: false });
 
@@ -68,9 +76,7 @@ export function fetchAllJobs(options: SimulateRequestOptions = {}): Promise<Job[
   return simulateRequest(async () => {
     const { data, error } = await createClient()
       .from("job_platform_jobs")
-      .select(
-        "id, partner_id, category, location_code, employment_type, salary_from, salary_to, currency, title, description, posted_at, job_platform_partners(slug, name)",
-      )
+      .select(`${JOB_COLUMNS}, job_platform_partners(slug, name)`)
       .order("posted_at", { ascending: false });
 
     if (error) {

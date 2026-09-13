@@ -16,6 +16,7 @@ function JobCardComponent({ job }: JobCardProps) {
   const t = useTranslations("jobs");
   const tLocations = useTranslations("locations");
   const tEmploymentType = useTranslations("employmentType");
+  const tWorkFormat = useTranslations("workFormat");
 
   const salaryText =
     job.salaryFrom && job.salaryTo && job.currency
@@ -24,7 +25,11 @@ function JobCardComponent({ job }: JobCardProps) {
 
   return (
     <article className="rounded-xl border border-gray-200 p-4 dark:border-gray-800">
-      <h3 className="font-semibold">{pickLocalized(job.title, locale)}</h3>
+      <h3 className="font-semibold">
+        <Link href={`/jobs/${job.id}`} className="hover:underline">
+          {pickLocalized(job.title, locale)}
+        </Link>
+      </h3>
       {job.partnerSlug && job.partnerName && (
         <Link
           href={`/partners/${job.partnerSlug}`}
@@ -44,6 +49,10 @@ function JobCardComponent({ job }: JobCardProps) {
         <div className="flex gap-1">
           <dt className="font-medium">{t("employmentTypeLabel")}:</dt>
           <dd>{tEmploymentType(job.employmentType)}</dd>
+        </div>
+        <div className="flex gap-1">
+          <dt className="font-medium">{t("workFormatLabel")}:</dt>
+          <dd>{tWorkFormat(job.workFormat)}</dd>
         </div>
         <div className="flex gap-1">
           <dt className="font-medium">{t("salaryLabel")}:</dt>

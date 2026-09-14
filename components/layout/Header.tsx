@@ -24,9 +24,6 @@ export async function Header() {
       <Link href="/#about" className={linkClassName}>
         {t("about")}
       </Link>
-      <Link href="/contact" className={linkClassName}>
-        {t("contact")}
-      </Link>
     </>
   );
 

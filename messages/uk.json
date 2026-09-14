@@ -5,7 +5,6 @@
     "findEmployee": "Знайти працівника",
     "about": "Про нас",
     "partners": "Партнери",
-    "contact": "Контакти",
     "languageLabel": "Мова"
   },
   "theme": {
@@ -199,7 +198,6 @@
     "findJobLink": "Знайти роботу",
     "employersTitle": "Роботодавцям",
     "findEmployeeLink": "Знайти працівника",
-    "contactsTitle": "Контакти",
     "socialsTitle": "Соцмережі",
     "privacy": "Політика конфіденційності",
     "terms": "Умови використання",

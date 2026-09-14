@@ -23,9 +23,6 @@ export async function Footer() {
             <Link href="/#about" className={columnLinkClassName}>
               {t("aboutLink")}
             </Link>
-            <Link href="/contact" className={columnLinkClassName}>
-              {t("contactsTitle")}
-            </Link>
           </div>
 
           <div className="flex flex-col gap-2">

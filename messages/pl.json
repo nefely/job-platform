@@ -5,7 +5,6 @@
     "findEmployee": "Znajdź pracownika",
     "about": "O nas",
     "partners": "Partnerzy",
-    "contact": "Kontakt",
     "languageLabel": "Język"
   },
   "theme": {
@@ -199,7 +198,6 @@
     "findJobLink": "Znajdź pracę",
     "employersTitle": "Dla pracodawców",
     "findEmployeeLink": "Znajdź pracownika",
-    "contactsTitle": "Kontakt",
     "socialsTitle": "Media społecznościowe",
     "privacy": "Polityka prywatności",
     "terms": "Warunki korzystania",

@@ -12,17 +12,11 @@ import { GlowDots } from "./GlowDots";
 export async function PremiumCtaSection() {
   const t = await getTranslations("premium");
 
-  const benefits = [
-    t("benefit1"),
-    t("benefit2"),
-    t("benefit3"),
-    t("benefit4"),
-    t("benefit5"),
-  ];
+  const benefits = [t("benefit1"), t("benefit2"), t("benefit3"), t("benefit4"), t("benefit5")];
 
   return (
     <section id="premium" className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <div className="relative overflow-hidden rounded-2xl border border-gray-200 px-6 py-10 dark:border-gray-800 sm:px-10">
+      <div className="relative overflow-hidden rounded-2xl border border-gray-200 px-6 py-10 sm:px-10 dark:border-gray-800">
         <DotBackground />
         <GlowDots />
 
@@ -36,7 +30,10 @@ export async function PremiumCtaSection() {
 
             <ul className="mt-6 flex flex-col gap-3">
               {benefits.map((benefit) => (
-                <li key={benefit} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                <li
+                  key={benefit}
+                  className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300"
+                >
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"

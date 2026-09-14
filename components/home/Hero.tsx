@@ -17,14 +17,10 @@ export async function Hero() {
           стек — контент лишається зверху й клікабельний. */}
       <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
         <FadeIn>
-          <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
-            {t("title")}
-          </h1>
+          <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">{t("title")}</h1>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <p className="mt-4 max-w-xl text-lg text-gray-600 dark:text-gray-300">
-            {t("subtitle")}
-          </p>
+          <p className="mt-4 max-w-xl text-lg text-gray-600 dark:text-gray-300">{t("subtitle")}</p>
         </FadeIn>
         <FadeIn delay={0.2}>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

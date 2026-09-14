@@ -3,11 +3,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useAsync } from "@/hooks/useAsync";
-import {
-  filterJobs,
-  type CategoryFilterValue,
-  type JobFilters,
-} from "@/lib/filterJobs";
+import { filterJobs, type CategoryFilterValue, type JobFilters } from "@/lib/filterJobs";
 import { fetchAllJobs } from "@/lib/mockApi/jobs";
 import { resolveErrorMessage } from "@/lib/mockApi/resolveErrorMessage";
 import type { AppLocale } from "@/types/i18n";

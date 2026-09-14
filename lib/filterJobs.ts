@@ -83,8 +83,6 @@ export function filterJobs(
       postedWithinDays == null ||
       Date.now() - new Date(job.postedAt).getTime() <= postedWithinDays * 24 * 60 * 60 * 1000;
 
-   
-
     return (
       matchesQuery &&
       matchesCategory &&

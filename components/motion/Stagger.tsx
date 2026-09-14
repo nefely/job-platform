@@ -43,7 +43,12 @@ export function StaggerContainer({
     : { animate: "show" as const };
 
   return (
-    <motion.div initial="hidden" variants={containerVariants} className={className} {...triggerProps}>
+    <motion.div
+      initial="hidden"
+      variants={containerVariants}
+      className={className}
+      {...triggerProps}
+    >
       {children}
     </motion.div>
   );

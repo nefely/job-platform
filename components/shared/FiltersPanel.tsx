@@ -121,7 +121,7 @@ export function FiltersPanel({
           <path d="M4 6h16M7 12h10M10 18h4" />
         </svg>
         {activeCount > 0 && (
-          <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-xs font-semibold text-white dark:bg-white dark:text-gray-900">
+          <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-xs font-semibold text-white dark:bg-white dark:text-gray-900">
             {activeCount}
           </span>
         )}
@@ -161,8 +161,11 @@ export function FiltersPanel({
 
               if (dimension.kind === "number") {
                 return (
-                  <label key={dimension.key} className="flex max-w-xs flex-col gap-1 text-sm font-medium">
-                    <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  <label
+                    key={dimension.key}
+                    className="flex max-w-xs flex-col gap-1 text-sm font-medium"
+                  >
+                    <span className="text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
                       {dimension.legend}
                     </span>
                     <input
@@ -182,7 +185,7 @@ export function FiltersPanel({
 
               return (
                 <div key={dimension.key} className="flex max-w-xs flex-col gap-1">
-                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  <span className="text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
                     {dimension.legend}
                   </span>
                   <Select

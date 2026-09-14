@@ -27,7 +27,7 @@ export function ThemeToggle() {
         strokeWidth="2"
         strokeLinecap="round"
         className={`absolute h-4.5 w-4.5 transition-all duration-200 ${
-          isDark ? "rotate-0 scale-100 opacity-100" : "rotate-90 scale-50 opacity-0"
+          isDark ? "scale-100 rotate-0 opacity-100" : "scale-50 rotate-90 opacity-0"
         }`}
         aria-hidden="true"
       >
@@ -42,7 +42,7 @@ export function ThemeToggle() {
         strokeLinecap="round"
         strokeLinejoin="round"
         className={`absolute h-4.5 w-4.5 transition-all duration-200 ${
-          isDark ? "-rotate-90 scale-50 opacity-0" : "rotate-0 scale-100 opacity-100"
+          isDark ? "scale-50 -rotate-90 opacity-0" : "scale-100 rotate-0 opacity-100"
         }`}
         aria-hidden="true"
       >

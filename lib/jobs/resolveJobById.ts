@@ -11,8 +11,7 @@ import type { LocationCode } from "@/types/location";
 // Supabase call, no artificial delay/failure — mirrors
 // lib/partners/resolvePartnerBySlug.ts (server-side route resolution, not
 // the async-handling feature the brief grades).
-const UUID_PATTERN =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function resolveJobById(id: string): Promise<Job | null> {
   // `id` is a Postgres `uuid` column — a malformed id (e.g. someone typing
@@ -41,12 +40,11 @@ export async function resolveJobById(id: string): Promise<Job | null> {
 
   // Взаємовиключні — рівно один embed буде непорожнім (job.partnerId XOR
   // job.employerId, див. job_platform_jobs_org_check у schema.sql).
-  const partner = data.job_platform_partners as unknown as
-    | { slug: string; name: LocalizedText }
-    | null;
-  const employer = data.job_platform_employers as unknown as
-    | { slug: string; name: string }
-    | null;
+  const partner = data.job_platform_partners as unknown as {
+    slug: string;
+    name: LocalizedText;
+  } | null;
+  const employer = data.job_platform_employers as unknown as { slug: string; name: string } | null;
 
   return {
     id: data.id,

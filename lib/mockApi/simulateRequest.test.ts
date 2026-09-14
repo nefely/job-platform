@@ -23,7 +23,11 @@ describe("simulateRequest", () => {
   it("waits within the configured 300-800ms window before resolving", async () => {
     vi.spyOn(Math, "random").mockReturnValue(0.5); // delay factor + above failureRate
     const resolve = vi.fn(() => "value");
-    const promise = simulateRequest(resolve, { minDelayMs: 300, maxDelayMs: 800, failureRate: 0.2 });
+    const promise = simulateRequest(resolve, {
+      minDelayMs: 300,
+      maxDelayMs: 800,
+      failureRate: 0.2,
+    });
 
     await vi.advanceTimersByTimeAsync(299);
     expect(resolve).not.toHaveBeenCalled();
@@ -35,7 +39,11 @@ describe("simulateRequest", () => {
 
   it("rejects with an ApiError when the random roll is below the failure rate", async () => {
     vi.spyOn(Math, "random").mockReturnValue(0); // always below failureRate
-    const promise = simulateRequest(() => "unused", { minDelayMs: 0, maxDelayMs: 0, failureRate: 0.2 });
+    const promise = simulateRequest(() => "unused", {
+      minDelayMs: 0,
+      maxDelayMs: 0,
+      failureRate: 0.2,
+    });
     // Attach the rejection assertion before advancing timers, otherwise the
     // promise can reject during the advance while nothing is listening yet.
     const assertion = expect(promise).rejects.toBeInstanceOf(ApiError);
@@ -49,8 +57,8 @@ describe("simulateRequest", () => {
     const controller = new AbortController();
     controller.abort(new Error("cancelled"));
 
-    await expect(
-      simulateRequest(() => "unused", { signal: controller.signal }),
-    ).rejects.toThrow("cancelled");
+    await expect(simulateRequest(() => "unused", { signal: controller.signal })).rejects.toThrow(
+      "cancelled",
+    );
   });
 });

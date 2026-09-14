@@ -17,13 +17,11 @@ export function submitContactForm(
   options: SimulateRequestOptions = {},
 ): Promise<ContactSubmissionResult> {
   return simulateRequest(async () => {
-    const { error } = await createClient()
-      .from("job_platform_contact_submissions")
-      .insert({
-        name: values.name.trim(),
-        contact: values.contact.trim(),
-        message: values.message.trim(),
-      });
+    const { error } = await createClient().from("job_platform_contact_submissions").insert({
+      name: values.name.trim(),
+      contact: values.contact.trim(),
+      message: values.message.trim(),
+    });
 
     if (error) {
       throw new ApiError(error.message);

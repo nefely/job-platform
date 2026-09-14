@@ -77,7 +77,8 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
       key: "employmentTypes",
       legend: t("employmentTypeLabel"),
       selected: employmentTypes,
-      onChange: (next) => onFiltersChange({ ...filters, employmentTypes: next as EmploymentType[] }),
+      onChange: (next) =>
+        onFiltersChange({ ...filters, employmentTypes: next as EmploymentType[] }),
       options: EMPLOYMENT_TYPE_IDS.map((id) => ({ value: id, label: tEmploymentType(id) })),
     },
     {
@@ -93,7 +94,8 @@ export function JobFiltersPanel({ filters, onFiltersChange }: JobFiltersPanelPro
       key: "experienceLevels",
       legend: t("experienceLabel"),
       selected: experienceLevels,
-      onChange: (next) => onFiltersChange({ ...filters, experienceLevels: next as ExperienceLevel[] }),
+      onChange: (next) =>
+        onFiltersChange({ ...filters, experienceLevels: next as ExperienceLevel[] }),
       options: EXPERIENCE_LEVEL_IDS.map((id) => ({ value: id, label: tExperienceLevel(id) })),
     },
     {

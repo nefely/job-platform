@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { UNKNOWN_ERROR_MESSAGE } from "@/lib/mockApi/simulateRequest";
 
 export type AsyncState<T> =
-  | { status: "loading" }
-  | { status: "success"; data: T }
-  | { status: "error"; error: string };
+  { status: "loading" } | { status: "success"; data: T } | { status: "error"; error: string };
 
 export interface UseAsyncResult<T> {
   state: AsyncState<T>;

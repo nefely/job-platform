@@ -35,9 +35,7 @@ export async function JobDetailView({ job }: JobDetailViewProps) {
         {t("backLink")}
       </Link>
 
-      <h1 className="mt-3 text-3xl font-bold tracking-tight">
-        {pickLocalized(job.title, locale)}
-      </h1>
+      <h1 className="mt-3 text-3xl font-bold tracking-tight">{pickLocalized(job.title, locale)}</h1>
 
       {job.partnerSlug && job.partnerName && (
         <Link
@@ -49,7 +47,9 @@ export async function JobDetailView({ job }: JobDetailViewProps) {
       )}
       {/* Прямий роботодавець (не партнер) — без власної сторінки, тому
           просто текст, не посилання. */}
-      {job.employerName && <p className="mt-1 text-gray-600 dark:text-gray-300">{job.employerName}</p>}
+      {job.employerName && (
+        <p className="mt-1 text-gray-600 dark:text-gray-300">{job.employerName}</p>
+      )}
 
       <dl className="mt-4 flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400">
         <div className="flex gap-1">

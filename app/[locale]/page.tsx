@@ -45,7 +45,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
       <FeaturedPartnersSection />
       <PremiumCtaSection />
-      
     </>
   );
 }

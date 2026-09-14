@@ -19,7 +19,12 @@ const arrowButtonClassName =
 // решта кнопок-іконок у проєкті) + "Сторінка X з Y" замість пронумерованих
 // кнопок — коректно працює при будь-якій кількості сторінок, без ризику
 // переповнення рядка чи edge-case'ів з "..." (без сторонніх UI-кітів).
-export function Pagination({ page, totalPages, onPageChange, namespace = "jobs" }: PaginationProps) {
+export function Pagination({
+  page,
+  totalPages,
+  onPageChange,
+  namespace = "jobs",
+}: PaginationProps) {
   const t = useTranslations(namespace);
 
   if (totalPages <= 1) return null;

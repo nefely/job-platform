@@ -37,7 +37,10 @@ describe("filterCandidates", () => {
     headline: "Frontend Developer",
     categories: ["it"],
     locationCode: "berlin",
-    languages: [{ code: "en", level: "native" }, { code: "uk", level: "fluent" }],
+    languages: [
+      { code: "en", level: "native" },
+      { code: "uk", level: "fluent" },
+    ],
   });
   const candidates = [driver, developer];
 
@@ -50,9 +53,7 @@ describe("filterCandidates", () => {
   });
 
   it("matches any of several selected categories", () => {
-    expect(filterCandidates(candidates, "", { categories: ["drivers", "it"] })).toEqual(
-      candidates,
-    );
+    expect(filterCandidates(candidates, "", { categories: ["drivers", "it"] })).toEqual(candidates);
   });
 
   it("filters by name substring, case-insensitively", () => {
@@ -65,9 +66,7 @@ describe("filterCandidates", () => {
   });
 
   it("combines category and query filters", () => {
-    expect(filterCandidates(candidates, "developer", { categories: ["it"] })).toEqual([
-      developer,
-    ]);
+    expect(filterCandidates(candidates, "developer", { categories: ["it"] })).toEqual([developer]);
     expect(filterCandidates(candidates, "developer", { categories: ["drivers"] })).toEqual([]);
   });
 

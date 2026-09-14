@@ -60,7 +60,9 @@ describe("ContactForm", () => {
     await user.click(screen.getByRole("button", { name: "Send request" }));
 
     await waitFor(() => {
-      expect(screen.getByText("Couldn't send your request. Check the details and try again.")).toBeInTheDocument();
+      expect(
+        screen.getByText("Couldn't send your request. Check the details and try again."),
+      ).toBeInTheDocument();
     });
 
     // Rolled back: the submitted values are restored, not left blank.

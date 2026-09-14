@@ -31,7 +31,7 @@ export function Select<T extends string>({
         <select
           value={value}
           onChange={(event) => onChange(event.target.value as T)}
-          className="h-10.5 w-full appearance-none rounded-lg border border-gray-300 py-2.5 pl-4 pr-9 text-sm font-normal focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:focus:border-gray-100"
+          className="h-10.5 w-full appearance-none rounded-lg border border-gray-300 py-2.5 pr-9 pl-4 text-sm font-normal focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:focus:border-gray-100"
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -49,7 +49,7 @@ export function Select<T extends string>({
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 dark:text-gray-400"
+          className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-500 dark:text-gray-400"
           aria-hidden="true"
         >
           <path d="m6 9 6 6 6-6" />

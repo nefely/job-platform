@@ -12,10 +12,7 @@ function toCategoryFilterValue(rawCategory: string | undefined): CategoryFilterV
   return "all";
 }
 
-export default async function JobsPage({
-  params,
-  searchParams,
-}: PageProps<"/[locale]/jobs">) {
+export default async function JobsPage({ params, searchParams }: PageProps<"/[locale]/jobs">) {
   const { locale } = await params;
   setRequestLocale(locale as AppLocale);
 

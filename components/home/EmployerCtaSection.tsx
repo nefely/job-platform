@@ -8,14 +8,12 @@ export async function EmployerCtaSection() {
 
   return (
     <section id="for-employers" className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <div className="relative overflow-hidden rounded-2xl border border-gray-200 px-6 py-10 dark:border-gray-800 sm:px-10">
+      <div className="relative overflow-hidden rounded-2xl border border-gray-200 px-6 py-10 sm:px-10 dark:border-gray-800">
         <DotBackground />
         <GlowDots />
 
         <div className="relative">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {t("employerTitle")}
-          </h2>
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{t("employerTitle")}</h2>
           <p className="mt-3 max-w-2xl text-gray-600 dark:text-gray-300">{t("employerText")}</p>
           <Link
             href="/candidates"

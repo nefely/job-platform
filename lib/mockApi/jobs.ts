@@ -83,7 +83,9 @@ export function fetchAllJobs(options: SimulateRequestOptions = {}): Promise<Job[
   return simulateRequest(async () => {
     const { data, error } = await createClient()
       .from("job_platform_jobs")
-      .select(`${JOB_COLUMNS}, job_platform_partners(slug, name), job_platform_employers(slug, name)`)
+      .select(
+        `${JOB_COLUMNS}, job_platform_partners(slug, name), job_platform_employers(slug, name)`,
+      )
       .order("posted_at", { ascending: false });
 
     if (error) {

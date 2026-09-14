@@ -86,9 +86,7 @@ export async function CandidateDetailView({ candidate }: CandidateDetailViewProp
 
       {candidate.skills.length > 0 && (
         <div className="mt-4">
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            {t("skillsLabel")}
-          </p>
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{t("skillsLabel")}</p>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {candidate.skills.map((skill) => (
               <span

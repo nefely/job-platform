@@ -74,13 +74,11 @@ export function filterCandidates(
       employmentTypes.length === 0 ||
       candidate.desiredEmploymentTypes.some((t) => employmentTypes.includes(t));
     const matchesWorkFormat =
-      workFormats.length === 0 ||
-      candidate.desiredWorkFormats.some((f) => workFormats.includes(f));
+      workFormats.length === 0 || candidate.desiredWorkFormats.some((f) => workFormats.includes(f));
     const matchesExperience =
       experienceLevels.length === 0 || experienceLevels.includes(candidate.experienceLevel);
     const matchesLanguage =
-      languages.length === 0 ||
-      candidate.languages.some((l) => languages.includes(l.code));
+      languages.length === 0 || candidate.languages.some((l) => languages.includes(l.code));
     const matchesSalary =
       maxSalary == null || (candidate.salaryExpectationFrom ?? Infinity) <= maxSalary;
     const matchesAvailability =

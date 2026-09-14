@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { HashScrollLink } from "./HashScrollLink";
 
 const columnLinkClassName =
   "text-sm text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white";
@@ -20,9 +21,9 @@ export async function Footer() {
 
           <div className="flex flex-col gap-2">
             <p className="text-sm font-semibold">{t("aboutTitle")}</p>
-            <Link href="/#about" className={columnLinkClassName}>
+            <HashScrollLink href="/#about" className={columnLinkClassName}>
               {t("aboutLink")}
-            </Link>
+            </HashScrollLink>
           </div>
 
           <div className="flex flex-col gap-2">

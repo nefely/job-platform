@@ -7,7 +7,7 @@ import { defineRouting } from "next-intl/routing";
 // простіший і зрозуміліший при копіюванні/поширенні посилань.
 export const routing = defineRouting({
   locales: ["uk", "en", "pl"],
-  defaultLocale: "uk",
+  defaultLocale: "en",
 });
 
 export type AppLocale = (typeof routing.locales)[number];

@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "title": "VV Work — Find a job. Find an employee.",
+    "description": "VV Work — a platform for finding jobs and workers across Europe."
+  },
   "nav": {
     "logo": "VV Work",
     "findJob": "Find a job",

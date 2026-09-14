@@ -20,7 +20,7 @@ export async function CategoryGrid() {
           <StaggerItem key={categoryId}>
             <Link
               href={`/jobs?category=${categoryId}`}
-              className="flex h-full flex-col gap-3 rounded-xl border border-gray-200 p-4 transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-900"
+              className="flex h-full flex-col gap-3 rounded-xl border border-gray-200 p-4 transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950/70 dark:hover:border-gray-600 dark:hover:bg-gray-800"
             >
               <span
                 className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${CATEGORY_COLORS[categoryId]}`}

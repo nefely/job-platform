@@ -39,6 +39,7 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
   const [filters, setFilters] = useState<JobFilters>(() =>
     initialCategory === "all" ? {} : { categories: [initialCategory] },
   );
+
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [page, setPage] = useState(1);
 

@@ -25,7 +25,7 @@ function CandidateCardComponent({ candidate }: CandidateCardProps) {
       : t("salaryNotSpecified");
 
   return (
-    <article className="flex h-full flex-col rounded-xl border border-gray-200 p-4 dark:border-gray-800">
+    <article className="flex h-full flex-col rounded-xl border border-gray-200 p-4 dark:border-gray-800 dark:bg-gray-950/70">
       <div className="flex flex-wrap gap-1.5">
         {candidate.categories.map((category) => (
           <span
@@ -77,7 +77,7 @@ function CandidateCardComponent({ candidate }: CandidateCardProps) {
           {candidate.skills.map((skill) => (
             <span
               key={skill}
-              className="rounded-full border border-gray-300 px-2 py-0.5 text-xs text-gray-600 dark:border-gray-700 dark:text-gray-300"
+              className="rounded-full border border-gray-300 px-2 py-0.5 text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
             >
               {skill}
             </span>

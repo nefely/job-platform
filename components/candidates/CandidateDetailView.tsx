@@ -93,7 +93,7 @@ export async function CandidateDetailView({ candidate }: CandidateDetailViewProp
             {candidate.skills.map((skill) => (
               <span
                 key={skill}
-                className="rounded-full border border-gray-300 px-2.5 py-0.5 text-xs text-gray-600 dark:border-gray-700 dark:text-gray-300"
+                className="rounded-full border border-gray-300 px-2.5 py-0.5 text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
               >
                 {skill}
               </span>

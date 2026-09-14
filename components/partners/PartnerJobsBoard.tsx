@@ -40,6 +40,7 @@ export function PartnerJobsBoard({ partnerId, initialCategory }: PartnerJobsBoar
   const [filters, setFilters] = useState<JobFilters>(() =>
     initialCategory === "all" ? {} : { categories: [initialCategory] },
   );
+
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [page, setPage] = useState(1);
 

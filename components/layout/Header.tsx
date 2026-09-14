@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { HashScrollLink } from "./HashScrollLink";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
 
 const linkClassName =
@@ -31,8 +32,8 @@ export async function Header() {
   return (
     <header className="relative border-b border-gray-200 dark:border-gray-800">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <Link href="/" className="text-lg font-bold tracking-tight">
-          {t("logo")}
+        <Link href="/" className="flex items-center">
+          <Logo className="h-[42px] w-auto shrink-0" title={t("logo")} />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex" aria-label={t("logo")}>

@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { HashScrollLink } from "./HashScrollLink";
+import { Logo } from "./Logo";
 
 const columnLinkClassName =
   "text-sm text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white";
@@ -15,7 +16,9 @@ export async function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           <div className="col-span-2 sm:col-span-1">
-            <p className="text-lg font-bold tracking-tight">{tNav("logo")}</p>
+            <p className="flex items-center">
+              <Logo className="h-[42px] w-auto shrink-0" title={tNav("logo")} />
+            </p>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{t("tagline")}</p>
           </div>
 

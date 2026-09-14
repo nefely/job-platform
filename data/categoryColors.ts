@@ -12,6 +12,6 @@ export const CATEGORY_COLORS: Record<CategoryId, string> = {
     "bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-300",
   hospitality: "bg-pink-100 text-pink-800 dark:bg-pink-900/40 dark:text-pink-300",
   it: "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-300",
-  drivers: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300",
+  drivers: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300",
   other: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
 };

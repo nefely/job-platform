@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { AboutIllustration } from "@/components/home/AboutIllustration";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { EmployerCtaSection } from "@/components/home/EmployerCtaSection";
 import { FeaturedPartnersSection } from "@/components/home/FeaturedPartnersSection";
@@ -19,13 +20,25 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       <Hero />
       <CategoryGrid />
-      <FeaturedPartnersSection />
       <EmployerCtaSection />
-      <PremiumCtaSection />
       <section id="about" className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <h2 className="text-2xl font-bold tracking-tight">{t("aboutTitle")}</h2>
-        <p className="mt-3 max-w-2xl text-gray-600 dark:text-gray-300">{t("aboutText")}</p>
+        <div className="grid items-center gap-8 sm:grid-cols-2">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">{t("aboutTitle")}</h2>
+            <div className="mt-3 flex max-w-xl flex-col gap-4 text-gray-600 dark:text-gray-300">
+              <p>{t("aboutText")}</p>
+              <p>{t("aboutText2")}</p>
+              <p>{t("aboutText3")}</p>
+            </div>
+          </div>
+          <div className="mx-auto w-full max-w-xs sm:max-w-none">
+            <AboutIllustration />
+          </div>
+        </div>
       </section>
+      <FeaturedPartnersSection />
+      <PremiumCtaSection />
+      
     </>
   );
 }

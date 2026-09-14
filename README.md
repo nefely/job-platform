@@ -1,9 +1,14 @@
 # VV Work
 
+[![CI](https://github.com/nefely/job-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/nefely/job-platform/actions/workflows/ci.yml)
+
 Тестове завдання — Frontend Developer. Платформа для пошуку роботи та
 працівників у Європі: Головна, агрегований пошук вакансій, індекс
 партнерів → сторінка окремого партнера з вакансіями (пошук + фільтр за
-категорією), сторінка контактів із формою заявки.
+категорією), пошук кандидатів (`/candidates`) для роботодавців. Форма
+заявки (`ContactForm`) вбудована контекстно на сторінках вакансії й
+кандидата, а не як окрема сторінка «Контакти» — див. «Відхилення від
+брифу».
 
 ## Стек
 
@@ -263,7 +268,7 @@ legend, selected/value, onChange, options}`) під свій тип фільтр
 
 ## Unit-тести
 
-`npm run test:coverage` — 62 тести, **~96% покриття** логіки, яку оцінює
+`npm run test:coverage` — 83 тести, **~96% покриття** логіки, яку оцінює
 бриф (debounce, комбінація фільтрів, валідація форми, retry/abort-guard):
 
 - `lib/mockApi/simulateRequest.test.ts` — затримка 300–800мс, ~20% помилка, `ApiError`
@@ -276,6 +281,10 @@ legend, selected/value, onChange, options}`) під свій тип фільтр
   `postedWithinDays` (доба/тиждень/місяць, відносно поточного часу);
   `countActiveJobFilters`
 - `lib/filterPartners.test.ts` — фільтр партнерів за категорією
+- `lib/filterCandidates.test.ts` — той самий підхід, що й `filterJobs.test.ts`,
+  для кандидатів: пошук за ім'ям/посадою, мультиселект-виміри (категорія/
+  локація/зайнятість/формат/досвід/мова), `maxSalary`, `availableWithinDays`,
+  `countActiveCandidateFilters`
 - `hooks/useDebouncedValue.test.ts` — не оновлюється до завершення delay, проміжні значення не просочуються
 - `hooks/useAsync.test.ts` — loading→success/error, `retry()`, застарілий (aborted) виклик не перезаписує новіший стан
 - `lib/validation/contactForm.test.ts` — межі імені/телефону/telegram/довжини повідомлення
@@ -285,6 +294,13 @@ legend, selected/value, onChange, options}`) під свій тип фільтр
 
 Покриття свідомо не рахується для презентаційних Server Components
 (Header/Footer/Hero тощо) — там немає логіки, лише розмітка.
+
+**CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) ганяє
+`typecheck` → `lint` → `test` → `build` на кожен push у `main` і кожен PR
+(бейдж угорі README). `build` — з плейсхолдер-значеннями
+`NEXT_PUBLIC_SUPABASE_*` (перевірено локально: build не робить жодних
+запитів до Supabase під час компіляції — увесь фетч даних клієнтський,
+`generateStaticParams` перелічує лише локалі).
 
 ## Lighthouse
 

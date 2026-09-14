@@ -3,6 +3,7 @@ import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { EmployerCtaSection } from "@/components/home/EmployerCtaSection";
 import { FeaturedPartnersSection } from "@/components/home/FeaturedPartnersSection";
 import { Hero } from "@/components/home/Hero";
+import { PremiumCtaSection } from "@/components/home/PremiumCtaSection";
 import type { AppLocale } from "@/types/i18n";
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
@@ -20,6 +21,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <CategoryGrid />
       <FeaturedPartnersSection />
       <EmployerCtaSection />
+      <PremiumCtaSection />
       <section id="about" className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <h2 className="text-2xl font-bold tracking-tight">{t("aboutTitle")}</h2>
         <p className="mt-3 max-w-2xl text-gray-600 dark:text-gray-300">{t("aboutText")}</p>

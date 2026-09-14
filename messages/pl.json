@@ -87,6 +87,17 @@
     "aboutText": "VV Work to platforma łącząca kandydatów i pracodawców w Europie. Upraszczamy poszukiwanie pracy i rekrutację dla setek firm.",
     "viewAllPartners": "Wszyscy partnerzy →"
   },
+  "premium": {
+    "title": "Zatrudniaj szybciej i skuteczniej",
+    "subtitle": "VV Work Premium dla pracodawców — priorytet tam, gdzie to ważne, bez prowizji agencyjnych.",
+    "benefit1": "Priorytetowe wyświetlanie ofert — na szczycie listy, odznaka „Polecane”",
+    "benefit2": "Nieograniczona liczba aktywnych ofert jednocześnie",
+    "benefit3": "Zaawansowane wyszukiwanie kandydatów — precyzyjne filtry wg budżetu i dostępności",
+    "benefit4": "Markowa strona firmy — logo, galeria, bez limitu tekstu",
+    "benefit5": "Odznaka „Zweryfikowany pracodawca”",
+    "formTitle": "Zostaw zgłoszenie — przedstawimy szczegóły",
+    "formSubtitle": "Bez zobowiązań. Skontaktujemy się i dobierzemy plan do Twoich potrzeb."
+  },
   "partnersIndex": {
     "title": "Partnerzy",
     "subtitle": "Firmy, które szukają pracowników przez VV Work.",

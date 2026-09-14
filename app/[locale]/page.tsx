@@ -1,5 +1,5 @@
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { AboutIllustration } from "@/components/home/AboutIllustration";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { EmployerCtaSection } from "@/components/home/EmployerCtaSection";
 import { FeaturedPartnersSection } from "@/components/home/FeaturedPartnersSection";
@@ -32,7 +32,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </div>
           </div>
           <div className="mx-auto w-full max-w-xs sm:max-w-none">
-            <AboutIllustration />
+            <Image
+              src="/vv-work-about-illustration.svg"
+              alt=""
+              width={760}
+              height={520}
+              unoptimized
+              className="h-auto w-full"
+            />
           </div>
         </div>
       </section>

@@ -84,6 +84,9 @@ export function AllJobsBoard({ initialCategory }: AllJobsBoardProps) {
 
   return (
     <div className="py-8">
+      {/* Сторінка дає лише h1 (заголовок); картки вакансій — h3. Без цього
+          h2 скрін-рідери бачили б стрибок рівнів (axe: heading-order). */}
+      <h2 className="sr-only">{t("listHeading")}</h2>
       <div className="relative flex flex-wrap items-start gap-x-3 gap-y-1">
         <div className="flex-1">
           <JobSearchInput onDebouncedChange={handleDebouncedQueryChange} />

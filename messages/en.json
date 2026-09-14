@@ -117,6 +117,7 @@
   "jobs": {
     "pageTitle": "Find a job",
     "pageSubtitle": "Every vacancy from our partners across Europe, in one place.",
+    "listHeading": "Job listings",
     "resultsCount": "Vacancies found: {count}",
     "searchLabel": "Search vacancies",
     "searchPlaceholder": "Search by job title…",
@@ -154,6 +155,7 @@
   "candidates": {
     "pageTitle": "Find an employee",
     "pageSubtitle": "Candidate profiles ready to start work in Europe — filter by field, location and experience.",
+    "listHeading": "Candidate listings",
     "resultsCount": "Candidates found: {count}",
     "searchLabel": "Search candidates",
     "searchPlaceholder": "Search by name or job title…",

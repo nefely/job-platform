@@ -135,7 +135,9 @@ export function ContactForm() {
       <div className="flex flex-col gap-1">
         <label htmlFor="contact-message" className="text-sm font-medium">
           {t("messageLabel")}{" "}
-          <span className="font-normal text-gray-400">({t("messageOptionalHint")})</span>
+          <span className="font-normal text-gray-500 dark:text-gray-400">
+            ({t("messageOptionalHint")})
+          </span>
         </label>
         <textarea
           id="contact-message"

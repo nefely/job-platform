@@ -22,8 +22,9 @@ const inactiveChipClassName =
 const activeDefaultClassName = "border-transparent bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900";
 
 // Мультиселект-чіпи: клік на чіп додає/прибирає значення з масиву `selected`.
-// Загальний (generic) компонент, використовується для категорії/типу
-// зайнятості/формату роботи/досвіду/мови в JobFiltersPanel.
+// Generic, ресурсно-нейтральний примітив — використовується всередині
+// FiltersPanel для будь-якого "chips"-виміру (категорія, тип зайнятості,
+// формат роботи, досвід, мова — і для вакансій, і для кандидатів).
 export function FilterChipGroup<T extends string>({
   legend,
   options,

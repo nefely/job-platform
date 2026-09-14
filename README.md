@@ -98,10 +98,15 @@ components/
               EmployerCtaSection
   motion/     FadeIn, Stagger (StaggerContainer/StaggerItem) — hand-rolled framer-motion обгортки
   partners/   PartnerCard, PartnerHeader, PartnersIndexBoard, AllJobsBoard,
-              PartnerJobsBoard, JobSearchInput, JobFiltersPanel, FilterChipGroup,
+              PartnerJobsBoard, JobSearchInput, JobFiltersPanel,
               CategoryFilter, JobList, JobCard, JobListSkeleton, JobDetailView
+  candidates/ CandidatesBoard, CandidateSearchInput, CandidateFiltersPanel,
+              CandidateList, CandidateCard, CandidateListSkeleton, CandidateDetailView
   contact/    ContactForm
-  shared/     Skeleton, RetryBlock, Select (generic стилізований <select>)
+  shared/     Skeleton, RetryBlock, Select, Pagination, FilterChipGroup,
+              FiltersPanel (generic config-driven панель — JobFiltersPanel і
+              CandidateFiltersPanel лише будують масив вимірів (chips/number/
+              select) під свій тип фільтрів, решта UI/логіки спільна)
 
 lib/
   supabase/       client.ts (браузер) / server.ts (Server Components)
@@ -176,11 +181,11 @@ identity, тож `React.memo(JobCard)`/`React.memo(PartnerCard)` не
 на місці (той самий `ContactForm`, що й на `/contact`) — не треба переходити
 на іншу сторінку, щоб відгукнутися.
 
-**Фільтри вакансій** (`JobFiltersPanel` + `FilterChipGroup`, використовується
-і на `/jobs`, і на `/partners/[slug]`): пошук за назвою завжди на видноті;
-іконка-кнопка «Фільтри» (з бейджем кількості активних фільтрів) розкриває
-панель, де **категорія, тип зайнятості, формат роботи, досвід і знання
-мови — усі мультиселект-чіпи** (можна обрати кілька значень одночасно, напр.
+**Фільтри вакансій** (`JobFiltersPanel`, використовується і на `/jobs`, і на
+`/partners/[slug]`): пошук за назвою завжди на видноті; іконка-кнопка
+«Фільтри» (з бейджем кількості активних фільтрів) розкриває панель, де
+**категорія, тип зайнятості, формат роботи, досвід і знання мови — усі
+мультиселект-чіпи** (можна обрати кілька значень одночасно, напр.
 "англійська АБО польська"), плюс поле мінімальної зарплати і **дата
 розміщення** (`postedWithinDays` — односелект "будь-коли/добу/тиждень/
 місяць" через generic `Select`: на відміну від інших вимірів це не масив,
@@ -189,6 +194,17 @@ identity, тож `React.memo(JobCard)`/`React.memo(PartnerCard)` не
 query, locale, filters: JobFilters)` — один об'єкт фільтрів із масивами
 замість розкиданих параметрів; порожній масив/undefined на вимір = без
 обмежень.
+
+**`JobFiltersPanel`/`CandidateFiltersPanel` — тонкі обгортки над спільним
+`shared/FiltersPanel`.** Сам toggle-кнопка/бейдж/клік-поза-закриває/Escape/
+`AnimatePresence`-панель написані один раз у `FiltersPanel`; кожен ресурсний
+файл лише будує масив `FilterDimension[]` (`{kind: "chips"|"number"|"select",
+legend, selected/value, onChange, options}`) під свій тип фільтрів
+(`JobFilters`/`CandidateFilters`) і передає готовий `activeCount`/`onReset`.
+Виміри між ресурсами не тотожні (напр. `minSalary` у вакансій — "зарплата
+від", а дзеркальний `maxSalary` у кандидатів — "бюджет до", бо ролі
+протилежні: роботодавець шукає кандидата в межах бюджету), тож спільним
+зроблено не тип фільтрів, а сам рушій відображення панелі.
 Категорійні бейджі (на картках вакансій і партнерів) і чіпи категорій у
 фільтрі використовують одну спільну кольорову мапу (`data/categoryColors.ts`)
 — один колір скрізь означає одну категорію.

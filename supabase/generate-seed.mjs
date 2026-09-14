@@ -116,11 +116,16 @@ ${rows.join(",\n")}
 left join public.job_platform_partners p on p.slug = v.partner_slug
 left join public.job_platform_employers e on e.slug = v.employer_slug
 where not exists (
-  -- Дедуп лише за англійським заголовком (не за partner_id/employer_id, як
-  -- раніше) — простіше для nullable-зв'язку з двома можливими таблицями,
-  -- і безпечно, бо в цьому seed-наборі англійські заголовки й так унікальні.
+  -- Дедуп за (партнер АБО роботодавець) + англійський заголовок — лише
+  -- title_en було НЕДОСТАТНЬО: різні компанії цілком легітимно можуть мати
+  -- однакову назву посади ("Housekeeper", "QA Engineer" — так і сталось у
+  -- цьому наборі), і global-дедуп хибно пропускав такі рядки як дублікати.
+  -- IS NOT DISTINCT FROM — null-безпечне порівняння (null = null тут true),
+  -- бо рівно одне з partner_id/employer_id завжди null.
   select 1 from public.job_platform_jobs j
   where j.title ->> 'en' = v.title_en
+    and j.partner_id is not distinct from p.id
+    and j.employer_id is not distinct from e.id
 );`;
 }
 
@@ -161,7 +166,7 @@ const output = `-- VV Work (job-platform) demo data.
 --
 -- Idempotent: safe to re-run (partners/employers via
 -- \`on conflict (slug) do nothing\`, jobs via \`where not exists\` keyed on
--- English title).
+-- organisation (partner or employer) + English title).
 -- Run this AFTER schema.sql, in the Supabase SQL Editor.
 --
 -- If you're picking up the job-filters update (work_format/experience_level/

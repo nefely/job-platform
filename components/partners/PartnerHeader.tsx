@@ -1,4 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
+import { CATEGORY_COLORS } from "@/data/categoryColors";
 import { pickLocalized } from "@/lib/i18n/pickLocalized";
 import type { AppLocale } from "@/types/i18n";
 import type { Partner } from "@/types/partner";
@@ -27,7 +28,7 @@ export async function PartnerHeader({ partner }: PartnerHeaderProps) {
         {partner.categories.map((categoryId) => (
           <span
             key={categoryId}
-            className="rounded-full border border-gray-200 px-3 py-1 text-xs font-medium text-gray-600 dark:border-gray-700 dark:text-gray-300"
+            className={`rounded-full px-3 py-1 text-xs font-medium ${CATEGORY_COLORS[categoryId]}`}
           >
             {tCategories(categoryId)}
           </span>

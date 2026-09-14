@@ -44,19 +44,23 @@ npm install
    (Project Settings → API у Supabase Dashboard.)
 2. У Supabase SQL Editor цього проєкту виконайте **по черзі**:
    - [`supabase/schema.sql`](supabase/schema.sql) — таблиці `job_platform_partners`,
-     `job_platform_jobs`, `job_platform_contact_submissions` + RLS-політики
-     (публічний `select` на partners/jobs, публічний `insert`-без-`select`
-     на заявки). Ідемпотентний, можна перезапускати (безпечно і для вже
+     `job_platform_jobs`, `job_platform_candidates`, `job_platform_contact_submissions`
+     + RLS-політики (публічний `select` на partners/jobs/candidates, публічний
+     `insert`-без-`select` на заявки). Ідемпотентний, можна перезапускати (безпечно і для вже
      заповненої бази — нові колонки/constraint'и додаються через `alter
      table ... add column if not exists` / `drop constraint if exists`).
    - Якщо база вже має старіший набір вакансій (без `work_format`/
      `experience_level`/`required_languages`): `delete from
      public.job_platform_jobs;` — партнерів це не чіпає.
    - [`supabase/seed.sql`](supabase/seed.sql) — 6 демо-партнерів, **60
-     вакансій**, кожен текстовий запис — jsonb `{ uk, en, pl }`. Ідемпотентний
-     (`on conflict do nothing` / `where not exists`). Це **згенерований**
-     файл — джерело правди [`supabase/seed-data.mjs`](supabase/seed-data.mjs)
-     (структуровані дані), перегенерувати: `npm run seed:generate`.
+     вакансій**, **100 профілів кандидатів**, кожен текстовий запис вакансій/партнерів —
+     jsonb `{ uk, en, pl }` (профілі кандидатів — звичайний рядок однією мовою,
+     див. `profile_locale`). Ідемпотентний (`on conflict do nothing` / `where not exists`).
+     Це **згенерований** файл — джерело правди
+     [`supabase/seed-data.mjs`](supabase/seed-data.mjs) (партнери/вакансії) і
+     [`supabase/candidates-seed-data.mjs`](supabase/candidates-seed-data.mjs) (кандидати,
+     детерміновано згенеровані шаблонним скриптом — вручну писати 100 унікальних
+     профілів було б непропорційно довго), перегенерувати: `npm run seed:generate`.
 
 Без цього кроку `/jobs`, `/partners`, сторінка партнера й блок партнерів
 на Головній коректно покажуть **retry-блок** ("не вдалося завантажити") —
@@ -101,11 +105,12 @@ components/
 
 lib/
   supabase/       client.ts (браузер) / server.ts (Server Components)
-  mockApi/        simulateRequest.ts + partners.ts / jobs.ts / contact.ts
+  mockApi/        simulateRequest.ts + partners.ts / jobs.ts / candidates.ts / contact.ts
   resolveErrorMessage.ts — мапить стабільні (не локалізовані) маркери
                    помилок simulateRequest/useAsync у переклад під поточну локаль
   filterJobs.ts    чиста функція пошук+категорія+додаткові фільтри (для вакансій)
   filterPartners.ts чиста функція фільтр партнерів за категорією
+  filterCandidates.ts чиста функція пошук+фільтри для кандидатів (пошук працівника)
   validation/      contactForm.ts — чисті валідатори
   i18n/            pickLocalized.ts
   partners/        resolvePartnerBySlug.ts (server-side lookup для notFound())
@@ -113,13 +118,14 @@ lib/
 
 hooks/       useDebouncedValue.ts, useAsync.ts, useMounted.ts
 data/        categories.ts, locations.ts, employmentTypes.ts, workFormats.ts,
-             experienceLevels.ts, languages.ts (фіксовані таксономії),
+             experienceLevels.ts, languages.ts, languageLevels.ts (фіксовані таксономії),
              categoryColors.ts (кольори категорій, спільні для бейджів і чіпів),
              categoryIcons.tsx (inline SVG-іконки категорій, без бібліотеки іконок)
-types/       category, location, job, partner, contact, i18n, language
+types/       category, location, job, partner, candidate, contact, i18n, language
 i18n/        routing.ts, navigation.ts, request.ts (next-intl)
 messages/    uk.json, en.json, pl.json
-supabase/    schema.sql, seed-data.mjs (джерело), generate-seed.mjs → seed.sql (згенеровано)
+supabase/    schema.sql, seed-data.mjs + candidates-seed-data.mjs (джерела),
+             generate-seed.mjs → seed.sql (згенеровано)
 proxy.ts     next-intl middleware (Next.js 16 перейменував middleware → proxy)
 ```
 

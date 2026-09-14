@@ -37,7 +37,7 @@ export async function Footer() {
 
           <div className="flex flex-col gap-2">
             <p className="text-sm font-semibold">{t("employersTitle")}</p>
-            <Link href="/#for-employers" className={columnLinkClassName}>
+            <Link href="/candidates" className={columnLinkClassName}>
               {t("findEmployeeLink")}
             </Link>
           </div>

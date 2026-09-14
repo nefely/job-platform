@@ -18,7 +18,7 @@ export async function EmployerCtaSection() {
           </h2>
           <p className="mt-3 max-w-2xl text-gray-600 dark:text-gray-300">{t("employerText")}</p>
           <Link
-            href="/contact"
+            href="/candidates"
             className="mt-6 inline-block rounded-full bg-gray-900 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
           >
             {t("employerCta")}

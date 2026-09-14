@@ -1,14 +1,17 @@
-// Рендерить supabase/seed.sql із supabase/seed-data.mjs.
+// Рендерить supabase/seed.sql із supabase/seed-data.mjs і
+// supabase/candidates-seed-data.mjs.
 // Запуск: node supabase/generate-seed.mjs
 //
-// Навіщо: ~60 вакансій × 3 мови вручну вписаних у сирий SQL — це багато
-// місць, де легко забути екранувати одинарну лапку в апострофі (уже
-// траплялось: кур'єр, комір'я тощо). Тут це робиться в одному місці.
+// Навіщо: ~60 вакансій × 3 мови (+ ~100 профілів кандидатів) вручну
+// вписаних у сирий SQL — це багато місць, де легко забути екранувати
+// одинарну лапку в апострофі (уже траплялось: кур'єр, комір'я тощо). Тут
+// це робиться в одному місці.
 
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { partners, jobs } from "./seed-data.mjs";
+import { candidates } from "./candidates-seed-data.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -23,6 +26,18 @@ function sqlLocalizedJsonb(text) {
 function sqlTextArray(values) {
   if (values.length === 0) return "array[]::text[]";
   return `array[${values.map(sqlString).join(", ")}]`;
+}
+
+function sqlNullable(value, renderer) {
+  return value == null ? "null" : renderer(value);
+}
+
+function sqlLanguagesJsonb(languages) {
+  if (languages.length === 0) return "'[]'::jsonb";
+  const items = languages.map(
+    (l) => `jsonb_build_object('code', ${sqlString(l.code)}, 'level', ${sqlString(l.level)})`,
+  );
+  return `jsonb_build_array(${items.join(", ")})`;
 }
 
 function renderPartnersInsert() {
@@ -88,6 +103,37 @@ where not exists (
 );`;
 }
 
+function renderCandidatesInsert() {
+  const rows = candidates.map((c) => {
+    const values = [
+      sqlString(c.slug),
+      sqlString(c.name),
+      sqlTextArray(c.categories),
+      sqlString(c.headline),
+      sqlString(c.profileLocale),
+      sqlString(c.locationCode),
+      sqlTextArray(c.desiredEmploymentTypes),
+      sqlTextArray(c.desiredWorkFormats),
+      sqlString(c.experienceLevel),
+      sqlLanguagesJsonb(c.languages),
+      sqlTextArray(c.skills),
+      sqlNullable(c.about, sqlString),
+      sqlNullable(c.salaryExpectationFrom, String),
+      sqlNullable(c.currency, sqlString),
+      sqlNullable(c.availableFrom, sqlString),
+    ];
+    return `  (${values.join(", ")})`;
+  });
+
+  return `insert into public.job_platform_candidates
+  (slug, name, categories, headline, profile_locale, location_code, desired_employment_types,
+   desired_work_formats, experience_level, languages, skills, about, salary_expectation_from,
+   currency, available_from)
+values
+${rows.join(",\n")}
+on conflict (slug) do nothing;`;
+}
+
 const output = `-- VV Work (job-platform) demo data.
 -- GENERATED FILE — do not edit by hand. Source of truth is
 -- supabase/seed-data.mjs; regenerate with \`node supabase/generate-seed.mjs\`.
@@ -111,8 +157,15 @@ ${renderPartnersInsert()}
 -- Jobs (${jobs.length})
 -- ---------------------------------------------------------------------------
 ${renderJobsInsert()}
+
+-- ---------------------------------------------------------------------------
+-- Candidates (${candidates.length})
+-- ---------------------------------------------------------------------------
+${renderCandidatesInsert()}
 `;
 
 const outPath = join(__dirname, "seed.sql");
 writeFileSync(outPath, output, "utf8");
-console.log(`Wrote ${jobs.length} jobs and ${partners.length} partners to ${outPath}`);
+console.log(
+  `Wrote ${jobs.length} jobs, ${partners.length} partners and ${candidates.length} candidates to ${outPath}`,
+);

@@ -87,6 +87,37 @@ create index if not exists job_platform_jobs_partner_id_idx on public.job_platfo
 create index if not exists job_platform_jobs_category_idx on public.job_platform_jobs (category);
 
 -- ---------------------------------------------------------------------------
+-- job_platform_candidates
+-- ---------------------------------------------------------------------------
+-- На відміну від partners/jobs, name/headline/about НЕ jsonb: це текст,
+-- який кандидат один раз пише про себе своєю мовою (як справжнє резюме),
+-- а не маркетинговий контент, перекладений на 3 мови. profile_locale
+-- фіксує, якою мовою написано профіль.
+create table if not exists public.job_platform_candidates (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  name text not null,
+  avatar_url text,
+  categories text[] not null default '{}',
+  headline text not null,
+  profile_locale text not null check (profile_locale in ('uk', 'en', 'pl')),
+  location_code text not null, -- код міста; лейбл — messages/*.json ("locations")
+  desired_employment_types text[] not null default '{}',
+  desired_work_formats text[] not null default '{}',
+  experience_level text not null default '0-1' check (experience_level in ('0-1', '1-3', '3-5', '5+')),
+  languages jsonb not null default '[]', -- [{ "code": "uk", "level": "native" }, ...]
+  skills text[] not null default '{}',
+  about text,
+  salary_expectation_from int,
+  currency text check (currency in ('UAH', 'EUR', 'PLN')),
+  available_from date,
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists job_platform_candidates_categories_idx
+  on public.job_platform_candidates using gin (categories);
+
+-- ---------------------------------------------------------------------------
 -- job_platform_contact_submissions
 -- ---------------------------------------------------------------------------
 -- Не перекладається: це вхідні дані від користувача (заявка), а не контент,
@@ -104,6 +135,7 @@ create table if not exists public.job_platform_contact_submissions (
 -- ---------------------------------------------------------------------------
 alter table public.job_platform_partners enable row level security;
 alter table public.job_platform_jobs enable row level security;
+alter table public.job_platform_candidates enable row level security;
 alter table public.job_platform_contact_submissions enable row level security;
 
 drop policy if exists "public read partners" on public.job_platform_partners;
@@ -112,6 +144,13 @@ create policy "public read partners" on public.job_platform_partners
 
 drop policy if exists "public read jobs" on public.job_platform_jobs;
 create policy "public read jobs" on public.job_platform_jobs
+  for select using (true);
+
+-- Кандидати поки без реєстрації/акаунтів (див. заплановану фічу
+-- accounts+applications) — це демо-каталог профілів для сторінки пошуку
+-- працівників, тому лише публічне читання, без insert-політики.
+drop policy if exists "public read candidates" on public.job_platform_candidates;
+create policy "public read candidates" on public.job_platform_candidates
   for select using (true);
 
 -- Anyone (anon key) can submit the contact/application form, but nobody can

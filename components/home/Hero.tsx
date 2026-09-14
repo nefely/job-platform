@@ -35,7 +35,7 @@ export async function Hero() {
               {t("ctaFindJob")}
             </Link>
             <Link
-              href="/#for-employers"
+              href="/candidates"
               className="rounded-full border border-gray-300 px-6 py-3 text-center text-sm font-semibold transition-colors hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-900"
             >
               {t("ctaFindEmployee")}

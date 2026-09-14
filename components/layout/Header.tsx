@@ -18,7 +18,7 @@ export async function Header() {
       <Link href="/partners" className={linkClassName}>
         {t("partners")}
       </Link>
-      <Link href="/#for-employers" className={linkClassName}>
+      <Link href="/candidates" className={linkClassName}>
         {t("findEmployee")}
       </Link>
       <Link href="/#about" className={linkClassName}>

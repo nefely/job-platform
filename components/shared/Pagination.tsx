@@ -6,6 +6,10 @@ interface PaginationProps {
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  /** i18n namespace, що містить paginationLabel/Prev/Next/Status — однакові
+   * ключі повторюються в кожному ресурсному неймспейсі (jobs, candidates),
+   * бо next-intl не має спільного "shared"-неймспейсу для компонентів. */
+  namespace?: "jobs" | "candidates";
 }
 
 const arrowButtonClassName =
@@ -15,8 +19,8 @@ const arrowButtonClassName =
 // решта кнопок-іконок у проєкті) + "Сторінка X з Y" замість пронумерованих
 // кнопок — коректно працює при будь-якій кількості сторінок, без ризику
 // переповнення рядка чи edge-case'ів з "..." (без сторонніх UI-кітів).
-export function Pagination({ page, totalPages, onPageChange }: PaginationProps) {
-  const t = useTranslations("jobs");
+export function Pagination({ page, totalPages, onPageChange, namespace = "jobs" }: PaginationProps) {
+  const t = useTranslations(namespace);
 
   if (totalPages <= 1) return null;
 

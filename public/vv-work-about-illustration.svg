@@ -42,17 +42,26 @@
       .vv-node:nth-child(6) { animation-delay: 1.25s; }
       .vv-node:nth-child(7) { animation-delay: 1.5s; }
 
-      .vv-float-a, .vv-float-b, .vv-float-c { animation: vv-float 5s ease-in-out infinite; }
+      .vv-float-a, .vv-float-b { animation: vv-float 5s ease-in-out infinite; }
       .vv-float-b { animation-delay: 1.6s; }
-      .vv-float-c { animation-delay: .8s; }
       @keyframes vv-float {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-8px); }
       }
 
+      /* Цей блок уже має статичний transform="translate(87 300)" —
+         анімація transform НЕ додається до нього, а замінює його повністю,
+         тож базовий зсув треба "запекти" прямо в keyframes, інакше блок
+         стрибає у (0,0). */
+      .vv-float-c { animation: vv-float-c 5s ease-in-out infinite; animation-delay: .8s; }
+      @keyframes vv-float-c {
+        0%, 100% { transform: translate(87px, 300px); }
+        50% { transform: translate(87px, 292px); }
+      }
+
       .vv-dash { animation: vv-dash 2.5s linear infinite; }
       @keyframes vv-dash {
-        to { stroke-dashoffset: -26; }
+        to { stroke-dashoffset: -22; }
       }
 
       .vv-bar-a { animation: vv-bar-fill-a 3.2s ease-in-out infinite; }
@@ -82,8 +91,10 @@
     <path d="M345 204 C375 175 414 175 439 205"/>
     <path d="M320 242 C358 230 402 242 433 275"/>
     <path d="M351 300 C378 278 413 278 447 302"/>
-    <path d="M333 208 C330 247 339 282 365 313"/>
-    <path d="M440 205 C433 236 432 263 445 302"/>
+    <!-- exact node-to-node connection: begins in the center of the upper-left node -->
+    <path d="M345 204 C332 236 338 281 365 313"/>
+    <!-- exact node-to-node connection: begins/ends in node centers -->
+    <path d="M439 205 C433 236 432 270 447 302"/>
   </g>
 
   <g fill="#2DD4BF">
@@ -115,16 +126,26 @@
   <g filter="url(#shadow)" class="vv-float-b">
     <rect x="522" y="282" width="184" height="122" rx="20" fill="#111E30" stroke="#2A3C56"/>
     <rect x="548" y="310" width="44" height="44" rx="10" fill="#16353B"/>
-    <path d="M560 344V322H580V344" stroke="#2DD4BF" stroke-width="3" stroke-linejoin="round"/>
-    <path d="M555 329L570 317L585 329" stroke="#2DD4BF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Clean employer / company icon -->
+    <path d="M557 329L570 318L583 329" stroke="#2DD4BF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M560.5 326.5V343.5H579.5V326.5" stroke="#2DD4BF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M567.5 343.5V335H572.5V343.5" stroke="#2DD4BF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     <rect x="609" y="315" width="70" height="9" rx="4.5" fill="#E7EEF7"/>
     <rect x="609" y="333" width="52" height="7" rx="3.5" fill="#68809A"/>
     <rect x="548" y="370" width="131" height="9" rx="4.5" fill="#1C3047"/>
     <rect class="vv-bar-b" x="548" y="370" width="98" height="9" rx="4.5" fill="#22C55E"/>
   </g>
 
-  <path class="vv-dash" d="M235 188 C267 181 286 181 309 194" stroke="#2DD4BF" stroke-width="2" stroke-dasharray="6 7" opacity=".7"/>
-  <path class="vv-dash" d="M470 309 C494 322 510 328 528 330" stroke="#22C55E" stroke-width="2" stroke-dasharray="6 7" opacity=".7"/>
+  <!-- External connections: clean curved routes with explicit ports -->
+  <g fill="none" stroke-linecap="round">
+    <path class="vv-dash" d="M238 179 C261 179 279 184 299 198" stroke="#2DD4BF" stroke-width="2.2" stroke-dasharray="5 6" opacity=".72"/>
+    <circle cx="238" cy="179" r="4" fill="#0F1A2A" stroke="#2DD4BF" stroke-width="2"/>
+    <circle cx="299" cy="198" r="4" fill="#0F1A2A" stroke="#2DD4BF" stroke-width="2"/>
+
+    <path class="vv-dash" d="M472 300 C492 312 506 321 522 328" stroke="#22C55E" stroke-width="2.2" stroke-dasharray="5 6" opacity=".72"/>
+    <circle cx="472" cy="300" r="4" fill="#0F1A2A" stroke="#22C55E" stroke-width="2"/>
+    <circle cx="522" cy="328" r="4" fill="#0F1A2A" stroke="#22C55E" stroke-width="2"/>
+  </g>
 
   <g transform="translate(87 300)" class="vv-float-c">
     <rect width="120" height="62" rx="16" fill="#0F1C2C" stroke="#27405C"/>

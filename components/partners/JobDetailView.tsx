@@ -47,6 +47,9 @@ export async function JobDetailView({ job }: JobDetailViewProps) {
           {pickLocalized(job.partnerName, locale)}
         </Link>
       )}
+      {/* Прямий роботодавець (не партнер) — без власної сторінки, тому
+          просто текст, не посилання. */}
+      {job.employerName && <p className="mt-1 text-gray-600 dark:text-gray-300">{job.employerName}</p>}
 
       <dl className="mt-4 flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400">
         <div className="flex gap-1">

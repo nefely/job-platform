@@ -13,7 +13,12 @@ export type Currency = "UAH" | "EUR" | "PLN";
 
 export interface Job {
   id: string;
-  partnerId: string;
+  // Взаємовиключні: вакансія належить АБО партнеру (агенції/компанії зі
+  // спеціальними стосунками з платформою), АБО прямому роботодавцю без
+  // жодного зв'язку з партнерами (не всі роботодавці — партнери). Рівно
+  // одне з двох завжди заповнене — див. CHECK-constraint у schema.sql.
+  partnerId?: string;
+  employerId?: string;
   category: CategoryId;
   locationCode: LocationCode;
   employmentType: EmploymentType;
@@ -27,9 +32,11 @@ export interface Job {
   description: LocalizedText;
   postedAt: string;
   // Заповнюються лише для агрегованого списку вакансій ("Знайти роботу" —
-  // fetchAllJobs), де потрібно показати, від якого партнера вакансія. На
-  // сторінці одного партнера (fetchJobsByPartnerId) лишаються undefined —
-  // партнер там і так один, показувати нема сенсу.
+  // fetchAllJobs) і сторінки однієї вакансії, де потрібно показати, від
+  // кого вакансія. На сторінці одного партнера (fetchJobsByPartnerId)
+  // лишаються undefined — партнер там і так один, показувати нема сенсу.
   partnerSlug?: string;
   partnerName?: LocalizedText;
+  employerSlug?: string;
+  employerName?: string;
 }

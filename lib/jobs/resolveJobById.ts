@@ -26,7 +26,7 @@ export async function resolveJobById(id: string): Promise<Job | null> {
   const { data, error } = await supabase
     .from("job_platform_jobs")
     .select(
-      "id, partner_id, category, location_code, employment_type, work_format, experience_level, required_languages, salary_from, salary_to, currency, title, description, posted_at, job_platform_partners(slug, name)",
+      "id, partner_id, employer_id, category, location_code, employment_type, work_format, experience_level, required_languages, salary_from, salary_to, currency, title, description, posted_at, job_platform_partners(slug, name), job_platform_employers(slug, name)",
     )
     .eq("id", id)
     .maybeSingle();
@@ -39,13 +39,19 @@ export async function resolveJobById(id: string): Promise<Job | null> {
     return null;
   }
 
+  // Взаємовиключні — рівно один embed буде непорожнім (job.partnerId XOR
+  // job.employerId, див. job_platform_jobs_org_check у schema.sql).
   const partner = data.job_platform_partners as unknown as
     | { slug: string; name: LocalizedText }
+    | null;
+  const employer = data.job_platform_employers as unknown as
+    | { slug: string; name: string }
     | null;
 
   return {
     id: data.id,
-    partnerId: data.partner_id,
+    partnerId: data.partner_id ?? undefined,
+    employerId: data.employer_id ?? undefined,
     category: data.category as CategoryId,
     locationCode: data.location_code as LocationCode,
     employmentType: data.employment_type as EmploymentType,
@@ -60,5 +66,7 @@ export async function resolveJobById(id: string): Promise<Job | null> {
     postedAt: data.posted_at,
     partnerSlug: partner?.slug,
     partnerName: partner?.name,
+    employerSlug: employer?.slug,
+    employerName: employer?.name,
   };
 }

@@ -44,20 +44,27 @@ npm install
    (Project Settings → API у Supabase Dashboard.)
 2. У Supabase SQL Editor цього проєкту виконайте **по черзі**:
    - [`supabase/schema.sql`](supabase/schema.sql) — таблиці `job_platform_partners`,
-     `job_platform_jobs`, `job_platform_candidates`, `job_platform_contact_submissions`
-     + RLS-політики (публічний `select` на partners/jobs/candidates, публічний
-     `insert`-без-`select` на заявки). Ідемпотентний, можна перезапускати (безпечно і для вже
-     заповненої бази — нові колонки/constraint'и додаються через `alter
-     table ... add column if not exists` / `drop constraint if exists`).
+     `job_platform_employers`, `job_platform_jobs`, `job_platform_candidates`,
+     `job_platform_contact_submissions` + RLS-політики (публічний `select` на
+     partners/employers/jobs/candidates, публічний `insert`-без-`select` на заявки).
+     Ідемпотентний, можна перезапускати (безпечно і для вже заповненої бази —
+     нові колонки/constraint'и додаються через `alter table ... add column if
+     not exists` / `drop constraint if exists`). **Якщо база вже має старішу
+     версію `job_platform_jobs`** (де `partner_id` був `not null`) — цей файл
+     сам зробить `alter column partner_id drop not null` і додасть
+     `employer_id` + CHECK-constraint, дані не втрачаються.
    - Якщо база вже має старіший набір вакансій (без `work_format`/
      `experience_level`/`required_languages`): `delete from
      public.job_platform_jobs;` — партнерів це не чіпає.
-   - [`supabase/seed.sql`](supabase/seed.sql) — 6 демо-партнерів, **60
-     вакансій**, **100 профілів кандидатів**, кожен текстовий запис вакансій/партнерів —
-     jsonb `{ uk, en, pl }` (профілі кандидатів — звичайний рядок однією мовою,
-     див. `profile_locale`). Ідемпотентний (`on conflict do nothing` / `where not exists`).
-     Це **згенерований** файл — джерело правди
-     [`supabase/seed-data.mjs`](supabase/seed-data.mjs) (партнери/вакансії) і
+   - [`supabase/seed.sql`](supabase/seed.sql) — 6 демо-партнерів, **8 прямих
+     роботодавців** (не партнерів), **80 вакансій** (60 партнерських + 20 від
+     прямих роботодавців), **100 профілів кандидатів**, кожен текстовий запис
+     вакансій/партнерів — jsonb `{ uk, en, pl }` (профілі кандидатів — звичайний
+     рядок однією мовою, див. `profile_locale`; назва прямого роботодавця —
+     теж звичайний рядок, без jsonb, з тієї ж причини, що й `Partner.name` на
+     практиці однакова у всіх трьох мовах). Ідемпотентний (`on conflict do
+     nothing` / `where not exists`). Це **згенерований** файл — джерело правди
+     [`supabase/seed-data.mjs`](supabase/seed-data.mjs) (партнери/роботодавці/вакансії) і
      [`supabase/candidates-seed-data.mjs`](supabase/candidates-seed-data.mjs) (кандидати,
      детерміновано згенеровані шаблонним скриптом — вручну писати 100 унікальних
      профілів було б непропорційно довго), перегенерувати: `npm run seed:generate`.
@@ -127,7 +134,7 @@ data/        categories.ts, locations.ts, employmentTypes.ts, workFormats.ts,
              experienceLevels.ts, languages.ts, languageLevels.ts (фіксовані таксономії),
              categoryColors.ts (кольори категорій, спільні для бейджів і чіпів),
              categoryIcons.tsx (inline SVG-іконки категорій, без бібліотеки іконок)
-types/       category, location, job, partner, candidate, contact, i18n, language
+types/       category, location, job, partner, employer, candidate, contact, i18n, language
 i18n/        routing.ts, navigation.ts, request.ts (next-intl)
 messages/    uk.json, en.json, pl.json
 supabase/    schema.sql, seed-data.mjs + candidates-seed-data.mjs (джерела),
@@ -399,3 +406,21 @@ legend, selected/value, onChange, options}`) під свій тип фільтр
   (загальні питання про компанію, партнерство тощо) — якщо в майбутньому
   ця вимога проявиться явно, `ContactForm` вже готовий, лишається
   повернути під нього окремий роут.
+- **`job_platform_employers` — не всі роботодавці є партнерами.** У
+  вихідній моделі `Job.partnerId` був обов'язковим — вакансія завжди
+  належала комусь із `job_platform_partners`. Але партнер у цій моделі —
+  це вже сутність зі спеціальними стосунками з платформою (власна
+  сторінка `/partners/:slug`, `categories`, `summary`) — а не будь-яка
+  компанія, що хоче розмістити вакансію. Реальний прямий роботодавець
+  (без агентських стосунків, без потреби у власній маркетинговій сторінці)
+  раніше просто не міг існувати в моделі даних. Додано легку сутність
+  `Employer` (`id`, `slug`, `name`, `locationCode` — без `categories`/
+  `summary`, без власної сторінки): `Job.partnerId` тепер **nullable**,
+  додано `Job.employerId` (теж nullable) — CHECK-constraint гарантує, що
+  рівно одне з двох завжди заповнене (вакансія або партнерська, або від
+  прямого роботодавця, ніколи обидва й ніколи жодне). `/jobs` показує
+  обидва типи однаково; картка/деталі вакансії показують партнера як
+  посилання на `/partners/:slug` (як і раніше), а прямого роботодавця —
+  просто текстом (окрему сторінку роботодавця поки не будували — за
+  потреби `job_platform_employers` вже готова її отримати). У seed-даних
+  — 8 прямих роботодавців, 20 вакансій від них (поряд із 60 партнерськими).

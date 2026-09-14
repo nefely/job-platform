@@ -75,6 +75,23 @@ export const partners = [
 ];
 
 // ---------------------------------------------------------------------------
+// Employers — прямі роботодавці без стосунків із платформою як партнер
+// (не мають власної сторінки/categories/summary — лише назва й локація для
+// картки вакансії). На відміну від partners, кожен тут відповідає рівно
+// одній реальній компанії, а не агенції з кількома напрямками.
+// ---------------------------------------------------------------------------
+export const employers = [
+  { slug: "nordwind-cargo", locationCode: "berlin", name: "NordWind Cargo" },
+  { slug: "alpine-bakery", locationCode: "salzburg", name: "Alpine Bakery Co." },
+  { slug: "greenfield-construction", locationCode: "wroclaw", name: "Greenfield Construction" },
+  { slug: "brightleaf-manufacturing", locationCode: "poznan", name: "Brightleaf Manufacturing" },
+  { slug: "cascade-hotel", locationCode: "prague", name: "Cascade Hotel" },
+  { slug: "pixelforge-studio", locationCode: "krakow", name: "PixelForge Studio" },
+  { slug: "steelline-logistics", locationCode: "gdansk", name: "Steelline Logistics" },
+  { slug: "summit-facilities", locationCode: "munich", name: "Summit Facilities" },
+];
+
+// ---------------------------------------------------------------------------
 // Jobs — ~60, розподілені по 6 партнерах (15 у EuroLogistics, по 9 в решти).
 // employmentType: full-time | part-time | seasonal | project
 // workFormat: onsite | remote | hybrid
@@ -751,6 +768,229 @@ export const jobs = [
       uk: "Доставка замовлень власним автомобілем у межах міста, компенсація пального за пройдені кілометри. Потрібне посвідчення категорії B від 1 року.",
       en: "Delivering orders in your own car within the city, fuel compensated per kilometre driven. Requires a category B licence held for 1+ year.",
       pl: "Dostawa zamówień własnym samochodem na terenie miasta, zwrot kosztów paliwa za przejechane kilometry. Wymagane prawo jazdy kat. B od roku.",
+    },
+  },
+
+  // --- Прямі роботодавці (employerSlug, не partnerSlug) — не всі
+  // роботодавці є партнерами платформи. ---
+  {
+    employerSlug: "nordwind-cargo", category: "drivers", locationCode: "berlin",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "3-5", requiredLanguages: ["en"],
+    salaryFrom: 2000, salaryTo: 2500, currency: "EUR",
+    title: { uk: "Водій категорії CE (власний автопарк)", en: "Category CE Driver (in-house fleet)", pl: "Kierowca kat. CE (własna flota)" },
+    description: {
+      uk: "Пряме працевлаштування — без агенції-посередника. Регулярні рейси на власному автопарку компанії, стабільний графік, офіційний контракт напряму з роботодавцем. Потрібна категорія CE та досвід від 3 років.",
+      en: "Direct employment — no staffing agency in between. Regular routes on the company's own fleet, stable schedule, an official contract directly with the employer. Requires category CE and 3+ years of experience.",
+      pl: "Zatrudnienie bezpośrednie — bez agencji pośredniczącej. Regularne trasy własną flotą firmy, stabilny grafik, oficjalna umowa bezpośrednio z pracodawcą. Wymagana kategoria CE i min. 3 lata doświadczenia.",
+    },
+  },
+  {
+    employerSlug: "nordwind-cargo", category: "logistics", locationCode: "berlin",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: [],
+    salaryFrom: 1700, salaryTo: 2000, currency: "EUR",
+    title: { uk: "Диспетчер власного автопарку", en: "In-house Fleet Dispatcher", pl: "Dyspozytor własnej floty" },
+    description: {
+      uk: "Пряме працевлаштування. Планування маршрутів і графіків для водіїв власного автопарку компанії, взаємодія напряму з керівництвом, без проміжної агенції.",
+      en: "Direct employment. Planning routes and schedules for the company's own fleet drivers, working directly with management, no intermediary agency.",
+      pl: "Zatrudnienie bezpośrednie. Planowanie tras i grafików dla kierowców własnej floty firmy, bezpośrednia współpraca z kierownictwem, bez pośredniczącej agencji.",
+    },
+  },
+  {
+    employerSlug: "alpine-bakery", category: "hospitality", locationCode: "salzburg",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: [],
+    salaryFrom: 1400, salaryTo: 1700, currency: "EUR",
+    title: { uk: "Пекар", en: "Baker", pl: "Piekarz" },
+    description: {
+      uk: "Пряме працевлаштування в сімейній пекарні — без агенції. Випікання хліба та випічки за традиційними рецептами, ранкові зміни. Досвід вітається, але не обов'язковий — навчаємо на місці.",
+      en: "Direct employment at a family bakery — no agency involved. Baking bread and pastries from traditional recipes, morning shifts. Experience is a plus but not required — on-the-job training provided.",
+      pl: "Zatrudnienie bezpośrednie w rodzinnej piekarni — bez agencji. Wypiek chleba i pieczywa według tradycyjnych receptur, zmiany poranne. Doświadczenie mile widziane, ale niewymagane — szkolenie na miejscu.",
+    },
+  },
+  {
+    employerSlug: "alpine-bakery", category: "hospitality", locationCode: "salzburg",
+    employmentType: "part-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: [],
+    salaryFrom: 1100, salaryTo: 1300, currency: "EUR",
+    title: { uk: "Продавець у пекарні", en: "Bakery Shop Assistant", pl: "Sprzedawca w piekarni" },
+    description: {
+      uk: "Пряме працевлаштування. Обслуговування покупців за прилавком, каса, викладка свіжої випічки. Часткова зайнятість, гнучкий графік.",
+      en: "Direct employment. Serving customers at the counter, cash handling, arranging fresh pastries on display. Part-time, flexible schedule.",
+      pl: "Zatrudnienie bezpośrednie. Obsługa klientów przy ladzie, kasa, wykładanie świeżego pieczywa. Praca w niepełnym wymiarze, elastyczny grafik.",
+    },
+  },
+  {
+    employerSlug: "greenfield-construction", category: "construction", locationCode: "wroclaw",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: [],
+    salaryFrom: 1800, salaryTo: 2200, currency: "EUR",
+    title: { uk: "Тесляр", en: "Carpenter", pl: "Cieśla" },
+    description: {
+      uk: "Пряме працевлаштування — компанія наймає без агенції. Виготовлення й монтаж дерев'яних конструкцій на об'єктах житлового будівництва. Потрібен досвід від 1 року й власний ручний інструмент.",
+      en: "Direct employment — the company hires without an agency. Building and installing wooden structures on residential construction sites. Requires 1+ year of experience and your own hand tools.",
+      pl: "Zatrudnienie bezpośrednie — firma zatrudnia bez agencji. Wykonywanie i montaż konstrukcji drewnianych na obiektach mieszkaniowych. Wymagany min. rok doświadczenia i własne narzędzia ręczne.",
+    },
+  },
+  {
+    employerSlug: "greenfield-construction", category: "construction", locationCode: "wroclaw",
+    employmentType: "seasonal", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: [],
+    salaryFrom: 1400, salaryTo: 1700, currency: "EUR",
+    title: { uk: "Різноробочий на будівництво (пряме працевлаштування)", en: "General Construction Laborer (direct hire)", pl: "Pracownik ogólnobudowlany (zatrudnienie bezpośrednie)" },
+    description: {
+      uk: "Пряме працевлаштування без посередників. Допоміжні роботи на будмайданчику: підготовка матеріалів, прибирання, допомога кваліфікованим робітникам. Сезонний контракт, спецодяг надається.",
+      en: "Direct employment, no intermediaries. Auxiliary work on the construction site: preparing materials, cleanup, assisting skilled workers. Seasonal contract, workwear provided.",
+      pl: "Zatrudnienie bezpośrednie, bez pośredników. Prace pomocnicze na budowie: przygotowanie materiałów, sprzątanie, pomoc wykwalifikowanym pracownikom. Kontrakt sezonowy, odzież robocza zapewniona.",
+    },
+  },
+  {
+    employerSlug: "brightleaf-manufacturing", category: "manufacturing", locationCode: "poznan",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: [],
+    salaryFrom: 1300, salaryTo: 1550, currency: "EUR",
+    title: { uk: "Оператор виробничої лінії", en: "Production Line Operator", pl: "Operator linii produkcyjnej" },
+    description: {
+      uk: "Пряме працевлаштування на власному виробництві компанії — без агенції. Обслуговування автоматизованої лінії, контроль якості на виході. Навчання на місці, без досвіду.",
+      en: "Direct employment at the company's own production facility — no agency. Operating an automated line, checking output quality. On-the-job training, no experience required.",
+      pl: "Zatrudnienie bezpośrednie we własnym zakładzie produkcyjnym firmy — bez agencji. Obsługa zautomatyzowanej linii, kontrola jakości na wyjściu. Szkolenie na miejscu, bez doświadczenia.",
+    },
+  },
+  {
+    employerSlug: "brightleaf-manufacturing", category: "manufacturing", locationCode: "poznan",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["pl"],
+    salaryFrom: 1500, salaryTo: 1800, currency: "EUR",
+    title: { uk: "Контролер якості", en: "Quality Controller", pl: "Kontroler jakości" },
+    description: {
+      uk: "Пряме працевлаштування. Перевірка сировини та готової продукції на відповідність стандартам якості, оформлення протоколів невідповідностей. Потрібна базова польська.",
+      en: "Direct employment. Checking raw materials and finished products against quality standards, documenting non-conformance reports. Basic Polish required.",
+      pl: "Zatrudnienie bezpośrednie. Kontrola surowców i gotowych produktów pod kątem zgodności ze standardami jakości, dokumentowanie niezgodności. Wymagany podstawowy polski.",
+    },
+  },
+  {
+    employerSlug: "brightleaf-manufacturing", category: "manufacturing", locationCode: "poznan",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "3-5", requiredLanguages: [],
+    salaryFrom: 1700, salaryTo: 2100, currency: "EUR",
+    title: { uk: "Механік з обслуговування обладнання", en: "Equipment Maintenance Mechanic", pl: "Mechanik utrzymania ruchu" },
+    description: {
+      uk: "Пряме працевлаштування без агенції-посередника. Плановий і аварійний ремонт виробничого обладнання, ведення журналу обслуговування. Потрібна технічна освіта й досвід від 3 років.",
+      en: "Direct employment, no staffing agency involved. Scheduled and emergency repair of production equipment, keeping a maintenance log. Requires technical education and 3+ years of experience.",
+      pl: "Zatrudnienie bezpośrednie, bez pośredniczącej agencji. Planowe i awaryjne naprawy sprzętu produkcyjnego, prowadzenie dziennika serwisowego. Wymagane wykształcenie techniczne i min. 3 lata doświadczenia.",
+    },
+  },
+  {
+    employerSlug: "cascade-hotel", category: "hospitality", locationCode: "prague",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: [],
+    salaryFrom: 1200, salaryTo: 1400, currency: "EUR",
+    title: { uk: "Покоївка", en: "Housekeeper", pl: "Pokojówka" },
+    description: {
+      uk: "Пряме працевлаштування в готелі — без агенції. Прибирання та підготовка номерів до заїзду гостей, заміна білизни. Графік 5/2, без досвіду.",
+      en: "Direct employment at the hotel — no agency. Cleaning and preparing rooms for guest check-in, changing linens. 5/2 schedule, no experience required.",
+      pl: "Zatrudnienie bezpośrednie w hotelu — bez agencji. Sprzątanie i przygotowanie pokoi na przyjazd gości, wymiana pościeli. Grafik 5/2, bez doświadczenia.",
+    },
+  },
+  {
+    employerSlug: "cascade-hotel", category: "hospitality", locationCode: "prague",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["en"],
+    salaryFrom: 1500, salaryTo: 1800, currency: "EUR",
+    title: { uk: "Адміністратор готелю", en: "Hotel Receptionist", pl: "Recepcjonista/-ka hotelowy/-a" },
+    description: {
+      uk: "Пряме працевлаштування. Заселення й виселення гостей, обробка бронювань. Робота позмінно, включно з вихідними. Потрібна англійська на розмовному рівні.",
+      en: "Direct employment. Checking guests in and out, handling bookings. Shift work, including weekends. Requires conversational English.",
+      pl: "Zatrudnienie bezpośrednie. Zameldowanie i wymeldowanie gości, obsługa rezerwacji. Praca zmianowa, w tym w weekendy. Wymagany komunikatywny angielski.",
+    },
+  },
+  {
+    employerSlug: "pixelforge-studio", category: "it", locationCode: "krakow",
+    employmentType: "full-time", workFormat: "remote", experienceLevel: "1-3", requiredLanguages: ["en"],
+    salaryFrom: 2400, salaryTo: 3000, currency: "EUR",
+    title: { uk: "Frontend-розробник", en: "Frontend Developer", pl: "Programista Frontend" },
+    description: {
+      uk: "Пряме працевлаштування — власна продуктова команда, без аутсорс-агенції. Розробка інтерфейсів на React/TypeScript, код-рев'ю, повністю віддалено.",
+      en: "Direct employment — our own in-house product team, no outsourcing agency. Building interfaces in React/TypeScript, code reviews, fully remote.",
+      pl: "Zatrudnienie bezpośrednie — własny zespół produktowy, bez agencji outsourcingowej. Tworzenie interfejsów w React/TypeScript, code review, praca w pełni zdalna.",
+    },
+  },
+  {
+    employerSlug: "pixelforge-studio", category: "it", locationCode: "krakow",
+    employmentType: "full-time", workFormat: "hybrid", experienceLevel: "0-1", requiredLanguages: ["en"],
+    salaryFrom: 1900, salaryTo: 2300, currency: "EUR",
+    title: { uk: "QA-інженер", en: "QA Engineer", pl: "Inżynier QA" },
+    description: {
+      uk: "Пряме працевлаштування. Мануальне й автоматизоване тестування вебзастосунку, написання тест-кейсів. 1 день в офісі, решта — віддалено.",
+      en: "Direct employment. Manual and automated testing of a web application, writing test cases. 1 office day, the rest remote.",
+      pl: "Zatrudnienie bezpośrednie. Testowanie manualne i automatyczne aplikacji webowej, pisanie przypadków testowych. 1 dzień w biurze, reszta zdalnie.",
+    },
+  },
+  {
+    employerSlug: "pixelforge-studio", category: "it", locationCode: "krakow",
+    employmentType: "part-time", workFormat: "remote", experienceLevel: "1-3", requiredLanguages: ["en"],
+    salaryFrom: 2000, salaryTo: 2500, currency: "EUR",
+    title: { uk: "UI/UX-дизайнер", en: "UI/UX Designer", pl: "Projektant UI/UX" },
+    description: {
+      uk: "Пряме працевлаштування, часткова зайнятість. Проєктування інтерфейсів продукту в Figma, юзабіліті-тести. Портфоліо обов'язкове.",
+      en: "Direct employment, part-time. Designing product interfaces in Figma, usability testing. Portfolio required.",
+      pl: "Zatrudnienie bezpośrednie, niepełny wymiar godzin. Projektowanie interfejsów produktu w Figmie, testy użyteczności. Wymagane portfolio.",
+    },
+  },
+  {
+    employerSlug: "steelline-logistics", category: "logistics", locationCode: "gdansk",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: [],
+    salaryFrom: 1400, salaryTo: 1650, currency: "EUR",
+    title: { uk: "Комірник", en: "Warehouse Keeper", pl: "Magazynier-ewidencjoner" },
+    description: {
+      uk: "Пряме працевлаштування — власний склад компанії, без агенції. Ведення обліку товару, приймання й видача продукції через WMS-систему.",
+      en: "Direct employment — the company's own warehouse, no agency. Tracking stock, receiving and issuing goods through a WMS system.",
+      pl: "Zatrudnienie bezpośrednie — własny magazyn firmy, bez agencji. Prowadzenie ewidencji towaru, przyjmowanie i wydawanie towaru w systemie WMS.",
+    },
+  },
+  {
+    employerSlug: "steelline-logistics", category: "logistics", locationCode: "gdansk",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: [],
+    salaryFrom: 1300, salaryTo: 1500, currency: "EUR",
+    title: { uk: "Водій навантажувача", en: "Forklift Driver", pl: "Kierowca wózka widłowego" },
+    description: {
+      uk: "Пряме працевлаштування. Робота на електронавантажувачі на власному складі компанії: переміщення палет, завантаження й розвантаження транспорту.",
+      en: "Direct employment. Operating an electric forklift at the company's own warehouse: moving pallets, loading and unloading trucks.",
+      pl: "Zatrudnienie bezpośrednie. Praca na wózku widłowym elektrycznym we własnym magazynie firmy: przemieszczanie palet, załadunek i rozładunek transportu.",
+    },
+  },
+  {
+    employerSlug: "steelline-logistics", category: "drivers", locationCode: "gdansk",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "3-5", requiredLanguages: ["en"],
+    salaryFrom: 2000, salaryTo: 2500, currency: "EUR",
+    title: { uk: "Водій категорії CE", en: "Category CE Driver", pl: "Kierowca kat. CE" },
+    description: {
+      uk: "Пряме працевлаштування, без агенції-посередника. Регулярні рейси на власному транспорті компанії, офіційний контракт напряму з роботодавцем.",
+      en: "Direct employment, no staffing agency in between. Regular routes on the company's own trucks, an official contract directly with the employer.",
+      pl: "Zatrudnienie bezpośrednie, bez pośredniczącej agencji. Regularne trasy własnym transportem firmy, oficjalna umowa bezpośrednio z pracodawcą.",
+    },
+  },
+  {
+    employerSlug: "summit-facilities", category: "other", locationCode: "munich",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "1-3", requiredLanguages: ["en"],
+    salaryFrom: 1600, salaryTo: 1900, currency: "EUR",
+    title: { uk: "Охоронець", en: "Security Guard", pl: "Ochroniarz" },
+    description: {
+      uk: "Пряме працевлаштування — власна служба безпеки компанії, без агенції. Охорона об'єкта, контроль доступу. Потрібна англійська на розмовному рівні.",
+      en: "Direct employment — the company's own security team, no agency. Site security, access control. Requires conversational English.",
+      pl: "Zatrudnienie bezpośrednie — własna ochrona firmy, bez agencji. Ochrona obiektu, kontrola dostępu. Wymagany komunikatywny angielski.",
+    },
+  },
+  {
+    employerSlug: "summit-facilities", category: "other", locationCode: "munich",
+    employmentType: "full-time", workFormat: "onsite", experienceLevel: "3-5", requiredLanguages: ["en"],
+    salaryFrom: 1800, salaryTo: 2100, currency: "EUR",
+    title: { uk: "Клінінг-менеджер", en: "Cleaning Supervisor", pl: "Kierownik sprzątania" },
+    description: {
+      uk: "Пряме працевлаштування. Організація роботи власної клінінгової команди компанії (без залучення агенції), контроль якості прибирання.",
+      en: "Direct employment. Organising the company's own in-house cleaning team (no agency involved), quality control of cleaning.",
+      pl: "Zatrudnienie bezpośrednie. Organizacja pracy własnego zespołu sprzątającego firmy (bez udziału agencji), kontrola jakości sprzątania.",
+    },
+  },
+  {
+    employerSlug: "summit-facilities", category: "other", locationCode: "munich",
+    employmentType: "seasonal", workFormat: "onsite", experienceLevel: "0-1", requiredLanguages: [],
+    salaryFrom: 1300, salaryTo: 1500, currency: "EUR",
+    title: { uk: "Садівник/доглядач території", en: "Groundskeeper", pl: "Ogrodnik terenów zielonych" },
+    description: {
+      uk: "Пряме працевлаштування, без агенції. Догляд за прилеглою територією: газони, клумби, доріжки. Сезонна робота, інструмент надається.",
+      en: "Direct employment, no agency. Maintaining the grounds: lawns, flower beds, footpaths. Seasonal work, tools provided.",
+      pl: "Zatrudnienie bezpośrednie, bez agencji. Dbanie o teren: trawniki, klomby, alejki. Praca sezonowa, narzędzia zapewnione.",
     },
   },
 ];

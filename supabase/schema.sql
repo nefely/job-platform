@@ -42,11 +42,32 @@ create table if not exists public.job_platform_partners (
 );
 
 -- ---------------------------------------------------------------------------
+-- job_platform_employers
+-- ---------------------------------------------------------------------------
+-- Не всі роботодавці — партнери: партнер (job_platform_partners) — агенція
+-- чи компанія зі спеціальними стосунками з платформою (своя сторінка,
+-- categories, summary), а employer — легка сутність для прямого
+-- роботодавця, що просто розмістив вакансію(ї) без жодного зв'язку з
+-- партнерами. Без власної сторінки — лише те, що показати на картці/у
+-- деталях вакансії.
+create table if not exists public.job_platform_employers (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  location_code text not null, -- код міста; лейбл — messages/*.json ("locations")
+  name text not null,
+  created_at timestamptz not null default now()
+);
+
+-- ---------------------------------------------------------------------------
 -- job_platform_jobs
 -- ---------------------------------------------------------------------------
 create table if not exists public.job_platform_jobs (
   id uuid primary key default gen_random_uuid(),
-  partner_id uuid not null references public.job_platform_partners (id) on delete cascade,
+  -- Взаємовиключні (див. job_platform_jobs_org_check нижче): вакансія
+  -- належить АБО партнеру, АБО прямому роботодавцю, ніколи обом і ніколи
+  -- жодному.
+  partner_id uuid references public.job_platform_partners (id) on delete cascade,
+  employer_id uuid references public.job_platform_employers (id) on delete cascade,
   category text not null check (category in
     ('construction', 'manufacturing', 'logistics', 'hospitality', 'it', 'drivers', 'other')),
   location_code text not null, -- код міста; лейбл — messages/*.json ("locations")
@@ -69,7 +90,13 @@ create table if not exists public.job_platform_jobs (
 alter table public.job_platform_jobs
   add column if not exists work_format text not null default 'onsite',
   add column if not exists experience_level text not null default '0-1',
-  add column if not exists required_languages text[] not null default '{}';
+  add column if not exists required_languages text[] not null default '{}',
+  add column if not exists employer_id uuid references public.job_platform_employers (id) on delete cascade;
+
+-- partner_id був not null, поки кожна вакансія обов'язково належала
+-- партнеру — тепер вакансія може належати прямому роботодавцю замість
+-- партнера, тож обмеження переїхало у job_platform_jobs_org_check нижче.
+alter table public.job_platform_jobs alter column partner_id drop not null;
 
 alter table public.job_platform_jobs drop constraint if exists job_platform_jobs_employment_type_check;
 alter table public.job_platform_jobs add constraint job_platform_jobs_employment_type_check
@@ -83,7 +110,17 @@ alter table public.job_platform_jobs drop constraint if exists job_platform_jobs
 alter table public.job_platform_jobs add constraint job_platform_jobs_experience_level_check
   check (experience_level in ('0-1', '1-3', '3-5', '5+'));
 
+-- Рівно одне з partner_id/employer_id має бути заповнене — вакансія або
+-- партнерська, або від прямого роботодавця, ніколи обидва й ніколи жодне.
+alter table public.job_platform_jobs drop constraint if exists job_platform_jobs_org_check;
+alter table public.job_platform_jobs add constraint job_platform_jobs_org_check
+  check (
+    (partner_id is not null and employer_id is null) or
+    (partner_id is null and employer_id is not null)
+  );
+
 create index if not exists job_platform_jobs_partner_id_idx on public.job_platform_jobs (partner_id);
+create index if not exists job_platform_jobs_employer_id_idx on public.job_platform_jobs (employer_id);
 create index if not exists job_platform_jobs_category_idx on public.job_platform_jobs (category);
 
 -- ---------------------------------------------------------------------------
@@ -134,12 +171,17 @@ create table if not exists public.job_platform_contact_submissions (
 -- Row Level Security
 -- ---------------------------------------------------------------------------
 alter table public.job_platform_partners enable row level security;
+alter table public.job_platform_employers enable row level security;
 alter table public.job_platform_jobs enable row level security;
 alter table public.job_platform_candidates enable row level security;
 alter table public.job_platform_contact_submissions enable row level security;
 
 drop policy if exists "public read partners" on public.job_platform_partners;
 create policy "public read partners" on public.job_platform_partners
+  for select using (true);
+
+drop policy if exists "public read employers" on public.job_platform_employers;
+create policy "public read employers" on public.job_platform_employers
   for select using (true);
 
 drop policy if exists "public read jobs" on public.job_platform_jobs;

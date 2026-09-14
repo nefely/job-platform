@@ -10,7 +10,7 @@
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { partners, jobs } from "./seed-data.mjs";
+import { partners, employers, jobs } from "./seed-data.mjs";
 import { candidates } from "./candidates-seed-data.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -57,10 +57,27 @@ ${rows.join(",\n")}
 on conflict (slug) do nothing;`;
 }
 
+function renderEmployersInsert() {
+  const rows = employers.map(
+    (e) => `  (${sqlString(e.slug)}, ${sqlString(e.locationCode)}, ${sqlString(e.name)})`,
+  );
+
+  return `insert into public.job_platform_employers (slug, location_code, name)
+values
+${rows.join(",\n")}
+on conflict (slug) do nothing;`;
+}
+
 function renderJobsInsert() {
+  // Кожен job-запис має РІВНО одне з partnerSlug/employerSlug (не обидва,
+  // не жодне) — дзеркало CHECK-constraint у schema.sql. Рендеримо обидва
+  // стовпці, відсутній — null, і LEFT JOIN-имо обидві таблиці; той, що не
+  // задіяний для конкретного рядка, лишається NULL природно (JOIN по NULL
+  // не дає збігів).
   const rows = jobs.map((j) => {
     const values = [
-      sqlString(j.partnerSlug),
+      sqlNullable(j.partnerSlug, sqlString),
+      sqlNullable(j.employerSlug, sqlString),
       sqlString(j.category),
       sqlString(j.locationCode),
       sqlString(j.employmentType),
@@ -81,10 +98,10 @@ function renderJobsInsert() {
   });
 
   return `insert into public.job_platform_jobs
-  (partner_id, category, location_code, employment_type, work_format, experience_level,
+  (partner_id, employer_id, category, location_code, employment_type, work_format, experience_level,
    required_languages, salary_from, salary_to, currency, title, description)
 select
-  p.id, v.category, v.location_code, v.employment_type, v.work_format, v.experience_level,
+  p.id, e.id, v.category, v.location_code, v.employment_type, v.work_format, v.experience_level,
   v.required_languages, v.salary_from, v.salary_to, v.currency,
   jsonb_build_object('uk', v.title_uk, 'en', v.title_en, 'pl', v.title_pl),
   jsonb_build_object('uk', v.description_uk, 'en', v.description_en, 'pl', v.description_pl)
@@ -92,14 +109,18 @@ from (
   values
 ${rows.join(",\n")}
 ) as v(
-  partner_slug, category, location_code, employment_type, work_format, experience_level,
+  partner_slug, employer_slug, category, location_code, employment_type, work_format, experience_level,
   required_languages, salary_from, salary_to, currency,
   title_uk, title_en, title_pl, description_uk, description_en, description_pl
 )
-join public.job_platform_partners p on p.slug = v.partner_slug
+left join public.job_platform_partners p on p.slug = v.partner_slug
+left join public.job_platform_employers e on e.slug = v.employer_slug
 where not exists (
+  -- Дедуп лише за англійським заголовком (не за partner_id/employer_id, як
+  -- раніше) — простіше для nullable-зв'язку з двома можливими таблицями,
+  -- і безпечно, бо в цьому seed-наборі англійські заголовки й так унікальні.
   select 1 from public.job_platform_jobs j
-  where j.partner_id = p.id and j.title ->> 'en' = v.title_en
+  where j.title ->> 'en' = v.title_en
 );`;
 }
 
@@ -138,8 +159,9 @@ const output = `-- VV Work (job-platform) demo data.
 -- GENERATED FILE — do not edit by hand. Source of truth is
 -- supabase/seed-data.mjs; regenerate with \`node supabase/generate-seed.mjs\`.
 --
--- Idempotent: safe to re-run (partners via \`on conflict (slug) do nothing\`,
--- jobs via \`where not exists\` keyed on partner + English title).
+-- Idempotent: safe to re-run (partners/employers via
+-- \`on conflict (slug) do nothing\`, jobs via \`where not exists\` keyed on
+-- English title).
 -- Run this AFTER schema.sql, in the Supabase SQL Editor.
 --
 -- If you're picking up the job-filters update (work_format/experience_level/
@@ -152,6 +174,12 @@ const output = `-- VV Work (job-platform) demo data.
 -- Partners
 -- ---------------------------------------------------------------------------
 ${renderPartnersInsert()}
+
+-- ---------------------------------------------------------------------------
+-- Employers (${employers.length}) — прямі роботодавці без стосунків із
+-- платформою як партнер (не всі роботодавці є партнерами)
+-- ---------------------------------------------------------------------------
+${renderEmployersInsert()}
 
 -- ---------------------------------------------------------------------------
 -- Jobs (${jobs.length})
@@ -167,5 +195,5 @@ ${renderCandidatesInsert()}
 const outPath = join(__dirname, "seed.sql");
 writeFileSync(outPath, output, "utf8");
 console.log(
-  `Wrote ${jobs.length} jobs, ${partners.length} partners and ${candidates.length} candidates to ${outPath}`,
+  `Wrote ${jobs.length} jobs, ${partners.length} partners, ${employers.length} employers and ${candidates.length} candidates to ${outPath}`,
 );
